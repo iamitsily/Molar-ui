@@ -12,6 +12,9 @@
         android:theme="@style/Theme.Molar"
         tools:targetApi="31">
         <activity
+            android:name=".ui.menuPacienteLayout"
+            android:exported="false" />
+      <activity
             android:name=".ui.RegistrarPaciente"
             android:exported="false" />
         <activity
