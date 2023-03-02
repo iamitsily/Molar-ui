@@ -47,6 +47,7 @@
                 android:layout_marginTop="10dp"
                 android:background="#EBEBEB"
                 android:ems="10"
+                android:fontFamily="@font/roboto"
                 android:hint=" Nombre"
                 android:inputType="textPersonName" />
 
@@ -57,6 +58,7 @@
                 android:layout_marginTop="10dp"
                 android:background="#EBEBEB"
                 android:ems="10"
+                android:fontFamily="@font/roboto"
                 android:hint=" Apellido materno"
                 android:inputType="textPersonName" />
 
