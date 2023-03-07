@@ -9,4 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gris">#A69F9F</color>
     <color name="azul">#1C6BA4</color>
+
+    <!--Parte de ajustes de cuenta perfil -->
+    <color name="rectangle_azul_bordes">#1C6BA4</color>
+    <color name="btn_redondo_gris">#677294</color>
 </resources>

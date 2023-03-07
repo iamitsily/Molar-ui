@@ -5,37 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/GoToReg"
-        android:layout_width="342dp"
-        android:layout_height="46dp"
-        android:layout_marginBottom="60dp"
-        android:text="¿Tienes alguna  duda? Contactanos molar@soport.uatx.mx"
-        android:textAlignment="center"
-        android:textColor="@color/gris"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.627"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/olvide_contraseña"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
-        android:text="¿Olvidaste tu contraseña?"
-        android:textAlignment="center"
-        android:textColor="@color/gris"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.535"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton"
-        app:layout_constraintVertical_bias="0.289" />
 
     <ImageView
         android:id="@+id/logo"
@@ -68,12 +37,12 @@
     <EditText
         android:id="@+id/loginPassword"
         android:layout_width="347dp"
-        android:layout_height="53dp"
+        android:layout_height="54dp"
         android:layout_marginBottom="316dp"
         android:background="@drawable/login_layaut_btnrectangulo"
         android:drawableStart="@drawable/login_layaut_icon_password"
         android:drawableRight="@drawable/login_layaut_ocultar"
-        android:drawablePadding="5dp"
+        android:drawablePadding="15dp"
         android:hint="Contraseña"
         android:inputType="textPassword"
         android:padding="15dp"
@@ -88,11 +57,12 @@
         android:layout_width="279dp"
         android:layout_height="52dp"
         android:layout_marginTop="32dp"
-        android:background="@drawable/login_layaut_btnredondo"
+        android:backgroundTint="#1C6BA4"
         android:fontFamily="sans-serif"
         android:text="iniciar sesión"
         android:textColor="@color/white"
         android:textSize="20sp"
+        app:cornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -102,7 +72,7 @@
     <EditText
         android:id="@+id/logPhone"
         android:layout_width="348dp"
-        android:layout_height="57dp"
+        android:layout_height="54dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/login_layaut_btnrectangulo"
         android:drawableStart="@drawable/login_layaut_icon_matricula"
@@ -127,6 +97,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/btnForgetPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="128dp"
+        android:background="@android:color/transparent"
+        android:text="¿Olvidaste tu contraseña?"
+        android:textAlignment="center"
+        android:textColor="@color/gris"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/GoToReg"
+        android:layout_width="342dp"
+        android:layout_height="46dp"
+        android:layout_marginBottom="60dp"
+        android:text="¿Tienes alguna duda? Contactanos molar@soport.uatx.mx"
+        android:textAlignment="center"
+        android:textColor="@color/gris"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.627"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
