@@ -11,6 +11,6 @@ public class registrarPacienteLayout extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registrar_paciente_layout);
+        setContentView(R.layout.activity_main);
     }
 }
