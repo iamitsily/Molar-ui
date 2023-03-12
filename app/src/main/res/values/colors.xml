@@ -13,4 +13,12 @@
     <!--Parte de ajustes de cuenta perfil -->
     <color name="rectangle_azul_bordes">#1C6BA4</color>
     <color name="btn_redondo_gris">#677294</color>
+
+    <!--Parte de modulos citas -->
+    <color name="_bg__modulo_de_citas_ek2_color">#FFFFFF</color>
+    <color name="rectangle_10_color">#1B6AA4</color>
+    <color name="View_agendar_cita">#1C6BA4</color>
+    <color name="View_Reagendar_cita">#F1E6EA</color>
+    <color name="View_Cancear_citas">#FAF0DB</color>
+    <color name="Calendario_parte_superior">#0E1012</color>
 </resources>
