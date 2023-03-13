@@ -110,7 +110,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 
     <TextView
         android:id="@+id/GoToReg"
@@ -212,6 +213,7 @@
                 android:backgroundTint="#1C6BA4"
                 android:onClick="fpEmailButton"
                 android:text="Continuar"
+                android:textColor="#FFFFFF"
                 app:cornerRadius="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -292,6 +294,7 @@
                 android:backgroundTint="#1C6BA4"
                 android:onClick="fpCodeButton"
                 android:text="Continuar"
+                android:textColor="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -390,6 +393,7 @@
                 android:backgroundTint="#1C6BA4"
                 android:onClick="fpRestorePass"
                 android:text="Actualizar contraseña"
+                android:textColor="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
