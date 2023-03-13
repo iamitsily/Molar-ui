@@ -9,8 +9,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Material3.DayNight.NoActionBar"
+        android:theme="@style/Theme.Material3.Light.NoActionBar"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.fechaHoraAgendarCitaLayout"
+            android:exported="false" />
         <activity
             android:name=".ui.registrarPacienteLayout"
             android:exported="false" />
