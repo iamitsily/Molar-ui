@@ -1,4 +1,4 @@
-package com.haku.molar.ui;
+package com.haku.molar.ui.patient;
 
 import androidx.appcompat.app.AppCompatActivity;
 
