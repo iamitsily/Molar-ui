@@ -12,28 +12,28 @@
         android:theme="@style/Theme.Material3.Light.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".ui.AgendarCitasLayout"
+            android:name=".ui.patient.ajustesCuentaDatosLayout"
             android:exported="false" />
         <activity
-            android:name=".ui.AjustesDeCuentaMenuLayout"
+            android:name=".ui.patient.AjustesDeCuentaMenuLayout"
             android:exported="false" />
         <activity
-            android:name=".ui.fechaHoraAgendarCitaLayout"
+            android:name=".ui.patient.fechaHoraAgendarCitaLayout"
             android:exported="false" />
         <activity
-            android:name=".ui.registrarPacienteLayout"
+            android:name=".ui.patient.registrarPacienteLayout"
             android:exported="false" />
         <activity
-            android:name=".ui.loginLayout"
+            android:name=".ui.patient.loginLayout"
             android:exported="false" />
         <activity
-            android:name=".ui.menuPacienteLayout"
+            android:name=".ui.patient.menuPacienteLayout"
             android:exported="false" />
         <activity
-            android:name=".ui.presentacionDosLayout"
+            android:name=".ui.patient.presentacionDosLayout"
             android:exported="false" />
         <activity
-            android:name=".ui.presentacionLayout"
+            android:name=".ui.patient.presentacionLayout"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

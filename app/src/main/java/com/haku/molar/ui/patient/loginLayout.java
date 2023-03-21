@@ -1,4 +1,4 @@
-package com.haku.molar.ui;
+package com.haku.molar.ui.patient;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -7,7 +7,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.haku.molar.R;
 
