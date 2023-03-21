@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.AgendarCitasLayout">
+    tools:context=".ui.patient.AgendarCitasLayout">
 
     <ImageView
         android:id="@+id/AC1_iv1"
