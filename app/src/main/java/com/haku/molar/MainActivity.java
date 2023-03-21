@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.haku.molar.ui.presentacionLayout;
+import com.haku.molar.ui.patient.presentacionLayout;
 
 public class MainActivity extends AppCompatActivity {
 
