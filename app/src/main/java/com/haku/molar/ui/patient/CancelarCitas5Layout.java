@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.haku.molar.R;
+
 public class CancelarCitas5Layout extends AppCompatActivity {
 
     @Override
