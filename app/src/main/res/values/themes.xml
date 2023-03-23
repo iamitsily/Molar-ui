@@ -15,8 +15,11 @@
     </style>
 
     <style name="MyCheckBox" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorControlNormal">#0F35F8</item>   <!-- cambio de color de borde normal como desee -->
-        <item name="colorControlActivated">#0F35F8</item> <!-- cambio de color activado como desees -->
+        <item name="colorControlNormal">#0F35F8
+        </item>   <!-- cambio de color de borde normal como desee -->
+        <item name="colorControlActivated">#0F35F8
+        </item> <!-- cambio de color activado como desees -->
         //<item name="android:textColor">#FFFF3F3C</item> <!-- checkbox text color -->
     </style>
+
 </resources>

@@ -9,4 +9,5 @@
     <string name="pacienteLayout_imgBtn">ImagenButtoon</string>
     <string name="pacienteLayout_tv5">Gestiona tus citas Dentales más rápido</string>
     <string name="pacienteLayout_tv6">Confía en nosotros, y te demostraremos nuestro potencial</string>
+    <string name="title_activity_termino_condiciones_layout">terminoCondicionesLayout</string>
 </resources>
