@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.patient.view_patient_AjustesDeCuentaMenu"
+    android:background="#306BA5">
+
+    <ImageView
+        android:id="@+id/ADC1_iv2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="116dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ajustesdecuentabtnback" />
+
+    <TextView
+        android:id="@+id/ADC1_tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="NombreUsuario"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ADC1_iv2" />
+
+    <ImageView
+        android:id="@+id/ADC1_iv1"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ajustesdecuentabtnback"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/ADC1_tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="RolUsuario"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ADC1_tv1" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="344dp"
+        android:layout_height="221dp"
+        android:layout_marginTop="44dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ADC1_tv2">
+
+        <Button
+            android:id="@+id/ADC1_btn1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Ajustes de cuenta"
+            android:gravity="left|center_vertical"
+            android:textColor="#000000"
+            android:backgroundTint="#FFFFFF"
+            app:cornerRadius="15dp"
+            />
+
+        <Button
+            android:id="@+id/ADC1_btn2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:text="Políticas de privacidad"
+            android:gravity="left|center_vertical"
+            android:textColor="#000000"
+            android:backgroundTint="#FFFFFF"
+            app:cornerRadius="15dp"/>
+
+        <Button
+            android:id="@+id/ADC1_btn3"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:text="Manual de app"
+            android:gravity="left|center_vertical"
+            android:textColor="#000000"
+            android:backgroundTint="#FFFFFF"
+            app:cornerRadius="15dp"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ADC1_iv3"
+        android:layout_width="36dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toStartOf="@+id/ADC1_tv3"
+        app:layout_constraintHorizontal_bias="0.949"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:srcCompat="@drawable/ajustesdecuentaiconoiconocerrarsesion" />
+
+    <TextView
+        android:id="@+id/ADC1_tv3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Cerrar sesión"
+        android:textColor="#C0CADA"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.547"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+</androidx.constraintlayout.widget.ConstraintLayout>
