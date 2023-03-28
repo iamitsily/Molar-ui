@@ -119,7 +119,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="30dp"
-            android:background="@drawable/agendar_cita_view" />
+            android:background="@drawable/drawable_patient_agendar_cita_view" />
 
         <ImageButton
             android:id="@+id/imageView"

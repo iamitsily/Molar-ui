@@ -7,8 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-
-public class view_General_Login extends AppCompatActivity {
+public class controller_General_Login extends AppCompatActivity {
     CardView emailCV, codeCV,passCV;
     ConstraintLayout clBackground;
     @Override

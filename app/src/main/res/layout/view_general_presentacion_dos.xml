@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view_General_PresentacionDos">
+    tools:context=".controller_General_PresentacionDos">
 
     <Button
         android:id="@+id/loginButton2"

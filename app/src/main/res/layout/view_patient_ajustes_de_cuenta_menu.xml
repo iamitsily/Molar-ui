@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.patient.view_patient_AjustesDeCuentaMenu"
+    tools:context=".controller.patient.controller_patient_AjustesDeCuentaMenu"
     android:background="#306BA5">
 
     <ImageView
