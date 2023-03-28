@@ -13,55 +13,55 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".view.patient.view_CancelarCitasLayout"
+            android:name=".controller.patient.controller_CancelarCitasLayout"
             android:exported="false" />
         <activity
-            android:name=".view.patient.view_patient_NotificacionesPaciente"
+            android:name=".controller.patient.controller_patient_NotificacionesPaciente"
             android:exported="false" />
         <activity
-            android:name=".view.patient.view_patient_AgendarCitas"
+            android:name=".controller.patient.controller_patient_AgendarCitas"
             android:exported="false" />
         <activity
-            android:name=".view.patient.view_patient_DetallesCitaPaciente"
+            android:name=".controller.patient.controller_patient_DetallesCitaPaciente"
             android:exported="false" />
         <activity
-            android:name=".view.patient.view_patient_AjustesCuentaDatos"
+            android:name=".controller.patient.controller_patient_AjustesCuentaDatos"
             android:exported="false" />
         <activity
-            android:name=".view.patient.view_patient_AjustesDeCuentaMenu"
+            android:name=".controller.patient.controller_patient_AjustesDeCuentaMenu"
             android:exported="false" />
         <activity
-            android:name=".view.patient.view_patient_FechaHoraAgendarCita"
+            android:name=".controller.patient.controller_patient_FechaHoraAgendarCita"
             android:exported="false" />
         <activity
-            android:name=".view.patient.view_patient_AvisoCitaError"
+            android:name=".controller.patient.controller_patient_AvisoCitaError"
             android:exported="false" />
         <activity
-            android:name=".view.patient.view_patient_AvisoCitaAgendada"
+            android:name=".controller.patient.controller_patient_AvisoCitaAgendada"
             android:exported="false" />
         <activity
-            android:name=".view.patient.view_patient_AvisoComprobarSolicitud"
+            android:name=".controller.patient.controller_patient_AvisoComprobarSolicitud"
             android:exported="false" />
         <activity
-            android:name=".view.patient.view_patient_CancelarCitaMotivo"
+            android:name=".controller.patient.controller_patient_CancelarCitaMotivo"
             android:exported="false" />
         <activity
-            android:name=".view.patient.view_patient_TerminosCondiciones"
+            android:name=".controller.patient.controller_patient_TerminosCondiciones"
             android:exported="false" />
         <activity
-            android:name=".view.patient.view_patient_RegistrarPaciente"
+            android:name=".controller.patient.controller_patient_RegistrarPaciente"
             android:exported="false" />
         <activity
             android:name=".view_General_Login"
             android:exported="false" />
         <activity
-            android:name=".view.patient.view_patient_MenuPaciente"
+            android:name=".controller.patient.controller_patient_MenuPaciente"
             android:exported="false" />
         <activity
-            android:name=".view_General_PresentacionDos"
+            android:name=".controller_General_PresentacionDos"
             android:exported="false" />
         <activity
-            android:name=".view_General_Presentacion"
+            android:name=".controller_General_Presentacion"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

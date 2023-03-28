@@ -1,10 +1,10 @@
-package com.haku.molar.view.patient;
+package com.haku.molar.controller.patient;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import com.haku.molar.R;
 
-public class view_patient_DetallesCitaPaciente extends AppCompatActivity {
+public class controller_patient_DetallesCitaPaciente extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

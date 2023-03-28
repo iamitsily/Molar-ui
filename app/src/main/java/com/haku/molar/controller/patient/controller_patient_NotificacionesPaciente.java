@@ -1,4 +1,4 @@
-package com.haku.molar.view.patient;
+package com.haku.molar.controller.patient;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.haku.molar.R;
 
-public class view_patient_TerminosCondiciones extends AppCompatActivity {
+public class controller_patient_NotificacionesPaciente extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_patient_terminos_condiciones);
+        setContentView(R.layout.view_patient_notificaciones_paciente);
     }
 }

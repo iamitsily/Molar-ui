@@ -9,9 +9,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.haku.molar.view.patient.view_patient_MenuPaciente;
+import com.haku.molar.controller.patient.controller_patient_MenuPaciente;
 
-public class view_General_PresentacionDos extends AppCompatActivity {
+public class controller_General_PresentacionDos extends AppCompatActivity {
     private ImageView imageView;
     private TextView textView1,textView2;
     private Button button;
@@ -35,13 +35,13 @@ public class view_General_PresentacionDos extends AppCompatActivity {
             button.setVisibility(View.INVISIBLE);
             cont++;
         }else if (cont == 1){
-            Intent intent = new Intent(this, view_patient_MenuPaciente.class);
+            Intent intent = new Intent(this, controller_patient_MenuPaciente.class);
             startActivity(intent);
             finish();
         }
     }
     public void skip(View view){
-        Intent intent = new Intent(this, view_patient_MenuPaciente.class);
+        Intent intent = new Intent(this, controller_patient_MenuPaciente.class);
         startActivity(intent);
         finish();
 
