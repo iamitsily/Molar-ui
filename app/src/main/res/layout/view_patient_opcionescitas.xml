@@ -40,7 +40,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="8dp"
             android:contentDescription="vector_ek3"
-            android:src="@drawable/image_modulo_citas_calendario" />
+            android:src="@mipmap/opcionescita_vercalendario" />
 
 
     </RelativeLayout>
@@ -61,21 +61,21 @@
             android:layout_width="319dp"
             android:layout_height="112.45dp"
             android:layout_marginStart="20dp"
-            android:background="@drawable/reagendar_cita_view" />
+            android:background="@drawable/drawable_patient_reagendar_cita_view" />
 
         <ImageButton
             android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
+            android:layout_width="61dp"
             android:layout_height="wrap_content"
             android:layout_alignStart="@id/dos"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginEnd="272dp"
+            android:layout_marginStart="23dp"
+            android:layout_marginTop="34dp"
+            android:layout_marginEnd="270dp"
             android:layout_weight="1"
             android:background="#00FFFFFF"
-            app:srcCompat="@drawable/image_modulo_citas_reagendar" />
+            app:srcCompat="@mipmap/opcionescita_reagendar" />
 
         <TextView
             android:layout_width="175dp"
@@ -97,7 +97,7 @@
             android:layout_marginTop="11dp"
             android:layout_marginEnd="53dp"
             android:background="#00FFFFFF"
-            android:src="@drawable/opciones_modulo_citas" />
+            android:src="@mipmap/opcionescita_opciones" />
 
 
     </RelativeLayout>
@@ -113,7 +113,7 @@
 
 
         <View
-            android:id="@+id/rectangle_13"
+            android:id="@+id/uno"
             android:layout_width="319dp"
             android:layout_height="112.45dp"
             android:layout_marginStart="20dp"
@@ -125,15 +125,15 @@
             android:id="@+id/imageView"
             android:layout_width="61dp"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/rectangle_13"
+            android:layout_alignStart="@+id/uno"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:background="#00FFFFFF"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginEnd="273dp"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="27dp"
+            android:layout_marginEnd="274dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/image_modulo_citas_agendar" />
+            android:background="#00FFFFFF"
+            app:srcCompat="@mipmap/opcionescita_agendar" />
 
         <TextView
             android:layout_width="175dp"
@@ -155,7 +155,7 @@
             android:layout_marginTop="11dp"
             android:layout_marginEnd="53dp"
             android:background="#00FFFFFF"
-            android:src="@drawable/opciones_modulo_citas" />
+            android:src="@mipmap/opcionescita_opciones" />
 
 
     </RelativeLayout>
@@ -177,21 +177,21 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="30dp"
-            android:background="@drawable/cancelar_cita_view" />
+            android:background="@drawable/drawable_patient_cancelar_cita_view" />
 
         <ImageButton
             android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
+            android:layout_width="61dp"
             android:layout_height="wrap_content"
             android:layout_alignStart="@id/tress"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginEnd="272dp"
+            android:layout_marginStart="23dp"
+            android:layout_marginTop="31dp"
+            android:layout_marginEnd="270dp"
             android:layout_weight="1"
             android:background="#00FFFFFF"
-            app:srcCompat="@drawable/image_modulo_citas_cancelar" />
+            app:srcCompat="@mipmap/opcionescita_cancelar" />
 
         <TextView
             android:layout_width="175dp"
@@ -200,7 +200,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="41dp"
             android:layout_marginEnd="82dp"
-            android:text="Cancelar Citas"
+            android:text="cancelar cita"
             android:textColor="@color/black"
             android:textSize="17dp"
             android:textStyle="bold" />
@@ -213,7 +213,7 @@
             android:layout_marginTop="11dp"
             android:layout_marginEnd="53dp"
             android:background="#00FFFFFF"
-            android:src="@drawable/opciones_modulo_citas" />
+            android:src="@mipmap/opcionescita_opciones" />
 
     </RelativeLayout>
 

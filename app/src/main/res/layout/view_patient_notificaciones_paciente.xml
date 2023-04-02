@@ -11,7 +11,7 @@
         android:layout_width="36dp"
         android:layout_height="24dp"
         android:backgroundTint="@android:color/transparent"
-        android:src="@drawable/iconregresar_ajustes_cuenta_layout"
+        android:src="@mipmap/regresar"
         android:tint="#000000"
         android:contentDescription="Regresar"
         app:layout_constraintBottom_toBottomOf="parent"
