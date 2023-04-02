@@ -14,7 +14,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/regresarbotonblanco" />
+        app:srcCompat="@mipmap/view_patient_reagendar_citas1_regresarbtn" />
 
     <ScrollView
         android:id="@+id/AC1_sv1"
@@ -54,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/border_reagendarcita"
+                android:background="@drawable/drawable_patient_reagendar_cita_txt"
                 android:ems="10"
                 android:gravity="start|top"
                 android:paddingLeft="10dp"
