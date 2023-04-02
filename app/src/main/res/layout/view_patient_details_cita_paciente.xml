@@ -32,7 +32,7 @@
             class="androidx.appcompat.widget.ActionMenuView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/view_detalils_cita_paciente" />
+            android:background="@drawable/drawable_patient_details_cita_paciente_view" />
 
         <ImageView
             android:id="@+id/imageView6"
@@ -40,7 +40,7 @@
             android:layout_height="75dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
-            app:srcCompat="@drawable/img_profile_layout" />
+            app:srcCompat="@mipmap/ajustesdecuenta_profile" />
 
         <TextView
             android:id="@+id/textView19"
@@ -85,7 +85,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/view_details_cita_paciente_bghora" />
+            android:background="@drawable/drawable_patient_details_cita_paciente_regresarborder" />
 
         <View
             android:layout_width="61dp"
@@ -94,17 +94,17 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="27dp"
             android:layout_marginBottom="26dp"
-            android:background="@drawable/bg_details_cita_paciente_reloj" />
+            android:background="@drawable/drawable_patient_reagendar_cita_borderhora" />
 
         <ImageView
             android:id="@+id/imageView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="26dp"
+            android:layout_height="27dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="46dp"
             android:layout_marginTop="34dp"
-            app:srcCompat="@drawable/img_details_cita_paciente_reloj" />
+            app:srcCompat="@mipmap/view_patient_reagendar_citas2_reloj" />
 
         <TextView
             android:id="@+id/textView24"
@@ -151,7 +151,7 @@
         android:layout_width="40dp"
         android:layout_height="39dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/fondo_citas_status"
+        android:background="@drawable/drawable_patient_details_cita_paciente_regresarborder"
         android:contentDescription="vector"
         android:src="@drawable/img_details_cita_paciente"
         app:layout_constraintEnd_toEndOf="@+id/view_pricipal"
@@ -164,9 +164,9 @@
         android:layout_width="40dp"
         android:layout_height="39dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/fondo_citas_status"
+        android:background="@drawable/drawable_patient_details_cita_paciente_regresarborder"
         android:contentDescription="vector"
-        android:src="@drawable/img_details_cita_paciente_regresar"
+        android:src="@mipmap/view_patient_reagendar_citas2_regresar"
         app:layout_constraintEnd_toEndOf="@+id/view_pricipal"
         app:layout_constraintHorizontal_bias="0.064"
         app:layout_constraintStart_toStartOf="parent"

@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.01999998"
-        app:srcCompat="@drawable/iconregresar_ajustes_cuenta_layout" />
+        app:srcCompat="@mipmap/regresar" />
 
     <TextView
         android:id="@+id/textView14"
