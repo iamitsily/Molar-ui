@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controller.registrarPaciente">
+    tools:context=".controller.patient.controller_patient_RegistrarPaciente">
 
     <ScrollView
         android:layout_width="0dp"
@@ -27,8 +27,8 @@
                 android:id="@+id/regpac_iv1"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:tint="#327AFF"
-                app:srcCompat="@drawable/regpac_regresar" />
+                app:srcCompat="@mipmap/regpac_regresar"
+                app:tint="#327AFF" />
 
             <TextView
                 android:id="@+id/regpac_tv1"
