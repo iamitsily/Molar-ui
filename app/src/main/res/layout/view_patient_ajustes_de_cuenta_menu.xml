@@ -16,7 +16,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@mipmap/fotoperfil" />
+        tools:src="@mipmap/view_patient_ajustes_de_cuenta_menu_foto_perfil" />
 
     <TextView
         android:id="@+id/ADC1_tv1"
@@ -38,7 +38,7 @@
         android:layout_height="44dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:src="@mipmap/ajustesdecuentabtnback"
+        android:src="@mipmap/view_patient_ajustes_de_cuenta_menu_btn_atras"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -108,7 +108,7 @@
         app:layout_constraintHorizontal_bias="0.949"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:srcCompat="@mipmap/ajustesdecuentaiconoiconocerrarsesion" />
+        app:srcCompat="@mipmap/view_patient_ajustes_de_cuenta_menu_cerrar_sesion_icono" />
 
     <TextView
         android:id="@+id/ADC1_tv3"
