@@ -27,7 +27,7 @@
                 android:id="@+id/regpac_iv1"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                app:srcCompat="@mipmap/regpac_regresar"
+                app:srcCompat="@mipmap/view_patient_registrar_paciente_btn_atras"
                 app:tint="#327AFF" />
 
             <TextView

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/estadoC"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controller.patient.controller_patient_EstadoCitas">
+
+    <ImageView
+        android:id="@+id/estadoCitas_iv1"
+        android:layout_width="429dp"
+        android:layout_height="211dp"
+        android:src="@mipmap/view_patient_estado_citas_bloque_azul"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/estadoCitas_sv"
+        android:layout_width="336dp"
+        android:layout_height="443dp"
+        android:layout_marginTop="68dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/estadoCitas_iv1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/estadoCitas_tv1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Motivo de cita cancelada"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/estadoCitas_et1"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine" />
+
+            <TextView
+                android:id="@+id/estadoCitas_tv2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Paciente: " />
+
+            <ImageView
+                android:id="@+id/estadoCitas_iv2"
+                android:layout_width="175dp"
+                android:layout_height="175dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:src="@mipmap/view_patient_estado_citas_relog" />
+
+            <Button
+                android:id="@+id/estadoCitas_btn1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#306BA5"
+                android:text="Volver"
+                app:cornerRadius="15dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/estadoCitas_tv3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:text="Detalles"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/estadoCitas_iv4"
+        app:layout_constraintStart_toEndOf="@+id/estadoCitas_iv3"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/estadoCitas_iv3"
+        android:layout_width="58dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:src="@mipmap/view_patient_ajustes_de_cuenta_menu_btn_atras"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/estadoCitas_iv4"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="20dp"
+        android:src="@mipmap/view_patient_estado_citas_btn2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/estadoCitas_iv5"
+        android:layout_width="286dp"
+        android:layout_height="141dp"
+        android:layout_marginTop="44dp"
+        android:src="@mipmap/view_patient_estado_citas_bloque_blanco"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/estadoCitas_tv3" />
+
+    <TextView
+        android:id="@+id/estadoCitas_tv5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="Estado cancelar cita"
+        app:layout_constraintStart_toEndOf="@+id/estadoCitas_iv6"
+        app:layout_constraintTop_toBottomOf="@+id/estadoCitas_tv4" />
+
+    <ImageView
+        android:id="@+id/estadoCitas_iv6"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="36dp"
+        android:src="@mipmap/view_patient_ajustes_de_cuenta_menu_foto_perfil"
+        app:layout_constraintStart_toStartOf="@+id/estadoCitas_iv5"
+        app:layout_constraintTop_toTopOf="@+id/estadoCitas_iv5" />
+
+    <TextView
+        android:id="@+id/estadoCitas_tv4"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="44dp"
+        android:text="Nombre"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/estadoCitas_iv6"
+        app:layout_constraintTop_toTopOf="@+id/estadoCitas_iv5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

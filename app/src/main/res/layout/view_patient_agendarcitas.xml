@@ -35,7 +35,7 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_gravity="center"
-                app:srcCompat="@mipmap/agendarcitasicono" />
+                app:srcCompat="@mipmap/view_patient_agendar_citas_calendario_icono" />
 
             <TextView
                 android:id="@+id/AC1_tv1"
