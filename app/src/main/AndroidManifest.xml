@@ -12,6 +12,9 @@
         android:theme="@style/Theme.Material3.Light.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".controller.admin.controller_admin_HistorialCitas"
+            android:exported="false" />
+        <activity
             android:name=".controller.patient.controller_patient_EstadoCitas"
             android:exported="false" />
         <activity
