@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controller.patient.controller_CancelarCitasLayout">
+    tools:context=".controller.admin.controller_admin_HistorialCitas">
 
     <TextView
         android:id="@+id/CC5_tv1"
         android:layout_width="114dp"
-        android:layout_height="74dp"
+        android:layout_height="60dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="24dp"
         android:text="Historial de citas"
         android:textSize="26sp"
         android:textStyle="bold"
@@ -24,7 +24,7 @@
         android:layout_height="100dp"
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.636"
+        app:layout_constraintHorizontal_bias="0.719"
         app:layout_constraintStart_toEndOf="@+id/CC5_tv1"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/view_patient_ajustes_de_cuenta_menu_foto_perfil" />
@@ -48,5 +48,17 @@
                 android:layout_height="match_parent" />
         </LinearLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/textView40"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:text="[NombrePaciente]"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CC5_tv1" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
