@@ -14,8 +14,12 @@
 
         <activity android:name=".controller.admin.controller_admin_RegistrarEmpleado"
             android:exported="false"/>
-        <activity android:name=".controller.admin.controller_admin_DetallesCitaPaciente"
-            android:exported="false"/>
+        <activity
+            android:name=".controller.admin.controller_admin_RegistrarPaciente"
+            android:exported="false" />
+        <activity
+            android:name=".controller.admin.controller_admin_DetallesCitaPaciente"
+            android:exported="false" />
         <activity
             android:name=".controller.admin.controller_admin_HistorialCitas"
             android:exported="false" />
