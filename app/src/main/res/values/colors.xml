@@ -21,4 +21,8 @@
     <color name="View_Reagendar_cita">#F1E6EA</color>
     <color name="View_Cancear_citas">#FAF0DB</color>
     <color name="Calendario_parte_superior">#0E1012</color>
+
+   <!-- parte de asistente en las view-->
+    <color name="rosa">#F5E1E9</color>
+    <color name="crema">#FAF0DB</color>
 </resources>
