@@ -11,15 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Material3.Light.NoActionBar"
         tools:targetApi="31">
-        <activity
-            android:name=".controller.doctor.controller_doctor_historialpacientes"
-            android:exported="false" />
-        <activity
-            android:name=".controller.doctor.controller_doctor_notificaciones"
-            android:exported="false" />
-        <activity
-            android:name=".controller.doctor.controller_doctor_citasconcluidas"
-            android:exported="false" />
+
+        <activity android:name=".controller.assistant.controller_assistant_MenuAsistente"
+            android:exported="false"/>
+
         <activity android:name=".controller.admin.controller_admin_RegistrarEmpleado"
             android:exported="false"/>
 
