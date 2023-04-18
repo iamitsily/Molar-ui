@@ -79,7 +79,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ajustesdecuenta_profile" />
+        app:srcCompat="@mipmap/view_doctor_patient_ajustesdecuenta_profile" />
 
     <ImageButton
         android:id="@+id/imageButton_redondo"

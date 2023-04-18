@@ -29,7 +29,7 @@ public class controller_General_PresentacionDos extends AppCompatActivity {
 
     public void siguiente(View view){
         if (cont == 0){
-            imageView.setImageResource(R.mipmap.presentacionlayoutimageview2);
+            imageView.setImageResource(R.mipmap.view_patient_presentacionlayoutimageview2);
             textView1.setText("Servicio de Calidad");
             textView2.setText("Nuestro personal esta altamente capacitado con los mejores estandares de calidad");
             button.setVisibility(View.INVISIBLE);

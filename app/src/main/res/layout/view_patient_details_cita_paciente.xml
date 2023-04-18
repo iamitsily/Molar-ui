@@ -40,7 +40,7 @@
             android:layout_height="75dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
-            app:srcCompat="@mipmap/ajustesdecuenta_profile" />
+            app:srcCompat="@mipmap/view_doctor_patient_ajustesdecuenta_profile" />
 
         <TextView
             android:id="@+id/textView19"
