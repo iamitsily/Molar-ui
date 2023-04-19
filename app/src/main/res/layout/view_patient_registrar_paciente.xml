@@ -155,8 +155,9 @@
                 android:layout_marginTop="5dp"
                 android:backgroundTint="#306BA5"
                 android:fontFamily="sans-serif"
-                app:cornerRadius="15dp"
-                android:text="Registrar cuenta" />
+                android:onClick="botonRegistrar"
+                android:text="Registrar cuenta"
+                app:cornerRadius="15dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
