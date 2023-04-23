@@ -49,7 +49,8 @@
                 android:ems="10"
                 android:fontFamily="sans-serif"
                 android:hint=" Nombre"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:maxLength="15" />
 
             <EditText
                 android:id="@+id/regpac_et2"
@@ -60,7 +61,8 @@
                 android:ems="10"
                 android:fontFamily="sans-serif"
                 android:hint=" Apellido paterno"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:maxLength="15" />
 
             <EditText
                 android:id="@+id/regpac_et3"
@@ -70,7 +72,8 @@
                 android:background="#EBEBEB"
                 android:ems="10"
                 android:hint="Apellido materno"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:maxLength="15" />
 
             <EditText
                 android:id="@+id/regpac_et4"
@@ -80,7 +83,8 @@
                 android:background="#EBEBEB"
                 android:ems="10"
                 android:hint=" Correo electrónico"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:maxLength="256" />
 
             <EditText
                 android:id="@+id/regpac_et5"
@@ -90,7 +94,8 @@
                 android:background="#EBEBEB"
                 android:ems="10"
                 android:hint=" +52"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:maxLength="10" />
 
             <TextView
                 android:id="@+id/regpac_tv2"
@@ -136,7 +141,8 @@
                 android:background="#EBEBEB"
                 android:ems="10"
                 android:hint=" Contraseña"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:maxLength="30" />
 
             <EditText
                 android:id="@+id/regpac_et7"
@@ -146,7 +152,8 @@
                 android:background="#EBEBEB"
                 android:ems="10"
                 android:hint=" Confirmar contraseña"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:maxLength="30" />
 
             <Button
                 android:id="@+id/regpac_btn1"
@@ -155,7 +162,7 @@
                 android:layout_marginTop="5dp"
                 android:backgroundTint="#306BA5"
                 android:fontFamily="sans-serif"
-                android:onClick="botonRegistrar"
+                android:onClick="Registrar"
                 android:text="Registrar cuenta"
                 app:cornerRadius="15dp" />
 
