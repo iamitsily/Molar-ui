@@ -320,7 +320,7 @@
         android:background="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ajustesdecuenta_profile" />
+        app:srcCompat="@mipmap/view_doctor_patient_ajustesdecuenta_profile" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

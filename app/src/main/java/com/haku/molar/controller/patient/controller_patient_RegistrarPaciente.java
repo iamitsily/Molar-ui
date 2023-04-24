@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haku.molar.R;
+import com.haku.molar.model.patient.model_Patient;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,12 +24,11 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
 
     private ImageView ivRegresar;
     private Button btnRegistrar;
-    private RadioButton rbtnHombre,rbtnMujer;
-    private EditText etNombre,etAPaterno,etAMaterno,etCorreo,etNumero,etContraseña,
-            etConfirmarContraseña;
+    private RadioButton rbtnHombre, rbtnMujer;
+    private EditText etNombre, etAPaterno, etAMaterno, etCorreo, etNumero, etContraseña, etConfirmarContraseña;
     private TextView tvIniciarSesion;
-    private String nombre,apaterno,amaterno,correo,numero,contraseña,confirmarContraseña,matricula;
-    private int rol=1,sexo;
+    private String nombre, apaterno, amaterno, correo, numero, contraseña, confirmarContraseña, matricula;
+    private int rol=1, sexo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,10 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
 
     public void Registrar(View v){
         obtenerDatos();
+        System.out.println(matricula + nombre + apaterno + amaterno + correo + numero + contraseña + confirmarContraseña);
+
+        model_Patient model_patient = new model_Patient(Integer.parseInt(matricula),1,sexo,nombre,apaterno,amaterno,correo,numero,contraseña,this);
+        model_patient.registrarPaciente();
     }
     private void obtenerDatos(){
         try {
@@ -83,11 +87,10 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
                 toast.show();
             }
 
-            validarDatos();
+            //validarDatos();
 
             generarMatricula();
 
-            enviarDatos();
 
         } catch (Exception e){
             System.out.println(e);
@@ -100,12 +103,7 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String currentDateandTime = simpleDateFormat.format(new Date());
 
-        matricula = currentDateandTime.substring(6,9) + currentDateandTime.substring(3,4) +
-                numero.substring(6,9);
-    }
-
-    private void enviarDatos(){
-        //Aqui va el modelo del paciente y su funcion de enviar.
+        matricula = currentDateandTime.substring(6,9) + currentDateandTime.substring(3,4) + numero.substring(6,9);
     }
 
     private void validarDatos(){
