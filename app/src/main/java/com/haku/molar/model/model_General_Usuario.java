@@ -1,9 +1,9 @@
-package com.haku.molar.model.patient;
+package com.haku.molar.model;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -12,80 +12,87 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.haku.molar.MainActivity;
+import com.haku.molar.Callback_General_Login;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class model_Patient {
+public class model_General_Usuario {
     int matricula, rol, sexo;
+    String[] res = new String[3];
     String nombre, apellidoPaterno, apellidoMaterno, email, telefono, password;
     Context context;
-    //Constructores
-        //Constructor general
+    private Callback_General_Login loginCallback;
 
-    public model_Patient() {
+    //Constructores
+
+    public model_General_Usuario() {
     }
 
-    public model_Patient(int matricula, int rol, int sexo, String nombre, String apellidoPaterno, String apellidoMaterno, String email, String telefono, String password, Context context) {
+    public model_General_Usuario(int matricula, String password, Context context, Callback_General_Login loginCallback) {
         this.matricula = matricula;
-        this.rol = rol;
-        this.sexo = sexo;
-        this.nombre = nombre;
-        this.apellidoPaterno = apellidoPaterno;
-        this.apellidoMaterno = apellidoMaterno;
-        this.email = email;
-        this.telefono = telefono;
         this.password = password;
         this.context = context;
+        this.loginCallback = loginCallback;
     }
 
-
-    //Funciones
-        //Ejemplo - Funcion al back para registrarPaciente
-    public void registrarPaciente(){
+    public void login(){
+        String url = "http://192.168.1.70/Molar-Backend/general/login.php";
+        String matricula = String.valueOf(getMatricula());
         ProgressDialog progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Registrando");
+        progressDialog.setMessage("Iniciando Sesión");
         progressDialog.show();
-        String url = "http://192.168.1.70/Molar-Backend/patient/service_registrarPaciente.php";
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST,url , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if (response.equalsIgnoreCase("Registro exitoso")) {
-                    Toast.makeText(context, "Datos insertados", Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
-                } else {
-                    Toast.makeText(context, "No se puede registrar", Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito = jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+                    if (jsonArray.length() == 0){
+                        System.out.println("model_general_usuario -> login -> datos vacío");
+                        loginCallback.onError("Verificar Usuario");
+                        progressDialog.dismiss();
+                    }else{
+                        if (exito.equals("1")){
+                            JSONObject object = jsonArray.getJSONObject(0);
+                            String matricula = object.getString("matricula");
+                            String nombre = object.getString("nombre");
+                            String password = object.getString("password");
+                            String[] res = {matricula, nombre, password};
+                            progressDialog.dismiss();
+                            loginCallback.onSuccess(res);
+                        }
+                    }
+                }catch (JSONException e){
+                    System.out.println("model_general_usuario -> login -> error: "+e);
+                    e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
-                System.out.println("Error: "+error.getMessage());
+                res[0]="";
+                res[1]="";
+                res[2]="";
+                System.out.println("model_general_usuario -> login -> Error: "+error.getMessage());
             }
-        }
-        ){
+        }){
+            @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                System.out.println("model_Patient->registro->getparams: "+String.valueOf(matricula)+apellidoPaterno+apellidoMaterno+email+telefono+rol+sexo+password);
-                params.put("matricula",String.valueOf(matricula));
-                params.put("nombre",nombre);
-                params.put("apellido_paterno",apellidoPaterno);
-                params.put("apellido_materno",apellidoMaterno);
-                params.put("email",email);
-                params.put("telefono",telefono);
-                params.put("rol",String.valueOf(rol));
-                params.put("sexo",String.valueOf(sexo));
-                params.put("password",password);
-                params.put("status","1");
+                params.put("matricula",matricula);
                 return params;
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
+
     }
 
     //Getters y setters
@@ -111,6 +118,14 @@ public class model_Patient {
 
     public void setSexo(int sexo) {
         this.sexo = sexo;
+    }
+
+    public String[] getRes() {
+        return res;
+    }
+
+    public void setRes(String[] res) {
+        this.res = res;
     }
 
     public String getNombre() {
@@ -159,5 +174,13 @@ public class model_Patient {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 }
