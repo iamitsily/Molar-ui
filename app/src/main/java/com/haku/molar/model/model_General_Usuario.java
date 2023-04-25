@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class model_General_Usuario {
     int matricula, rol, sexo;
-    String[] res = new String[3];
+    String[] res = new String[4];
     String nombre, apellidoPaterno, apellidoMaterno, email, telefono, password;
     Context context;
     private Callback_General_Login loginCallback;
@@ -41,7 +41,9 @@ public class model_General_Usuario {
     }
 
     public void login(){
-        String url = "http://192.168.1.70/Molar-Backend/general/login.php";
+        //String url = "http://192.168.1.70/Molar-Backend/general/login.php";
+        String url = "https://molarservices.azurewebsites.net/general/login.php";
+
         String matricula = String.valueOf(getMatricula());
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Iniciando Sesión");
@@ -63,7 +65,8 @@ public class model_General_Usuario {
                             String matricula = object.getString("matricula");
                             String nombre = object.getString("nombre");
                             String password = object.getString("password");
-                            String[] res = {matricula, nombre, password};
+                            String rol = object.getString("rol");
+                            String[] res = {matricula, nombre, password, rol};
                             progressDialog.dismiss();
                             loginCallback.onSuccess(res);
                         }
@@ -79,6 +82,7 @@ public class model_General_Usuario {
                 res[0]="";
                 res[1]="";
                 res[2]="";
+                res[3]="";
                 System.out.println("model_general_usuario -> login -> Error: "+error.getMessage());
             }
         }){
