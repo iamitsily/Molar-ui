@@ -57,7 +57,6 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
     public void Registrar(View v){
         obtenerDatos();
         System.out.println(matricula + nombre + apaterno + amaterno + correo + numero + contraseña + confirmarContraseña);
-
         if (contraseña.equals(confirmarContraseña)){
             model_Patient model_patient = new model_Patient(Integer.parseInt(matricula),1,sexo,nombre,apaterno,amaterno,correo,numero,contraseña,this);
             model_patient.registrarPaciente();
@@ -75,14 +74,17 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
             contraseña = String.valueOf(etContraseña.getText());
             confirmarContraseña = String.valueOf(etConfirmarContraseña.getText());
 
-            /* //0 hombre 1 mujer
-            if(rbtnHombre.isSelected()) {
+            //0 hombre 1 mujer
+
+            //System.out.println(rbtnHombre.isChecked());
+            //System.out.println(rbtnMujer.isChecked());
+            if(rbtnHombre.isChecked()) {
                 sexo = 0;
-            } else if (rbtnMujer.isSelected()){
+            } else if (rbtnMujer.isChecked()){
                 sexo = 1;
             } else {
                 //No se selecciono ninguno, mostrar falta
-                //Mete un perro toast}
+                //Mete un perro toast
                 Context context = getApplicationContext();
                 CharSequence text = "Algún dato no ha sido ingresado, por favor llena todos los " +
                         "campos solicitados";
@@ -90,8 +92,9 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
             }
-*/
-            //validarDatos();
+
+
+            validarDatos();
 
             generarMatricula();
 
@@ -108,8 +111,8 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
         String currentDateandTime = simpleDateFormat.format(new Date());
 
         matricula = currentDateandTime.substring(6,10) + currentDateandTime.substring(3,5) + numero.substring(6,10);
-        System.out.println(currentDateandTime);
-        System.out.println(numero);
+        //System.out.println(currentDateandTime);
+        //System.out.println(numero);
     }
 
     private void validarDatos(){
@@ -119,45 +122,46 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
         //Revisar el plan de pruebas integrales
         if(!(nombre != null && nombre.matches("^[a-zA-Z]*$"))){
             error = true;
+            System.out.println("A");
         }
         if(!(apaterno != null && apaterno.matches("^[a-zA-Z]*$"))){
             error = true;
+            System.out.println("B");
         }
         if(!(amaterno != null && amaterno.matches("^[a-zA-Z]*$"))){
             error = true;
+            System.out.println("C");
         }
         if(nombre.length() < 3){
             error = true;
+            System.out.println("D");
         }
         if(apaterno.length() < 4){
             error = true;
+            System.out.println("E");
         }
         if(amaterno.length() < 4) {
             error = true;
+            System.out.println("F");
         }
         i = correo.length();
         dominio = correo.substring((i-10),i);
-        System.out.println(dominio);
-        if(!correo.equals(aux)){
+        //System.out.println(dominio);
+        if((dominio.equals(aux)) == false){
             error = true;
         }
         if(numero.length() != 10){
             error = true;
+            System.out.println("H");
         }
         if(contraseña.length() > 30){
             error = true;
+            System.out.println("I");
         }
         if(confirmarContraseña.length() > 30){
             error = true;
+            System.out.println("J");
         }
-            if(!rbtnMujer.isSelected() && !rbtnHombre.isSelected()){
-                Context context = getApplicationContext();
-                CharSequence text = "Algún dato no ha sido ingresado, por favor llena todos los " +
-                        "campos solicitados";
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-            }
         if(error == true){
             Context context = getApplicationContext();
             CharSequence text = "Los datos ingresados no son válidos, por favor revisar";
