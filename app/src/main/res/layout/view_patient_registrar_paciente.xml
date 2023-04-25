@@ -152,7 +152,7 @@
                 android:background="#EBEBEB"
                 android:ems="10"
                 android:hint=" Confirmar contraseña"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 android:maxLength="30" />
 
             <Button

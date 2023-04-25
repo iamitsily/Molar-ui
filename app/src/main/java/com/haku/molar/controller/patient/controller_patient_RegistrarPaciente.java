@@ -58,8 +58,12 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
         obtenerDatos();
         System.out.println(matricula + nombre + apaterno + amaterno + correo + numero + contraseña + confirmarContraseña);
 
-        model_Patient model_patient = new model_Patient(Integer.parseInt(matricula),1,sexo,nombre,apaterno,amaterno,correo,numero,contraseña,this);
-        model_patient.registrarPaciente();
+        if (contraseña.equals(confirmarContraseña)){
+            model_Patient model_patient = new model_Patient(Integer.parseInt(matricula),1,sexo,nombre,apaterno,amaterno,correo,numero,contraseña,this);
+            model_patient.registrarPaciente();
+        }else{
+            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+        }
     }
     private void obtenerDatos(){
         try {
@@ -71,7 +75,7 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
             contraseña = String.valueOf(etContraseña.getText());
             confirmarContraseña = String.valueOf(etConfirmarContraseña.getText());
 
-            //0 hombre 1 mujer
+            /* //0 hombre 1 mujer
             if(rbtnHombre.isSelected()) {
                 sexo = 0;
             } else if (rbtnMujer.isSelected()){
@@ -86,7 +90,7 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
             }
-
+*/
             //validarDatos();
 
             generarMatricula();
@@ -103,7 +107,9 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String currentDateandTime = simpleDateFormat.format(new Date());
 
-        matricula = currentDateandTime.substring(6,9) + currentDateandTime.substring(3,4) + numero.substring(6,9);
+        matricula = currentDateandTime.substring(6,10) + currentDateandTime.substring(3,5) + numero.substring(6,10);
+        System.out.println(currentDateandTime);
+        System.out.println(numero);
     }
 
     private void validarDatos(){
@@ -144,8 +150,7 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
         if(confirmarContraseña.length() > 30){
             error = true;
         }
-        if(!rbtnHombre.isSelected()){
-            if(!rbtnMujer.isSelected()){
+            if(!rbtnMujer.isSelected() && !rbtnHombre.isSelected()){
                 Context context = getApplicationContext();
                 CharSequence text = "Algún dato no ha sido ingresado, por favor llena todos los " +
                         "campos solicitados";
@@ -153,7 +158,6 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
             }
-        }
         if(error == true){
             Context context = getApplicationContext();
             CharSequence text = "Los datos ingresados no son válidos, por favor revisar";

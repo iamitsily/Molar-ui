@@ -37,7 +37,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/menuPacienteLayout_tv2"
+                android:id="@+id/tvNombre_patient_MenuPaciente"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/pacienteLayout_tv2"
@@ -53,6 +53,7 @@
             android:layout_weight="0"
             android:background="@drawable/roundedbutton"
             android:contentDescription="@string/pacienteLayout_imgBtn"
+            android:onClick="registrar"
             android:src="@mipmap/ic_launcher" />
     </LinearLayout>
 

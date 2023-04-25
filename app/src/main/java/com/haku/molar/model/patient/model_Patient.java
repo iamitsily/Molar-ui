@@ -47,7 +47,7 @@ public class model_Patient {
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Registrando");
         progressDialog.show();
-        String url = "http://192.168.1.70/Molar-Backend/patient/service_registrarPaciente.php";
+        String url = "https://molarservices.azurewebsites.net/patient/service_registrarPaciente.php";
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
