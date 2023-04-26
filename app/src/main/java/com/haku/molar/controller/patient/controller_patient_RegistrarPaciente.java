@@ -3,6 +3,7 @@ package com.haku.molar.controller.patient;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
@@ -169,5 +170,16 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
         }
+    }
+    public void inicioSesion(View v){
+        Intent intent = new Intent(this,com.haku.molar.controller_General_Login.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void regresar(View v){
+        Intent intent = new Intent(this,com.haku.molar.controller.patient.controller_patient_MenuPaciente.class);
+        startActivity(intent);
+        finish();
     }
 }
