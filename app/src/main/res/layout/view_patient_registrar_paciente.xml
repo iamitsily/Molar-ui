@@ -27,6 +27,7 @@
                 android:id="@+id/regpac_iv1"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:onClick="regresar"
                 app:srcCompat="@mipmap/view_patient_registrar_paciente_btn_atras"
                 app:tint="#327AFF" />
 
@@ -188,6 +189,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif"
+                    android:onClick="inicioSesion"
                     android:text=" Iniciar sesión"
                     android:textColor="#327AFF" />
 
