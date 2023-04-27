@@ -14,11 +14,19 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.haku.molar.MolarCrypt;
 import com.haku.molar.R;
 import com.haku.molar.model.patient.model_Patient;
 
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 
 public class controller_patient_RegistrarPaciente extends AppCompatActivity {
@@ -59,6 +67,13 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
         obtenerDatos();
         System.out.println(matricula + nombre + apaterno + amaterno + correo + numero + contraseña + confirmarContraseña);
         if (contraseña.equals(confirmarContraseña)){
+
+            try {
+                contraseña = MolarCrypt.encrypt(contraseña);
+            } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
+                throw new RuntimeException(e);
+            }
+
             model_Patient model_patient = new model_Patient(Integer.parseInt(matricula),1,sexo,nombre,apaterno,amaterno,correo,numero,contraseña,this);
             model_patient.registrarPaciente();
         }else{
