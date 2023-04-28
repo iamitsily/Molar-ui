@@ -11,15 +11,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.01999998">
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="280dp"
@@ -35,6 +33,10 @@
                 android:text="@string/pacienteLayout_tv1"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
 
             <TextView
                 android:id="@+id/tvNombre_patient_MenuPaciente"
@@ -58,19 +60,17 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.31">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <TextView
             android:id="@+id/menuPacienteLayout_tv3"
@@ -85,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="20dp">
+            android:padding="10dp">
 
             <ImageButton
                 android:id="@+id/imageButton2"
@@ -95,6 +95,8 @@
                 android:background="@drawable/roundedbutton"
                 android:backgroundTint="#DCEDF9"
                 android:contentDescription="@string/pacienteLayout_imgBtn"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:src="@mipmap/menupacientelayout_servicio1" />
 
             <ImageButton
@@ -105,7 +107,6 @@
                 android:background="@drawable/roundedbutton"
                 android:backgroundTint="#FAF0DB"
                 android:contentDescription="@string/pacienteLayout_imgBtn"
-                android:padding="5dp"
                 android:src="@mipmap/menupacientelayout_servicio2" />
 
             <ImageButton
@@ -116,6 +117,8 @@
                 android:background="@drawable/roundedbutton"
                 android:backgroundTint="#D6F6FF"
                 android:contentDescription="@string/pacienteLayout_imgBtn"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:src="@mipmap/menupacientelayout_servicio3" />
 
             <ImageButton
@@ -194,8 +197,20 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="130dp"
             android:orientation="horizontal"
-            android:padding="20dp" />
+            android:padding="20dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/menu_patient_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_menu_patient"
+            app:itemIconTint="@drawable/selector_menu_patient_text_icon"
+            app:itemTextColor="@drawable/selector_menu_patient_text_icon"
+            app:menu="@menu/menu_patient" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
