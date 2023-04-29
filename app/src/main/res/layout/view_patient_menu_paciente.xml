@@ -11,6 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -62,7 +63,7 @@
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:gravity="center"
@@ -70,7 +71,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.19">
 
         <TextView
             android:id="@+id/menuPacienteLayout_tv3"
@@ -197,20 +199,26 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_height="150dp"
             android:orientation="horizontal"
             android:padding="20dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/menu_patient_menu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_menu_patient"
-            app:itemIconTint="@drawable/selector_menu_patient_text_icon"
-            app:itemTextColor="@drawable/selector_menu_patient_text_icon"
-            app:menu="@menu/menu_patient" />
     </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/menu_patient_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_menu_patient"
+        app:itemIconTint="@drawable/selector_menu_patient_text_icon"
+        app:itemTextColor="@drawable/selector_menu_patient_text_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+        app:layout_constraintVertical_bias="1.0"
+        app:menu="@menu/menu_patient" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
