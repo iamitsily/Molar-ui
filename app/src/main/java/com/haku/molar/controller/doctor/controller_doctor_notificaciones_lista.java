@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.haku.molar.R;
 
-public class controller_doctor_historialpacientes extends AppCompatActivity {
+public class controller_doctor_notificaciones_lista extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_doctor_historialpacientes);
+        setContentView(R.layout.view_doctor_notificaciones_lista);
     }
 }
