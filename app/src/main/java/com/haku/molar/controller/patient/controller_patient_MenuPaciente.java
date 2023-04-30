@@ -6,14 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
 
 public class controller_patient_MenuPaciente extends AppCompatActivity {
     TextView tvNombre;
     String matricula;
     String nombre;
+
+    BottomNavigationView menuNav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +28,34 @@ public class controller_patient_MenuPaciente extends AppCompatActivity {
         tvNombre = (TextView) findViewById(R.id.tvNombre_patient_MenuPaciente);
 
         inicioUI();
+
+        menuNav = findViewById(R.id.menu_patient_menu);
+        menuNav.setSelectedItemId(R.id.menu_patient_home);
+
+        //Listeners
+        menuNav.setOnItemSelectedListener(item ->{
+            switch (item.getItemId()){
+                case R.id.menu_patient_cita:
+                    startActivity(new Intent(this, controller_patient_OpcionesCitas.class));
+                    overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+                    finish();
+                    break;
+                case R.id.menu_patient_historial:
+                    startActivity(new Intent(this, controller_patient_HistorialCitasLayout.class));
+                    overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+                    finish();
+                    break;
+                case R.id.menu_patient_notificacion:
+                    startActivity(new Intent(this, controller_patient_NotificacionesPaciente.class));
+                    overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+                    finish();
+                    break;
+
+            }
+            return false;
+        });
     }
+
     public void inicioUI(){
         tvNombre.setText(nombre);
     }

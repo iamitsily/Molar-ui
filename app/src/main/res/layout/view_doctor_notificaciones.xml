@@ -156,4 +156,18 @@
             android:layout_marginBottom="28dp"
             app:srcCompat="@mipmap/view_doctor_notificacion" />
     </RelativeLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/menu_patient_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_menu_patient"
+        app:itemIconTint="@drawable/selector_menu_patient_text_icon"
+        app:itemTextColor="@drawable/selector_menu_patient_text_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:menu="@menu/menu_patient" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.haku.molar.controller.doctor.controller_doctor_menu_doctor;
 import com.haku.molar.controller.patient.controller_patient_MenuPaciente;
 import com.haku.molar.model.model_General_Usuario;
 
@@ -60,7 +61,6 @@ public class controller_General_Login extends AppCompatActivity implements Callb
     public void Login(View view){
         int matriculaInt = Integer.parseInt(matricula.getText().toString().trim());
         passwordString = password.getText().toString().trim();
-        Toast.makeText(this, matriculaInt+passwordString, Toast.LENGTH_SHORT).show();
         if ((matriculaInt==1001) && (passwordString.equals("admin"))){
             startActivity(new Intent(getApplicationContext(), controller_patient_MenuPaciente.class));
             finish();
@@ -86,16 +86,20 @@ public class controller_General_Login extends AppCompatActivity implements Callb
                     //1 -> menuPaciente
                     case "1":
                         Toast.makeText(this, "MenuPacienet", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(this, controller_patient_MenuPaciente.class);
-                        intent.putExtra("matricula",datos[0]);
-                        intent.putExtra("nombre", datos[1]);
-                        startActivity(intent);
+                        Intent intentPatient = new Intent(this, controller_patient_MenuPaciente.class);
+                        intentPatient.putExtra("matricula",datos[0]);
+                        intentPatient.putExtra("nombre", datos[1]);
+                        startActivity(intentPatient);
                         finish();
                         break;
                     //2 -> menuDoctor
                     case "2":
                         Toast.makeText(this, "MenuDoctor", Toast.LENGTH_SHORT).show();
-                        //startActivity(new Intent(this, controller_doctor_MenuAdmin));
+                        Intent intentDoctor = new Intent(this, controller_doctor_menu_doctor.class);
+                        intentDoctor.putExtra("matricula",datos[0]);
+                        intentDoctor.putExtra("nombre", datos[1]);
+                        startActivity(intentDoctor);
+                        finish();
                         break;
                     //3 -> menuAsistente
                     case "3":
