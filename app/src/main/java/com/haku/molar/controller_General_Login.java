@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -28,6 +30,8 @@ public class controller_General_Login extends AppCompatActivity implements Callb
     String passwordString;
     CardView emailCV, codeCV,passCV;
     ConstraintLayout clBackground;
+    Button forgetPassbtn, loginBtn;
+    CheckBox checkBoxDatos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,11 +43,16 @@ public class controller_General_Login extends AppCompatActivity implements Callb
         clBackground = (ConstraintLayout) findViewById(R.id.loginLayoutConstrainLayoutCardView);
         matricula = (EditText) findViewById(R.id.edtMatriculaLogin);
         password = (EditText) findViewById(R.id.edtPasswordLogin);
-
+        forgetPassbtn = (Button) findViewById(R.id.view_general_login_btnForgetPassword);
+        loginBtn = (Button) findViewById(R.id.view_general_login_loginbtn);
+        checkBoxDatos = (CheckBox) findViewById(R.id.view_general_login_checkboxDatos);
     }
     public void fpButton(View view){
         emailCV.setVisibility(View.VISIBLE);
         clBackground.setVisibility(View.VISIBLE);
+        forgetPassbtn.setVisibility(View.INVISIBLE);
+        loginBtn.setVisibility(View.INVISIBLE);
+        checkBoxDatos.setVisibility(View.INVISIBLE);
         clBackground.setBackgroundColor(Color.parseColor("#BC858585"));
     }
     public void fpEmailButton(View view){
@@ -53,10 +62,15 @@ public class controller_General_Login extends AppCompatActivity implements Callb
     public void fpCodeButton(View view){
         codeCV.setVisibility(View.INVISIBLE);
         passCV.setVisibility(View.VISIBLE);
+        password.setVisibility(View.INVISIBLE);
     }
     public void fpRestorePass(View view){
         passCV.setVisibility(View.INVISIBLE);
         clBackground.setVisibility(View.INVISIBLE);
+        forgetPassbtn.setVisibility(View.VISIBLE);
+        loginBtn.setVisibility(View.VISIBLE);
+        checkBoxDatos.setVisibility(View.VISIBLE);
+        password.setVisibility(View.VISIBLE);
     }
     public void Login(View view){
         int matriculaInt = Integer.parseInt(matricula.getText().toString().trim());

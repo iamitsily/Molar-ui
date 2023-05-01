@@ -28,7 +28,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <ImageView
                 android:id="@+id/AC1_iv2"
@@ -44,10 +45,26 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:text="Describanos el motivo de agendar su cita..."
+                android:text="Agendar Cita"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Motivo:" />
+
+            <Spinner
+                android:id="@+id/view_patient_agendarcitas_spinnerMotivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/textView68"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Describa brevemente su cita:" />
 
             <EditText
                 android:id="@+id/tv_motivo"
@@ -57,11 +74,12 @@
                 android:background="@drawable/drawable_patient_reagendar_cita_txt"
                 android:ems="10"
                 android:gravity="start|top"
+                android:inputType="textMultiLine"
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
-                android:inputType="textMultiLine"
+                android:textColor="#7B8D9E"
                 android:textSize="15dp"
-                android:textColor="#7B8D9E"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/AC1_tv2"
@@ -70,21 +88,19 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:text="Denos una hora en la que le gustaria tener su cita"
-                android:textSize="16sp" />
-
-            <Spinner
-                android:id="@+id/AC1_sp"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="5dp" />
+                android:textSize="16sp"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/button5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:background="@drawable/drawable_roundedbutton_general"
                 android:backgroundTint="#306BA5"
+                android:onClick="fechaHorabtn"
                 android:text="Continuar"
+                android:textColor="#FFFFFF"
                 app:cornerRadius="15dp" />
         </LinearLayout>
     </ScrollView>
