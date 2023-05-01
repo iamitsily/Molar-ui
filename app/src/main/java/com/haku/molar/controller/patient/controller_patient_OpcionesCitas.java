@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
@@ -11,7 +13,7 @@ import com.haku.molar.R;
 public class controller_patient_OpcionesCitas extends AppCompatActivity {
 
     BottomNavigationView menuNav;
-
+    View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,7 +22,15 @@ public class controller_patient_OpcionesCitas extends AppCompatActivity {
 
         menuNav = findViewById(R.id.menu_patient_menu);
         menuNav.setSelectedItemId(R.id.menu_patient_cita);
-
+        view = findViewById(R.id.view_agendarCita_patient_opcionescita);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), controller_patient_AgendarCitas.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         //Listeners
         menuNav.setOnItemSelectedListener(item ->{
             switch (item.getItemId()){

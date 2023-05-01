@@ -53,7 +53,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/view_general_login_loginbtn"
         android:layout_width="279dp"
         android:layout_height="52dp"
         android:layout_marginTop="32dp"
@@ -80,6 +80,8 @@
         android:drawableStart="@mipmap/login_layaut_icon_matricula"
         android:drawablePadding="10dp"
         android:hint=" Matricula"
+        android:inputType="number"
+        android:maxLength="10"
         android:padding="15dp"
         android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/edtPasswordLogin"
@@ -88,7 +90,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/view_general_login_checkboxDatos"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginBottom="264dp"
@@ -101,7 +103,7 @@
         app:useMaterialThemeColors="true" />
 
     <Button
-        android:id="@+id/btnForgetPassword"
+        android:id="@+id/view_general_login_btnForgetPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="128dp"
@@ -114,7 +116,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+        app:layout_constraintTop_toBottomOf="@+id/view_general_login_loginbtn" />
 
     <TextView
         android:id="@+id/GoToReg"
@@ -129,7 +131,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.627"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton"
+        app:layout_constraintTop_toBottomOf="@+id/view_general_login_loginbtn"
         app:layout_constraintVertical_bias="1.0" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
