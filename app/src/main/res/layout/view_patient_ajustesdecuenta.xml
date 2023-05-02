@@ -11,10 +11,12 @@
         android:layout_width="417dp"
         android:layout_height="310dp"
         android:background="@drawable/drawable_ajustesdecuenta_view"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:id="@+id/imageButton4"
@@ -22,6 +24,7 @@
         android:layout_height="41dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/drawable_ajustesdecuenta_regresar"
+        android:onClick="backCuentaMenuBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent"
@@ -106,98 +109,131 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rectangle_541" />
 
-    <LinearLayout
-        android:layout_width="335dp"
-        android:layout_height="272dp"
-        android:layout_marginTop="56dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.428"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rectangle_541">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="Número de télefono:"
-            android:textColor="#1C6BA4" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="38dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/drawable_ajustesdecuenta_profile"
-            android:drawableRight="@mipmap/ajustesdecuenta_editar_parametros_cuenta"
-            android:paddingRight="10dp"
-            android:hint="+52 " />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="Correo electrónico : "
-            android:textColor="#1C6BA4" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="38dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/drawable_ajustesdecuenta_profile"
-            android:drawableRight="@mipmap/ajustesdecuenta_editar_parametros_cuenta"
-            android:paddingRight="10dp"
-            android:hint="correo " />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="Contraseña: "
-            android:textColor="#1C6BA4" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="38dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/drawable_ajustesdecuenta_profile"
-            android:drawableRight="@mipmap/ajustesdecuenta_editar_parametros_cuenta"
-            android:inputType="textPassword"
-            android:paddingRight="10dp"
-            android:hint="*********" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="Confirmar contraseña:"
-            android:textColor="#1C6BA4" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="38dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/drawable_ajustesdecuenta_profile"
-            android:inputType="textPassword"
-            android:paddingRight="10dp"
-            android:hint="*********" />
-
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="262dp"
-        android:layout_height="51dp"
-        android:layout_marginBottom="28dp"
-        android:backgroundTint="#1C6BA4"
-        android:text="Guardar"
-        app:cornerRadius="15dp"
-        android:textAlignment="center"
-        android:textColor="@color/white"
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Número de télefono:"
+                android:textColor="#1C6BA4" />
+
+            <EditText
+                android:id="@+id/view_patient_ajustesCuentaTelefono"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/drawable_ajustesdecuenta_profile"
+                android:hint="+52 "
+                android:inputType="number"
+                android:paddingRight="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Correo electrónico : "
+                android:textColor="#1C6BA4" />
+
+            <EditText
+                android:id="@+id/view_patient_ajustesCuentaEmail"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/drawable_ajustesdecuenta_profile"
+                android:hint="example@.com"
+                android:inputType="textEmailAddress"
+                android:paddingRight="10dp" />
+
+            <TextView
+                android:id="@+id/textView66"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Contraseña actual"
+                android:textColor="#1C6BA4" />
+
+            <EditText
+                android:id="@+id/view_patient_ajustesCuentaPasswordActual"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/drawable_ajustesdecuenta_profile"
+                android:drawableRight="@mipmap/login_layaut_ocultar"
+                android:inputType="textPassword"
+                android:paddingRight="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Nueva contraseña:"
+                android:textColor="#1C6BA4" />
+
+            <EditText
+                android:id="@+id/view_patient_ajustesCuentaPassword"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/drawable_ajustesdecuenta_profile"
+                android:drawableRight="@mipmap/login_layaut_ocultar"
+                android:inputType="textPassword"
+                android:paddingRight="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Confirmar contraseña:"
+                android:textColor="#1C6BA4" />
+
+            <EditText
+                android:id="@+id/view_patient_ajustesCuentaConfirmedPassword"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/drawable_ajustesdecuenta_profile"
+                android:drawableRight="@mipmap/login_layaut_ocultar"
+                android:inputType="textPassword"
+                android:paddingRight="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="262dp"
+                    android:layout_height="51dp"
+                    android:background="@drawable/drawable_roundedbutton_general"
+                    android:backgroundTint="#1C6BA4"
+                    android:gravity="center"
+                    android:text="Guardar"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    app:cornerRadius="15dp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

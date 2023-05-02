@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -32,6 +35,7 @@ public class controller_General_Login extends AppCompatActivity implements Callb
     ConstraintLayout clBackground;
     Button forgetPassbtn, loginBtn;
     CheckBox checkBoxDatos;
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +50,20 @@ public class controller_General_Login extends AppCompatActivity implements Callb
         forgetPassbtn = (Button) findViewById(R.id.view_general_login_btnForgetPassword);
         loginBtn = (Button) findViewById(R.id.view_general_login_loginbtn);
         checkBoxDatos = (CheckBox) findViewById(R.id.view_general_login_checkboxDatos);
+
+        password.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int DRAWABLE_RIGHT = 2;
+
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (password.getRight() - password.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        password.setInputType(InputType.TYPE_CLASS_TEXT);
+                    }
+                }
+                return false;
+            }
+        });
     }
     public void fpButton(View view){
         emailCV.setVisibility(View.VISIBLE);
@@ -103,6 +121,7 @@ public class controller_General_Login extends AppCompatActivity implements Callb
                         Intent intentPatient = new Intent(this, controller_patient_MenuPaciente.class);
                         intentPatient.putExtra("matricula",datos[0]);
                         intentPatient.putExtra("nombre", datos[1]);
+                        intentPatient.putExtra("rol",datos[3]);
                         startActivity(intentPatient);
                         finish();
                         break;
@@ -130,6 +149,6 @@ public class controller_General_Login extends AppCompatActivity implements Callb
     }
     @Override
     public void onError(String mensaje) {
-        Toast.makeText(this, "Verifique el usuario", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
 }

@@ -57,7 +57,7 @@
             android:layout_weight="0"
             android:background="@drawable/roundedbutton"
             android:contentDescription="@string/pacienteLayout_imgBtn"
-            android:onClick="registrar"
+            android:onClick="ajustesCuenta"
             android:src="@mipmap/ic_launcher" />
     </LinearLayout>
 
