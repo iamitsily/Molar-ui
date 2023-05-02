@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.haku.molar.controller.assistant.controller_assistant_MenuAsistente;
 import com.haku.molar.controller.doctor.controller_doctor_menu_doctor;
 import com.haku.molar.controller.patient.controller_patient_OpcionesCitas;
 import com.haku.molar.controller.patient.controller_patient_RegistrarPaciente;
@@ -16,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(this, controller_General_Login.class);
+        Intent intent = new Intent(this, controller_assistant_MenuAsistente.class);
         startActivity(intent);
         finish();
     }
