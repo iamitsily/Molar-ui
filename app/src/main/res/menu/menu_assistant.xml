@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_assistant_home"
+        android:icon="@drawable/vectorasset_menu_patient_home"
+        android:title="Home"/>
+    <item
+        android:id="@+id/menu_assistant_paciente"
+        android:icon="@drawable/vectorasset_menu_assistant_patient"
+        android:title="Paciente"/>
+    <item
+        android:id="@+id/menu_assistant_citas"
+        android:icon="@drawable/vectorasseet_menu_assistant_citas"
+        android:title="Citas"/>
+
+</menu>
