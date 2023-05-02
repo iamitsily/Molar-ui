@@ -2,6 +2,7 @@ package com.haku.molar.model;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -13,6 +14,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.haku.molar.Callback_General_Login;
+import com.haku.molar.R;
+import com.haku.molar.model.patient.Callback_patient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +42,7 @@ public class model_General_Usuario {
         this.context = context;
         this.loginCallback = loginCallback;
     }
-
+    //Funciones
     public void login(){
         //String url = "http://192.168.1.70/Molar-Backend/general/login.php";
         String url = "https://molarservices.azurewebsites.net/general/login.php";
@@ -72,18 +75,21 @@ public class model_General_Usuario {
                         }
                     }
                 }catch (JSONException e){
-                    System.out.println("model_general_usuario -> login -> error: "+e);
+                    System.out.println("model_general_usuario -> login -> JSONException: "+e);
                     e.printStackTrace();
+                    progressDialog.dismiss();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                res[0]="";
-                res[1]="";
-                res[2]="";
-                res[3]="";
-                System.out.println("model_general_usuario -> login -> Error: "+error.getMessage());
+                System.out.println("model_general_usuario -> login -> onErrorResponse: "+error.getMessage());
+                if (error.getMessage().equals("null")){
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "Error inesperado, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }
+                progressDialog.dismiss();
             }
         }){
             @Nullable

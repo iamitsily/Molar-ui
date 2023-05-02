@@ -12,8 +12,7 @@ import com.haku.molar.R;
 
 public class controller_patient_MenuPaciente extends AppCompatActivity {
     TextView tvNombre;
-    String matricula;
-    String nombre;
+    String matricula, nombre, rol;
 
     BottomNavigationView menuNav;
     @Override
@@ -24,7 +23,7 @@ public class controller_patient_MenuPaciente extends AppCompatActivity {
         Intent intent = getIntent();
         matricula = intent.getStringExtra("matricula");
         nombre = intent.getStringExtra("nombre");
-
+        rol = intent.getStringExtra("rol");
         tvNombre = (TextView) findViewById(R.id.tvNombre_patient_MenuPaciente);
 
         inicioUI();
@@ -50,7 +49,6 @@ public class controller_patient_MenuPaciente extends AppCompatActivity {
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
                     break;
-
             }
             return false;
         });
@@ -61,5 +59,14 @@ public class controller_patient_MenuPaciente extends AppCompatActivity {
     }
     public void registrar(View view){
         startActivity(new Intent(this, controller_patient_RegistrarPaciente.class));
+        finish();
+    }
+    public void ajustesCuenta(View view){
+        Intent intentAjustesCuenta = new Intent(this, controller_patient_AjustesDeCuentaMenu.class);
+        intentAjustesCuenta.putExtra("matricula",matricula);
+        intentAjustesCuenta.putExtra("nombre", nombre);
+        intentAjustesCuenta.putExtra("rol",rol);
+        startActivity(intentAjustesCuenta);
+        finish();
     }
 }

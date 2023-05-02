@@ -36,7 +36,7 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
     private RadioButton rbtnHombre, rbtnMujer;
     private EditText etNombre, etAPaterno, etAMaterno, etCorreo, etNumero, etContraseña, etConfirmarContraseña;
     private TextView tvIniciarSesion;
-    private String nombre, apaterno, amaterno, correo, numero, contraseña, confirmarContraseña, matricula;
+    private String nombre, apaterno, amaterno, correo, numero, contraseña, confirmarContraseña, matricula, contraseñaNoCrypt;
     private int rol=1, sexo;
 
     @Override
@@ -65,7 +65,7 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
 
     public void Registrar(View v){
         obtenerDatos();
-        System.out.println(matricula + nombre + apaterno + amaterno + correo + numero + contraseña + confirmarContraseña);
+        System.out.println(matricula + nombre + apaterno + amaterno + correo + numero + contraseña + confirmarContraseña + contraseñaNoCrypt);
         if (contraseña.equals(confirmarContraseña)){
 
             try {
@@ -73,8 +73,7 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
             } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
                 throw new RuntimeException(e);
             }
-
-            model_Patient model_patient = new model_Patient(Integer.parseInt(matricula),1,sexo,nombre,apaterno,amaterno,correo,numero,contraseña,this);
+            model_Patient model_patient = new model_Patient(Integer.parseInt(matricula),1,sexo,nombre,apaterno,amaterno,correo,numero,contraseña,this, contraseñaNoCrypt);
             model_patient.registrarPaciente();
         }else{
             Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
@@ -89,7 +88,7 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
             numero = String.valueOf(etNumero.getText());
             contraseña = String.valueOf(etContraseña.getText());
             confirmarContraseña = String.valueOf(etConfirmarContraseña.getText());
-
+            contraseñaNoCrypt = String.valueOf(etContraseña.getText());
             //0 hombre 1 mujer
 
             //System.out.println(rbtnHombre.isChecked());
