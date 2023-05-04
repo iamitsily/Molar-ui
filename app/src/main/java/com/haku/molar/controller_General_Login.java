@@ -104,8 +104,8 @@ public class controller_General_Login extends AppCompatActivity implements Callb
             codeCV.setVisibility(View.VISIBLE);
             Codefp = genCode();
             System.out.println(String.valueOf(Codefp));
-            //MolarMail molarMail = new MolarMail(edtEmailfp.getText().toString().trim(), String.valueOf(Codefp),this);
-            //molarMail.codeMail();
+            MolarMail molarMail = new MolarMail(edtEmailfp.getText().toString().trim(), String.valueOf(Codefp),this);
+            molarMail.codeMail();
         }
     }
     //Fase codigo
@@ -128,7 +128,13 @@ public class controller_General_Login extends AppCompatActivity implements Callb
             Toast.makeText(this, "Por favor ingrese la nueva contraseña", Toast.LENGTH_SHORT).show();
         }else{
             if(edtPassfp.getText().toString().equals(edtPassConfirmedfp.getText().toString())){
-                model_General_Usuario model_general_usuario = new model_General_Usuario(edtEmailfp.getText().toString(),edtPassfp.getText().toString(),this,this);
+                String password="";
+                try {
+                    password = MolarCrypt.encrypt(edtPassfp.getText().toString());
+                } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
+                    throw new RuntimeException(e);
+                }
+                model_General_Usuario model_general_usuario = new model_General_Usuario(edtEmailfp.getText().toString(),password,this,this);
                 model_general_usuario.restorePass();
             }else{
                 Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
@@ -214,7 +220,12 @@ public class controller_General_Login extends AppCompatActivity implements Callb
 
     @Override
     public void onErrorForgetPass() {
-
+        succesCV.setVisibility(View.INVISIBLE);
+        clBackground.setVisibility(View.INVISIBLE);
+        forgetPassbtn.setVisibility(View.VISIBLE);
+        loginBtn.setVisibility(View.VISIBLE);
+        checkBoxDatos.setVisibility(View.VISIBLE);
+        password.setVisibility(View.VISIBLE);
     }
 
     public int genCode(){
