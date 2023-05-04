@@ -35,13 +35,20 @@ public class model_General_Usuario {
 
     public model_General_Usuario() {
     }
-
+    //Login
     public model_General_Usuario(int matricula, String password, Context context, Callback_General_Login loginCallback) {
         this.matricula = matricula;
         this.password = password;
         this.context = context;
         this.loginCallback = loginCallback;
     }
+    //ForgetPass
+    public model_General_Usuario(String email, String password, Context context, Callback_General_Login loginCallback) {
+        this.email = email;
+        this.password = password;
+        this.context = context;
+    }
+
     //Funciones
     public void login(){
         //String url = "http://192.168.1.70/Molar-Backend/general/login.php";
@@ -105,6 +112,43 @@ public class model_General_Usuario {
 
     }
 
+    public void restorePass(){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Actualizando contraseña");
+        progressDialog.show();
+        String url = "https://molarservices.azurewebsites.net/general/restablecerPass.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.equalsIgnoreCase("Modificacion exitosa")){
+                    Toast.makeText(context, "Contraseña actualizada", Toast.LENGTH_SHORT).show();
+                    loginCallback.onSuccessForgetPass();
+                    progressDialog.dismiss();
+                }else{
+                    Toast.makeText(context, "Error al actualizar la cuenta", Toast.LENGTH_SHORT).show();
+                    loginCallback.onErrorForgetPass();
+                    progressDialog.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println("Error: "+error.getMessage());
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("email",getEmail());
+                params.put("password",getPassword());
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
     //Getters y setters
     public int getMatricula() {
         return matricula;

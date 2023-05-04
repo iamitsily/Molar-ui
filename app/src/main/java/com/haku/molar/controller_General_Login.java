@@ -23,18 +23,20 @@ import com.haku.molar.model.model_General_Usuario;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
 public class controller_General_Login extends AppCompatActivity implements Callback_General_Login {
-    EditText matricula, password;
+    EditText matricula, password, edtEmailfp, edtCodefp, edtPassfp, edtPassConfirmedfp;
     String passwordString;
-    CardView emailCV, codeCV,passCV;
+    CardView emailCV, codeCV,passCV, succesCV;
     ConstraintLayout clBackground;
     Button forgetPassbtn, loginBtn;
     CheckBox checkBoxDatos;
+    int Codefp = 0;
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,11 @@ public class controller_General_Login extends AppCompatActivity implements Callb
         forgetPassbtn = (Button) findViewById(R.id.view_general_login_btnForgetPassword);
         loginBtn = (Button) findViewById(R.id.view_general_login_loginbtn);
         checkBoxDatos = (CheckBox) findViewById(R.id.view_general_login_checkboxDatos);
-
+        succesCV = (CardView) findViewById(R.id.loginLayoutCardViewSuccess);
+        edtEmailfp = (EditText) findViewById(R.id.edtMail_login_fp);
+        edtCodefp = (EditText) findViewById(R.id.edtCode_login_fp);
+        edtPassfp = (EditText) findViewById(R.id.edtPass_login_fp);
+        edtPassConfirmedfp = (EditText) findViewById(R.id.edtPassConfirmed_login_fp);
         password.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -64,6 +70,22 @@ public class controller_General_Login extends AppCompatActivity implements Callb
                 return false;
             }
         });
+
+        clBackground.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                emailCV.setVisibility(View.INVISIBLE);
+                codeCV.setVisibility(View.INVISIBLE);
+                passCV.setVisibility(View.INVISIBLE);
+                succesCV.setVisibility(View.INVISIBLE);
+                clBackground.setVisibility(View.INVISIBLE);
+                forgetPassbtn.setVisibility(View.VISIBLE);
+                loginBtn.setVisibility(View.VISIBLE);
+                checkBoxDatos.setVisibility(View.VISIBLE);
+                password.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
     }
     public void fpButton(View view){
         emailCV.setVisibility(View.VISIBLE);
@@ -73,17 +95,49 @@ public class controller_General_Login extends AppCompatActivity implements Callb
         checkBoxDatos.setVisibility(View.INVISIBLE);
         clBackground.setBackgroundColor(Color.parseColor("#BC858585"));
     }
+    //Fase email
     public void fpEmailButton(View view){
-        emailCV.setVisibility(View.INVISIBLE);
-        codeCV.setVisibility(View.VISIBLE);
+        if(edtEmailfp.getText().toString().trim().equals("")){
+            Toast.makeText(this, "Por favor ingrese su email", Toast.LENGTH_SHORT).show();
+        }else{
+            emailCV.setVisibility(View.INVISIBLE);
+            codeCV.setVisibility(View.VISIBLE);
+            Codefp = genCode();
+            System.out.println(String.valueOf(Codefp));
+            //MolarMail molarMail = new MolarMail(edtEmailfp.getText().toString().trim(), String.valueOf(Codefp),this);
+            //molarMail.codeMail();
+        }
     }
+    //Fase codigo
     public void fpCodeButton(View view){
-        codeCV.setVisibility(View.INVISIBLE);
-        passCV.setVisibility(View.VISIBLE);
-        password.setVisibility(View.INVISIBLE);
+        if (edtCodefp.getText().toString().equals("")){
+            Toast.makeText(this, "Por favor ingrese el codigo recibido", Toast.LENGTH_SHORT).show();
+        }else{
+            if (Codefp == Integer.parseInt(edtCodefp.getText().toString())){
+                codeCV.setVisibility(View.INVISIBLE);
+                passCV.setVisibility(View.VISIBLE);
+                password.setVisibility(View.INVISIBLE);
+            }else{
+                Toast.makeText(this, "No coincide el codigo", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
+    //Fase nueva contraseña
     public void fpRestorePass(View view){
-        passCV.setVisibility(View.INVISIBLE);
+        if (edtPassfp.getText().toString().trim().equals("") || edtPassConfirmedfp.getText().toString().trim().equals("")){
+            Toast.makeText(this, "Por favor ingrese la nueva contraseña", Toast.LENGTH_SHORT).show();
+        }else{
+            if(edtPassfp.getText().toString().equals(edtPassConfirmedfp.getText().toString())){
+                model_General_Usuario model_general_usuario = new model_General_Usuario(edtEmailfp.getText().toString(),edtPassfp.getText().toString(),this,this);
+                model_general_usuario.restorePass();
+            }else{
+                Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    //Fase completada
+    public void fpSucces(View view){
+        succesCV.setVisibility(View.INVISIBLE);
         clBackground.setVisibility(View.INVISIBLE);
         forgetPassbtn.setVisibility(View.VISIBLE);
         loginBtn.setVisibility(View.VISIBLE);
@@ -150,5 +204,23 @@ public class controller_General_Login extends AppCompatActivity implements Callb
     @Override
     public void onError(String mensaje) {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSuccessForgetPass() {
+        passCV.setVisibility(View.INVISIBLE);
+        succesCV.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onErrorForgetPass() {
+
+    }
+
+    public int genCode(){
+        int code = 0;
+        Random random = new Random();
+        code = random.nextInt(99999 - 10000 + 1) + 10000;
+        return code;
     }
 }

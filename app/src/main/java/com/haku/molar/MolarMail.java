@@ -1,6 +1,7 @@
 package com.haku.molar;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import java.util.Properties;
 
@@ -15,7 +16,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class MolarMail {
-    String Remitente, RemitentePass ,Receptor, PassReceptor, MatriculaReceptor, NombreReceptor;
+    String Remitente, RemitentePass ,Receptor, PassReceptor, MatriculaReceptor, NombreReceptor, codigoRecuperacion;
     Context context;
 
     public MolarMail() {
@@ -26,6 +27,12 @@ public class MolarMail {
         PassReceptor = passReceptor;
         MatriculaReceptor = matriculaReceptor;
         NombreReceptor = nombreReceptor;
+        this.context = context;
+    }
+
+    public MolarMail(String receptor, String codigoRecuperacion, Context context) {
+        Receptor = receptor;
+        this.codigoRecuperacion = codigoRecuperacion;
         this.context = context;
     }
 
@@ -53,7 +60,7 @@ public class MolarMail {
         try {
             mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(Receptor));
             mimeMessage.setSubject("Detalles de Cuenta - Molar");
-            mimeMessage.setText("Haku Molar\nHola "+NombreReceptor+
+            mimeMessage.setText("Haku Molar\n\nHola "+NombreReceptor+
                     " te damos la bienvenida a Molar,\npara nosotros es un placer que formes parte de nuestra familia.\n\n" +
                     "A continuación tus datos de acceso: \n\n" +
                     "Matricula: "+MatriculaReceptor+"\n" +
@@ -68,6 +75,58 @@ public class MolarMail {
                 public void run() {
                     try {
                         Transport.send(mimeMessage);
+                    } catch (MessagingException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            thread.start();
+        } catch (AddressException e) {
+            throw new RuntimeException(e);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void codeMail() {
+        Remitente = "molar.haku@gmail.com";
+        RemitentePass = "mjlednfveztfghvg";
+
+        String stringHost = "smtp.gmail.com";
+
+        Properties properties = System.getProperties();
+
+        properties.put("mail.smtp.host", stringHost);
+        properties.put("mail.smtp.port", "465");
+        properties.put("mail.smtp.ssl.enable", "true");
+        properties.put("mail.smtp.auth", "true");
+
+        Session session = Session.getInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(Remitente, RemitentePass);
+            }
+        });
+        MimeMessage mimeMessage = new MimeMessage(session);
+
+        try {
+            mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(Receptor));
+            mimeMessage.setSubject("Código de autentificación - Molar");
+            mimeMessage.setText("Haku Molar\n\nHola! "+
+                    " Recibimos una solicitud para restablecer su contraseña de Molar,\nSi no ha solicitado un restablecimiento de contraseña, puede ignorar este correo electronico.\n\n" +
+                    "Codigo de recuperación: \n\n" +
+                    "Codigo: "+codigoRecuperacion+"\n\n" +
+                    "Ingrese el codigo en la aplicación, este codigo expira en cuanto cierre la app o pantalla de recuperación\n\n" +
+                    "Si tiene alguna pregunta o necesita ayuda adicional, por favor contactenos al correo molar.haku@gmail.com\n" +
+                    "Con amor, Molar <3\n\n" +
+                    "Email generado automaticamente, no responder.");
+
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Transport.send(mimeMessage);
+                        Toast.makeText(context, "Email enviado", Toast.LENGTH_SHORT).show();
                     } catch (MessagingException e) {
                         throw new RuntimeException(e);
                     }
