@@ -47,6 +47,7 @@ public class model_General_Usuario {
         this.email = email;
         this.password = password;
         this.context = context;
+        this.loginCallback = loginCallback;
     }
 
     //Funciones
@@ -121,9 +122,8 @@ public class model_General_Usuario {
             @Override
             public void onResponse(String response) {
                 if (response.equalsIgnoreCase("Modificacion exitosa")){
-                    Toast.makeText(context, "Contraseña actualizada", Toast.LENGTH_SHORT).show();
-                    loginCallback.onSuccessForgetPass();
                     progressDialog.dismiss();
+                    loginCallback.onSuccessForgetPass();
                 }else{
                     Toast.makeText(context, "Error al actualizar la cuenta", Toast.LENGTH_SHORT).show();
                     loginCallback.onErrorForgetPass();
