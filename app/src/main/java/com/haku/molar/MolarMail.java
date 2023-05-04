@@ -126,7 +126,6 @@ public class MolarMail {
                 public void run() {
                     try {
                         Transport.send(mimeMessage);
-                        Toast.makeText(context, "Email enviado", Toast.LENGTH_SHORT).show();
                     } catch (MessagingException e) {
                         throw new RuntimeException(e);
                     }

@@ -104,8 +104,8 @@ public class controller_General_Login extends AppCompatActivity implements Callb
             codeCV.setVisibility(View.VISIBLE);
             Codefp = genCode();
             System.out.println(String.valueOf(Codefp));
-            //MolarMail molarMail = new MolarMail(edtEmailfp.getText().toString().trim(), String.valueOf(Codefp),this);
-            //molarMail.codeMail();
+            MolarMail molarMail = new MolarMail(edtEmailfp.getText().toString().trim(), String.valueOf(Codefp),this);
+            molarMail.codeMail();
         }
     }
     //Fase codigo
