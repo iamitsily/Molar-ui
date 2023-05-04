@@ -16,7 +16,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class MolarMail {
-    String Remitente, RemitentePass ,Receptor, PassReceptor, MatriculaReceptor, NombreReceptor, codigoRecuperacion;
+    String Remitente, RemitentePass="mjlednfveztfghvg" ,Receptor, PassReceptor, MatriculaReceptor, NombreReceptor, codigoRecuperacion;
     Context context;
 
     public MolarMail() {
@@ -38,7 +38,6 @@ public class MolarMail {
 
     public void sendMail() {
         Remitente = "molar.haku@gmail.com";
-        RemitentePass = "itinfvuyckoiajdl";
 
         String stringHost = "smtp.gmail.com";
 
@@ -90,7 +89,6 @@ public class MolarMail {
 
     public void codeMail() {
         Remitente = "molar.haku@gmail.com";
-        RemitentePass = "mjlednfveztfghvg";
 
         String stringHost = "smtp.gmail.com";
 
