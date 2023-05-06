@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
@@ -34,5 +35,15 @@ public class controller_assistant_menuPacientes extends AppCompatActivity {
             }
             return false;
         });
+    }
+    public void registrarPaciente(View view){
+        Intent intent = new Intent(this, controller_assistant_registrarPaciente.class);
+        startActivity(intent);
+        finish();
+    }
+    public void buscarPaciente(View view){
+        Intent intent = new Intent(this, controller_assistant_menuCitas.class);
+        startActivity(intent);
+        finish();
     }
 }
