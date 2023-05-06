@@ -16,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.haku.molar.controller.assistant.controller_assistant_MenuAsistente;
 import com.haku.molar.controller.doctor.controller_doctor_menu_doctor;
 import com.haku.molar.controller.patient.controller_patient_MenuPaciente;
 import com.haku.molar.model.model_General_Usuario;
@@ -48,7 +49,7 @@ public class controller_General_Login extends AppCompatActivity implements Callb
         passCV = (CardView) findViewById(R.id.loginLayoutCardViewPassword3);
         clBackground = (ConstraintLayout) findViewById(R.id.loginLayoutConstrainLayoutCardView);
         matricula = (EditText) findViewById(R.id.edtMatriculaLogin);
-        password = (EditText) findViewById(R.id.edtPasswordLogin);
+        password = (EditText) findViewById(R.id.edtPasswordPro);
         forgetPassbtn = (Button) findViewById(R.id.view_general_login_btnForgetPassword);
         loginBtn = (Button) findViewById(R.id.view_general_login_loginbtn);
         checkBoxDatos = (CheckBox) findViewById(R.id.view_general_login_checkboxDatos);
@@ -191,13 +192,19 @@ public class controller_General_Login extends AppCompatActivity implements Callb
                         Intent intentDoctor = new Intent(this, controller_doctor_menu_doctor.class);
                         intentDoctor.putExtra("matricula",datos[0]);
                         intentDoctor.putExtra("nombre", datos[1]);
+                        intentDoctor.putExtra("rol",datos[3]);
                         startActivity(intentDoctor);
                         finish();
                         break;
                     //3 -> menuAsistente
                     case "3":
                         Toast.makeText(this, "MenuAsistente", Toast.LENGTH_SHORT).show();
-                        //startActivity(new Intent(this, controller_assistant_MenuAdmin));
+                        Intent intentAssistant = new Intent(this, controller_assistant_MenuAsistente.class);
+                        intentAssistant.putExtra("matricula",datos[0]);
+                        intentAssistant.putExtra("nombre", datos[1]);
+                        intentAssistant.putExtra("rol",datos[3]);
+                        startActivity(intentAssistant);
+                        finish();
                         break;
                 }
             }else{

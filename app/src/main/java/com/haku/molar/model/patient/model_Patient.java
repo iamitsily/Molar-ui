@@ -147,7 +147,7 @@ public class model_Patient {
             @Override
             public void onResponse(String response) {
                 if (response.equalsIgnoreCase("Registro exitoso")) {
-                    Toast.makeText(context, "Datos insertados", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show();
                     MolarMail molarMail = new MolarMail(email,passwordNoCrypt,String.valueOf(matricula),nombre,context);
                     molarMail.sendMail();
                     progressDialog.dismiss();

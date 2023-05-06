@@ -34,28 +34,35 @@
         app:layout_constraintTop_toBottomOf="@+id/logo"
         app:layout_constraintVertical_bias="0.027" />
 
-    <EditText
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edtPasswordLogin"
-        android:layout_width="347dp"
-        android:layout_height="54dp"
-        android:layout_marginBottom="316dp"
+        android:layout_width="348dp"
+        android:layout_height="65dp"
         android:background="@drawable/drawable_login_border"
-        android:drawableStart="@mipmap/login_layaut_icon_password"
-        android:drawableEnd="@mipmap/login_layaut_ocultar"
-        android:drawablePadding="5dp"
-        android:hint="Contraseña"
-        android:inputType="textPassword"
         android:padding="15dp"
-        android:textColor="#000000"
+        app:endIconMode="password_toggle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.543"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtMatriculaLogin"
+        app:layout_constraintVertical_bias="0.050000012">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtPasswordPro"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:maxLength="30"
+            android:textColor="#000000" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/view_general_login_loginbtn"
         android:layout_width="279dp"
-        android:layout_height="52dp"
+        android:layout_height="60dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/drawable_patient_agendar_cita_view"
         android:backgroundTint="#1C6BA4"
@@ -69,30 +76,33 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtPasswordLogin"
-        app:layout_constraintVertical_bias="0.139" />
+        app:layout_constraintVertical_bias="0.172" />
 
     <EditText
         android:id="@+id/edtMatriculaLogin"
         android:layout_width="348dp"
-        android:layout_height="54dp"
-        android:layout_marginBottom="24dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/drawable_login_border"
-        android:drawableStart="@mipmap/login_layaut_icon_matricula"
-        android:drawablePadding="5dp"
+        android:drawableEnd="@mipmap/login_layaut_icon_matricula"
         android:hint=" Matricula"
         android:inputType="number"
         android:maxLength="10"
         android:padding="15dp"
         android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/edtPasswordLogin"
+        app:layout_constraintBottom_toTopOf="@+id/loginLayoutCardViewPassword3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintVertical_bias="0.49" />
 
     <CheckBox
         android:id="@+id/view_general_login_checkboxDatos"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="264dp"
         android:text="Recordar Datos"
         android:textColor="@color/gris"
@@ -100,6 +110,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtPasswordLogin"
+        app:layout_constraintVertical_bias="0.0"
         app:useMaterialThemeColors="true" />
 
     <Button
@@ -114,9 +126,10 @@
         android:textColor="@color/gris"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_general_login_loginbtn" />
+        app:layout_constraintTop_toBottomOf="@+id/view_general_login_loginbtn"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/GoToReg"
@@ -129,10 +142,11 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.627"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_general_login_loginbtn"
         app:layout_constraintVertical_bias="1.0" />
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/loginLayoutConstrainLayoutCardView"
@@ -474,6 +488,5 @@
                 app:layout_constraintVertical_bias="0.79" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

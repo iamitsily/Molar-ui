@@ -23,6 +23,8 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -30,10 +32,8 @@ import javax.crypto.NoSuchPaddingException;
 
 public class controller_assistant_registrarPaciente extends AppCompatActivity {
     private ImageView ibRegresar;
-    private Button btnRegistrar;
     private RadioButton rbtnHombre, rbtnMujer;
     private EditText etNombre, etAPaterno, etAMaterno, etCorreo, etNumero, etContraseña, etConfirmarContraseña;
-    private TextView tvIniciarSesion;
     private String nombre, apaterno, amaterno, correo, numero, contraseña, confirmarContraseña, matricula, contraseñaNoCrypt;
     private int rol, sexo;
 
@@ -43,8 +43,6 @@ public class controller_assistant_registrarPaciente extends AppCompatActivity {
         setContentView(R.layout.view_assistant_registrar_paciente);
 
         ibRegresar = findViewById(R.id.view_assistant_registrarPaciente_btnback);
-
-        btnRegistrar = findViewById(R.id.view_assistant_registrarPaciente_btnRegistrar);
 
         rbtnHombre = findViewById(R.id.view_assistant_registrarPaciente_rbHombre);
         rbtnMujer = findViewById(R.id.view_assistant_registrarPaciente_rbMujer);
@@ -57,15 +55,24 @@ public class controller_assistant_registrarPaciente extends AppCompatActivity {
         etContraseña = findViewById(R.id.view_assistant_registrarPaciente_password);
         etConfirmarContraseña = findViewById(R.id.view_assistant_registrarPaciente_confirmedPass);
 
-        tvIniciarSesion = findViewById(R.id.regpac_tv4);
+        ibRegresar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),controller_assistant_MenuAsistente.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     public void Registrar(View v){
-        
+
         obtenerDatos();
-        /*
-        System.out.println(matricula + nombre + apaterno + amaterno + correo + numero + contraseña + confirmarContraseña + contraseñaNoCrypt);
-        if (contraseña.equals(confirmarContraseña)){
+        if(validarDatos()){
+            System.out.println("Datos incorrectos");
+        }else{
+            System.out.println("Datos correctos");
+            generarMatricula();
             try {
                 contraseña = MolarCrypt.encrypt(contraseña);
             } catch (NoSuchPaddingException | NoSuchAlgorithmException |
@@ -73,59 +80,50 @@ public class controller_assistant_registrarPaciente extends AppCompatActivity {
                      IllegalBlockSizeException | BadPaddingException e) {
                 throw new RuntimeException(e);
             }
+            nombre = palabraMayuscula(nombre);
+            apaterno = palabraMayuscula(apaterno);
+            amaterno = palabraMayuscula(amaterno);
+            imprimirDatos();
             model_Patient model_patient = new model_Patient(Integer.parseInt(matricula),1,sexo,nombre,apaterno,amaterno,correo,numero,contraseña,this, contraseñaNoCrypt);
             model_patient.registrarPaciente();
-        }else{
-            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            limpiarDatos();
         }
-        */
+    }
+    private void imprimirDatos(){
+        System.out.println("Nombre: "+nombre);
+        System.out.println("Apaterno: "+apaterno);
+        System.out.println("Amaterno: "+amaterno);
+        System.out.println("Correo: "+correo);
+        System.out.println("Numero: "+numero);
+        System.out.println("Contraseña: "+contraseña);
+        System.out.println("ContraseñaConfirmed: "+confirmarContraseña);
+        System.out.println("Hombre: "+rbtnHombre.isChecked());
+        System.out.println("Mujer: "+rbtnMujer.isChecked());
+
     }
 
     private void obtenerDatos(){
         try {
-            nombre = String.valueOf(etNombre.getText());
-            apaterno = String.valueOf(etAPaterno.getText());
-            amaterno = String.valueOf(etAMaterno.getText());
-            correo = String.valueOf(etCorreo.getText());
-            numero = String.valueOf(etNumero.getText());
-            contraseña = String.valueOf(etContraseña.getText());
-            confirmarContraseña = String.valueOf(etConfirmarContraseña.getText());
-            contraseñaNoCrypt = String.valueOf(etContraseña.getText());
-            System.out.println(rbtnHombre.isChecked());
-            System.out.println(rbtnMujer.isChecked());
-            System.out.println(!rbtnHombre.isChecked());
-            System.out.println(!rbtnMujer.isChecked());
+            nombre = etNombre.getText().toString().trim();
+            apaterno = etAPaterno.getText().toString().trim();
+            amaterno = etAMaterno.getText().toString().trim();
+            correo = etCorreo.getText().toString().trim();
+            numero = etNumero.getText().toString().trim();
+            contraseña = etContraseña.getText().toString().trim();
+            confirmarContraseña = etConfirmarContraseña.getText().toString().trim();
+            contraseñaNoCrypt = etContraseña.getText().toString().trim();
             //0 hombre 1 mujer
             if ((!rbtnHombre.isChecked())&&(!rbtnMujer.isChecked())){
-                Toast.makeText(this, "Seleccione sexo", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Seleccione sexo", Toast.LENGTH_SHORT).show();
             }else{
-
+                if (rbtnHombre.isChecked()){
+                    sexo=0;
+                }else{
+                    sexo=1;
+                }
             }
-            if(rbtnHombre.isChecked()) {
-                sexo = 0;
-            } else if (rbtnMujer.isChecked()){
-                sexo = 1;
-            } else {
-                /*
-                //No se selecciono ninguno, mostrar falta
-                Context context = getApplicationContext();
-                CharSequence text = "Algún dato no ha sido ingresado, por favor llena todos los " +
-                        "campos solicitados";
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show(); */
-            }
-
-            /*
-            validarDatos();
-
-            generarMatricula();
-            */
-
         } catch (Exception e){
             System.out.println(e);
-            //Utilizar un toast para notificar rectificacion de datos
-
         }
     }
 
@@ -139,62 +137,99 @@ public class controller_assistant_registrarPaciente extends AppCompatActivity {
         //System.out.println(numero);
     }
 
-    private void validarDatos(){
+    private boolean validarDatos(){
         boolean error = false;
-        String aux = "@gmail.com", dominio="";
-        int i=0;
+
         //Revisar el plan de pruebas integrales
-        if(!(nombre != null && nombre.matches("^[a-zA-Z]*$"))){
+        if(nombre.equals("") || !nombre.matches("^[a-zA-Z]*$")){
             error = true;
-            etNombre.setBackgroundColor(Color.RED);
+            etNombre.setText("");
+            etNombre.setHint("Revisar nombre "+nombre);
+            etNombre.setHintTextColor(Color.RED);
         }
-        if(!(apaterno != null && apaterno.matches("^[a-zA-Z]*$"))){
+        if(apaterno.equals("") || !apaterno.matches("^[a-zA-Z]*$")){
             error = true;
-            System.out.println("B");
+            etAPaterno.setText("");
+            etAPaterno.setHint("Revisar apaterno "+apaterno);
+            etAPaterno.setHintTextColor(Color.RED);
         }
-        if(!(amaterno != null && amaterno.matches("^[a-zA-Z]*$"))){
+        if(amaterno.equals("") || !amaterno.matches("^[a-zA-Z]*$")){
             error = true;
-            System.out.println("C");
+            etAMaterno.setText("");
+            etAMaterno.setHint("Revisar amaterno "+amaterno);
+            etAMaterno.setHintTextColor(Color.RED);
         }
         if(nombre.length() < 3){
             error = true;
-            System.out.println("D");
+            Toast.makeText(this, "Nombre mayor o igual a 2 caracteres", Toast.LENGTH_SHORT).show();
         }
         if(apaterno.length() < 4){
             error = true;
-            System.out.println("E");
+            Toast.makeText(this, "Apaterno mayor o igual a 3 caracteres", Toast.LENGTH_SHORT).show();
         }
         if(amaterno.length() < 4) {
             error = true;
-            System.out.println("F");
+            Toast.makeText(this, "Amaterno mayor o igual a 3 caracteres", Toast.LENGTH_SHORT).show();
         }
-        i = correo.length();
-        dominio = correo.substring((i-10),i);
-        //System.out.println(dominio);
-        if((dominio.equals(aux)) == false){
-            error = true;
+        if (!validarEmail(correo)) {
+            etCorreo.setText("");
+            etCorreo.setHint("Revisar correo "+correo);
+            etCorreo.setHintTextColor(Color.RED);
         }
-        if(numero.length() != 10){
+        if(numero.length() < 10){
             error = true;
-            System.out.println("H");
+            etNumero.setText("");
+            etNumero.setHint("Numero a 10 digitos");
+            etNumero.setHintTextColor(Color.RED);
         }
         if(contraseña.length() > 30){
             error = true;
-            System.out.println("I");
+            etContraseña.setBackgroundColor(Color.RED);
+            Toast.makeText(this, "Maximo 30 caracteres en contraseña", Toast.LENGTH_SHORT).show();
         }
         if(confirmarContraseña.length() > 30){
             error = true;
-            System.out.println("J");
+            Toast.makeText(this, "Maximo 30 caracteres en confirmación de contraseña", Toast.LENGTH_SHORT).show();
+        }
+        if (contraseña.equals("")){
+            error = true;
+            Toast.makeText(this, "Llene el campo contraseña", Toast.LENGTH_SHORT).show();
+        }
+        if (confirmarContraseña.equals("")){
+            Toast.makeText(this, "Llene el campo confirmar contraseña", Toast.LENGTH_SHORT).show();
+        }
+        if (!contraseña.equals(confirmarContraseña)){
+            error=true;
+            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
         }
         if(error == true){
-            Context context = getApplicationContext();
-            CharSequence text = "Los datos ingresados no son válidos, por favor revisar";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+            Toast.makeText(this, "Revisar registro", Toast.LENGTH_SHORT).show();
         }
+        System.out.println(error);
+        return error;
     }
-
+    public static boolean validarEmail(String email) {
+        String regex = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+    public String palabraMayuscula(String string){
+        String ofiString="";
+        ofiString = string.substring(0, 1).toUpperCase() + string.substring(1);
+        return ofiString;
+    }
+    public void limpiarDatos(){
+        etNombre.setText("");
+        etAPaterno.setText("");
+        etAMaterno.setText("");
+        etCorreo.setText("");
+        etNumero.setText("");
+        rbtnHombre.setChecked(false);
+        rbtnMujer.setChecked(false);
+        etContraseña.setText("");
+        etConfirmarContraseña.setText("");
+    }
     public void regresar(View v){
         Intent intent = new Intent(this,com.haku.molar.controller.patient.controller_patient_MenuPaciente.class);
         startActivity(intent);
