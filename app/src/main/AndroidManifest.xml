@@ -15,6 +15,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".controller.assistant.controller_assistant_registrarPaciente"
+            android:exported="false" />
+        <activity
             android:name=".controller.assistant.controller_assistant_menuCitas"
             android:exported="false" />
         <activity
