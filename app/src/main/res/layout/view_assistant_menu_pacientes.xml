@@ -68,6 +68,7 @@
             android:layout_height="75dp"
             android:background="@drawable/drawable_roundedbutton_general"
             android:backgroundTint="#90CEFA"
+            android:onClick="registrarPaciente"
             android:text="Registrar Paciente"
             android:textColor="#FFFFFF"
             android:textSize="24sp" />
@@ -82,6 +83,7 @@
             android:layout_height="75dp"
             android:background="@drawable/drawable_roundedbutton_general"
             android:backgroundTint="#45B1FF"
+            android:onClick="buscarPaciente"
             android:text="Buscar paciente"
             android:textColor="#FFFFFF"
             android:textSize="24sp" />

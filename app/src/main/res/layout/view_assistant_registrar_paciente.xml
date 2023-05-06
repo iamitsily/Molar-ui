@@ -84,7 +84,7 @@
                 android:background="#EBEBEB"
                 android:ems="10"
                 android:hint=" Correo electrónico"
-                android:inputType="textPersonName"
+                android:inputType="textEmailAddress"
                 android:maxLength="256" />
 
             <EditText
@@ -134,27 +134,41 @@
                     android:text=" Mujer" />
             </RadioGroup>
 
-            <EditText
-                android:id="@+id/view_assistant_registrarPaciente_password"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="46dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="10dp"
-                android:background="#EBEBEB"
                 android:ems="10"
-                android:hint=" Contraseña"
-                android:inputType="textPassword"
-                android:maxLength="30" />
+                android:background="#EBEBEB"
+                app:endIconMode="password_toggle">
 
-            <EditText
-                android:id="@+id/view_assistant_registrarPaciente_confirmedPass"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/view_assistant_registrarPaciente_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Contraseña"
+                    android:inputType="textPassword"
+                    android:maxLength="30"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="46dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="10dp"
-                android:background="#EBEBEB"
                 android:ems="10"
-                android:hint=" Confirmar contraseña"
-                android:inputType="textPassword"
-                android:maxLength="30" />
+                android:background="#EBEBEB"
+                app:endIconMode="password_toggle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/view_assistant_registrarPaciente_confirmedPass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Confirmar contraseña"
+                    android:inputType="textPassword"
+                    android:maxLength="30"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Space
                 android:layout_width="match_parent"

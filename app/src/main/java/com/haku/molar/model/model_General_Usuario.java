@@ -92,10 +92,10 @@ public class model_General_Usuario {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println("model_general_usuario -> login -> onErrorResponse: "+error.getMessage());
-                if (error.getMessage().equals("null")){
+                if (error==null){
                     Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(context, "Error inesperado, intente mas tarde", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
                 }
                 progressDialog.dismiss();
             }
