@@ -62,7 +62,7 @@ public class model_cita {
 
     public void horasCita(){
 
-        String url = "http://192.168.1.71/Molar-Backend/citas/service_citasDia.php";
+        String url = "https://molarservices.azurewebsites.net/citas/service_citasDia.php";
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Revisando disponibilidad");
         progressDialog.show();
@@ -109,7 +109,7 @@ public class model_cita {
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Agendando cita");
         progressDialog.show();
-        String url = "http://192.168.1.71/Molar-Backend/citas/service_crearcitasPaciente.php";
+        String url = "https://molarservices.azurewebsites.net/citas/service_crearcitasPaciente.php";
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
