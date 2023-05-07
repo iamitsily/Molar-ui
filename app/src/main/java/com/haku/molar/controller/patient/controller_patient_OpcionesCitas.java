@@ -11,7 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
 
 public class controller_patient_OpcionesCitas extends AppCompatActivity {
-
+    String matricula,nombre;
     BottomNavigationView menuNav;
     View view;
     @Override
@@ -19,15 +19,19 @@ public class controller_patient_OpcionesCitas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_patient_opcionescitas);
 
-
+        Intent intent = getIntent();
+        matricula = intent.getStringExtra("matricula");
+        nombre = intent.getStringExtra("nombre");
         menuNav = findViewById(R.id.menu_patient_menu);
         menuNav.setSelectedItemId(R.id.menu_patient_cita);
         view = findViewById(R.id.view_agendarCita_patient_opcionescita);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), controller_patient_AgendarCitas.class);
-                startActivity(intent);
+                Intent intentAgendarCita = new Intent(getApplicationContext(), controller_patient_AgendarCitas.class);
+                intentAgendarCita.putExtra("matricula",matricula);
+                intentAgendarCita.putExtra("nombre", nombre);
+                startActivity(intentAgendarCita);
                 finish();
             }
         });

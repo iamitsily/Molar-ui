@@ -13,9 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.haku.molar.Callback_General_Login;
-import com.haku.molar.R;
-import com.haku.molar.model.patient.Callback_patient;
+import com.haku.molar.general.Callback_General_Login;
 
 import org.json.JSONArray;
 import org.json.JSONException;

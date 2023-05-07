@@ -1,4 +1,4 @@
-package com.haku.molar;
+package com.haku.molar.utils;
 
 import android.content.Context;
 import android.widget.Toast;
