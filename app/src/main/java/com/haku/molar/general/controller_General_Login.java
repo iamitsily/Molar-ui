@@ -1,4 +1,4 @@
-package com.haku.molar;
+package com.haku.molar.general;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -16,10 +16,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.haku.molar.R;
 import com.haku.molar.controller.assistant.controller_assistant_MenuAsistente;
 import com.haku.molar.controller.doctor.controller_doctor_menu_doctor;
 import com.haku.molar.controller.patient.controller_patient_MenuPaciente;
 import com.haku.molar.model.model_General_Usuario;
+import com.haku.molar.utils.MolarCrypt;
+import com.haku.molar.utils.MolarMail;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;

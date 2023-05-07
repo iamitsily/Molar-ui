@@ -2,7 +2,6 @@ package com.haku.molar.model.patient;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -14,8 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.haku.molar.MainActivity;
-import com.haku.molar.MolarMail;
+import com.haku.molar.utils.MolarMail;
 
 import org.json.JSONArray;
 import org.json.JSONException;

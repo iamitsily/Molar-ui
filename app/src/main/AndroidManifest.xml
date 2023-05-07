@@ -99,7 +99,7 @@
             android:name=".controller.patient.controller_patient_RegistrarPaciente"
             android:exported="false" />
         <activity
-            android:name=".controller_General_Login"
+            android:name=".general.controller_General_Login"
             android:exported="false" />
         <activity
             android:name=".controller.patient.controller_patient_MenuPaciente"
@@ -108,10 +108,10 @@
             android:name=".controller.patient.controller_patient_OpcionesCitas"
             android:exported="false" />
         <activity
-            android:name=".controller_General_PresentacionDos"
+            android:name=".general.controller_General_PresentacionDos"
             android:exported="false" />
         <activity
-            android:name=".controller_General_Presentacion"
+            android:name=".general.controller_General_Presentacion"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

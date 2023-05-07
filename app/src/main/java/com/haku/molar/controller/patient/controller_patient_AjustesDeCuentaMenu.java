@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haku.molar.R;
-import com.haku.molar.controller_General_Login;
+import com.haku.molar.general.controller_General_Login;
 
 public class controller_patient_AjustesDeCuentaMenu extends AppCompatActivity {
     ImageView imageView;

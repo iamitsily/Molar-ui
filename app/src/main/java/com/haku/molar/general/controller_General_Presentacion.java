@@ -1,10 +1,12 @@
-package com.haku.molar;
+package com.haku.molar.general;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.haku.molar.R;
 
 public class controller_General_Presentacion extends AppCompatActivity {
 
