@@ -49,7 +49,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/tv_motivo"
+                android:id="@+id/view_patient_agendarcitas_descripcion"
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
                 android:layout_marginTop="20dp"

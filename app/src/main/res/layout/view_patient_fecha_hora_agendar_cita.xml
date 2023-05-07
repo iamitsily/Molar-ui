@@ -12,14 +12,14 @@
         android:layout_height="48dp"
         android:backgroundTint="@android:color/transparent"
         android:contentDescription="Boton Regresar"
-        app:tint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.01999998"
-        app:srcCompat="@mipmap/regresar" />
+        app:srcCompat="@mipmap/regresar"
+        app:tint="#000000" />
 
     <TextView
         android:id="@+id/textView14"
@@ -36,7 +36,7 @@
         app:layout_constraintVertical_bias="0.022" />
 
     <CalendarView
-        android:id="@+id/calendarView"
+        android:id="@+id/view_patient_calendarCita"
         android:layout_width="0dp"
         android:layout_height="300dp"
         android:calendarTextColor="#1C6BA4"
@@ -94,7 +94,7 @@
                 android:padding="10dp">
 
                 <Button
-                    android:id="@+id/button11"
+                    android:id="@+id/view_patient_fechaHora_btn1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -105,7 +105,7 @@
                     app:cornerRadius="8dp" />
 
                 <Button
-                    android:id="@+id/button12"
+                    android:id="@+id/view_patient_fechaHora_btn2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -117,7 +117,7 @@
                     app:cornerRadius="8dp" />
 
                 <Button
-                    android:id="@+id/button13"
+                    android:id="@+id/view_patient_fechaHora_btn3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -136,7 +136,7 @@
                 android:padding="10dp">
 
                 <Button
-                    android:id="@+id/button14"
+                    android:id="@+id/view_patient_fechaHora_btn4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -147,7 +147,7 @@
                     app:cornerRadius="8dp" />
 
                 <Button
-                    android:id="@+id/button15"
+                    android:id="@+id/view_patient_fechaHora_btn5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -159,7 +159,7 @@
                     app:cornerRadius="8dp" />
 
                 <Button
-                    android:id="@+id/button16"
+                    android:id="@+id/view_patient_fechaHora_btn6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -174,11 +174,12 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button17"
+            android:id="@+id/view_patient_fechaHora_btnAgendar"
             android:layout_width="279dp"
             android:layout_height="52dp"
             android:background="@drawable/drawable_roundedbutton_general"
             android:backgroundTint="#FFFFFF"
+            android:onClick="agendarCita"
             android:text="Agendar"
             android:textColor="#1C6BA4"
             app:layout_constraintBottom_toBottomOf="parent"

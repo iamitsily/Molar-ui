@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.haku.molar.R;
@@ -14,16 +15,22 @@ import java.util.ArrayList;
 
 public class controller_patient_AgendarCitas extends AppCompatActivity {
     Spinner spinner;
-
+    String matricula,nombre;
+    EditText descripcion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_patient_agendarcitas);
 
+        Intent intent = getIntent();
+        matricula = intent.getStringExtra("matricula");
+        nombre = intent.getStringExtra("nombre");
+
         spinner = findViewById(R.id.view_patient_agendarcitas_spinnerMotivo);
+        descripcion = findViewById(R.id.view_patient_agendarcitas_descripcion);
 
         ArrayList<motivo> Motivos = new ArrayList<>();
-            Motivos.add(new motivo("Revisión"));
+            Motivos.add(new motivo("Revision"));
         Motivos.add(new motivo("Caries"));
         Motivos.add(new motivo("Limpieza"));
         Motivos.add(new motivo("Muelas"));
@@ -35,8 +42,13 @@ public class controller_patient_AgendarCitas extends AppCompatActivity {
 
     }
     public void fechaHorabtn(View view){
-        Intent intent = new Intent(this, controller_patient_FechaHoraAgendarCita.class);
-        startActivity(intent);
+
+        Intent intentFechaHora = new Intent(getApplicationContext(), controller_patient_FechaHoraAgendarCita.class);
+        intentFechaHora.putExtra("matricula",matricula);
+        intentFechaHora.putExtra("nombre", nombre);
+        intentFechaHora.putExtra("motivo", spinner.getSelectedItem().toString());
+        intentFechaHora.putExtra("descripcion", descripcion.getText().toString().trim());
+        startActivity(intentFechaHora);
         finish();
     }
     public class motivo{

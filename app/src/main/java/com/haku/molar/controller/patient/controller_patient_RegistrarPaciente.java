@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +13,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.haku.molar.MolarCrypt;
+import com.haku.molar.general.controller_General_Login;
+import com.haku.molar.utils.MolarCrypt;
 import com.haku.molar.R;
 import com.haku.molar.model.patient.model_Patient;
 
@@ -186,7 +186,7 @@ public class controller_patient_RegistrarPaciente extends AppCompatActivity {
         }
     }
     public void inicioSesion(View v){
-        Intent intent = new Intent(this,com.haku.molar.controller_General_Login.class);
+        Intent intent = new Intent(this, controller_General_Login.class);
         startActivity(intent);
         finish();
     }

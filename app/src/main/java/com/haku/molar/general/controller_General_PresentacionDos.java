@@ -1,4 +1,4 @@
-package com.haku.molar;
+package com.haku.molar.general;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.haku.molar.R;
 import com.haku.molar.controller.patient.controller_patient_MenuPaciente;
 
 public class controller_General_PresentacionDos extends AppCompatActivity {
