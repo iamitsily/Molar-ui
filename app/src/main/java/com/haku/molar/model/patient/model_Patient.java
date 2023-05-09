@@ -182,7 +182,52 @@ public class model_Patient {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
+    public void obtenerNumDoctor(){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Asignando medico");
+        progressDialog.show();
 
+        String url = "https://molarservices.azurewebsites.net/doctor/service_contarDoctor.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito = jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+                    if (jsonArray.length() == 0){
+                        Toast.makeText(context, "No hay medicos", Toast.LENGTH_SHORT).show();
+                    }else{
+                        if (exito.equals("1")){
+                            JSONObject object = jsonArray.getJSONObject(0);
+                            String num = object.getString("Num");
+                            System.out.println(num);
+                            progressDialog.dismiss();
+                        }
+                    }
+                } catch (JSONException e) {
+                    System.out.println("model_Patient -> obtenerMedico -> JSONException: "+e);
+                    e.printStackTrace();
+                    progressDialog.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                {
+                    System.out.println("model_general_usuario -> login -> onErrorResponse: "+error.getMessage());
+                    if (error==null){
+                        Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                    }
+                    progressDialog.dismiss();
+                }
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
     //Getters y setters
     public int getMatricula() {
         return matricula;

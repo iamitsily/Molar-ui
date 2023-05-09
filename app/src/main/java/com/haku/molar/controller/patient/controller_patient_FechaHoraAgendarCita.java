@@ -22,8 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity implements Callback_cita {
-    String hora="",fecha="",motivo="",descripcion="",nombre="";
-    String matricula="";
+    String hora="",fecha="",motivo="",descripcion="",nombre="", matricula="", matriculaDoctor="";
     Button hora1,hora2,hora3,hora4,hora5,hora6;
     CalendarView calendarView;
     @Override
@@ -160,8 +159,9 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
         if (hora.equals("")){
             Toast.makeText(this, "Seleccione una hora disponible", Toast.LENGTH_SHORT).show();
         }else{
-            model_cita model_cita = new model_cita(generarId(),fecha,hora,motivo,"1","1",matricula,this,this,descripcion);
-            model_cita.agendarCita();
+            obtenerNumDoctor();
+            //model_cita model_cita = new model_cita(generarId(),fecha,hora,motivo,"1","1",matricula,this,this,descripcion);
+            //model_cita.agendarCita();
         }
     }
     public String generarId(){
@@ -210,6 +210,12 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
         hora6.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#E3F4E1")));
         hora6.setTextColor(ColorStateList.valueOf(Color.parseColor("#1C6BA4")));
         hora6.setEnabled(true);
+    }
+    public String obtenerNumDoctor(){
+        String matriculaDoctorPro="";
+        model_Patient model_patient = new model_Patient();
+        model_patient.obtenerNumDoctor();
+        return matriculaDoctorPro;
     }
     @Override
     public void onSuccesshoraCitas(String[] datos) {
