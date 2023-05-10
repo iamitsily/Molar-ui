@@ -30,6 +30,10 @@ public class model_cita {
     String[] res = new String[6];
     public model_cita() {
     }
+    public model_cita(Context context, Callback_cita callback_cita){
+        this.context = context;
+        this.callback_cita = callback_cita;
+    }
     public model_cita(String id, String dia, String hora, String motivo, String estado, String status, String idUusario, String idMedico) {
         this.id = id;
         this.dia = dia;
@@ -145,6 +149,52 @@ public class model_cita {
                 return params;
             }
         };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+    public void obtenerNumDoctor(){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Obteniendo medico");
+        progressDialog.show();
+
+        String url = "https://molarservices.azurewebsites.net/doctor/service_contarDoctor.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito = jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+                    if (jsonArray.length() == 0){
+                        Toast.makeText(context, "No hay medicos", Toast.LENGTH_SHORT).show();
+                    }else{
+                        if (exito.equals("1")){
+                            JSONObject object = jsonArray.getJSONObject(0);
+                            String num = object.getString("Num");
+                            System.out.println(num);
+                            progressDialog.dismiss();
+                        }
+                    }
+                } catch (JSONException e) {
+                    System.out.println("model_Patient -> obtenerMedico -> JSONException: "+e);
+                    e.printStackTrace();
+                    progressDialog.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                {
+                    System.out.println("model_general_usuario -> login -> onErrorResponse: "+error.getMessage());
+                    if (error==null){
+                        Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                    }
+                    progressDialog.dismiss();
+                }
+            }
+        });
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }

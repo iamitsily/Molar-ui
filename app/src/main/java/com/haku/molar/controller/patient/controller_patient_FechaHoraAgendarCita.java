@@ -211,11 +211,9 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
         hora6.setTextColor(ColorStateList.valueOf(Color.parseColor("#1C6BA4")));
         hora6.setEnabled(true);
     }
-    public String obtenerNumDoctor(){
-        String matriculaDoctorPro="";
-        model_Patient model_patient = new model_Patient();
-        model_patient.obtenerNumDoctor();
-        return matriculaDoctorPro;
+    public void obtenerNumDoctor(){
+        model_cita model_cita = new model_cita(this, this);
+        model_cita.obtenerNumDoctor();
     }
     @Override
     public void onSuccesshoraCitas(String[] datos) {
