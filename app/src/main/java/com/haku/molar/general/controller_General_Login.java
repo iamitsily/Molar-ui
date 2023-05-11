@@ -159,9 +159,39 @@ public class controller_General_Login extends AppCompatActivity implements Callb
         int matriculaInt = Integer.parseInt(matricula.getText().toString().trim());
         passwordString = password.getText().toString().trim();
         if ((matriculaInt==1001) && (passwordString.equals("admin"))){
+            if (checkBoxDatos.isChecked()){
+                SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = loginDatos.edit();
+                editor.putString("matricula","1001");
+                editor.putString("password","admin");
+                editor.putString("checkbox","1");
+                editor.apply();
+            }else{
+                SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = loginDatos.edit();
+                editor.putString("matricula","");
+                editor.putString("password","");
+                editor.putString("checkbox","0");
+                editor.apply();
+            }
             startActivity(new Intent(getApplicationContext(), controller_patient_MenuPaciente.class));
             finish();
         }if((matriculaInt==2002) && (passwordString.equals("asistant"))) {
+            if (checkBoxDatos.isChecked()){
+                SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = loginDatos.edit();
+                editor.putString("matricula","2002");
+                editor.putString("password","asistant");
+                editor.putString("checkbox","1");
+                editor.apply();
+            }else{
+                SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = loginDatos.edit();
+                editor.putString("matricula","");
+                editor.putString("password","");
+                editor.putString("checkbox","0");
+                editor.apply();
+            }
             startActivity(new Intent(getApplicationContext(), controller_assistant_MenuAsistente.class));
             finish();
         }else{
