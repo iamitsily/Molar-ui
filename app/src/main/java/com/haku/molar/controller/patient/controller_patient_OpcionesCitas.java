@@ -39,17 +39,26 @@ public class controller_patient_OpcionesCitas extends AppCompatActivity {
         menuNav.setOnItemSelectedListener(item ->{
             switch (item.getItemId()){
                 case R.id.menu_patient_home:
-                    startActivity(new Intent(this, controller_patient_MenuPaciente.class));
+                    Intent intentHome = new Intent(this, controller_patient_MenuPaciente.class);
+                    intentHome.putExtra("matricula",matricula);
+                    intentHome.putExtra("nombre", nombre);
+                    startActivity(intentHome);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
                     break;
                 case R.id.menu_patient_historial:
-                    startActivity(new Intent(this, controller_patient_HistorialCitasLayout.class));
+                    Intent intentHistorial = new Intent(this, controller_patient_HistorialCitasLayout.class);
+                    intentHistorial.putExtra("matricula",matricula);
+                    intentHistorial.putExtra("nombre", nombre);
+                    startActivity(intentHistorial);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
                     break;
                 case R.id.menu_patient_notificacion:
-                    startActivity(new Intent(this, controller_patient_NotificacionesPaciente.class));
+                    Intent intentNotificacion = new Intent(this, controller_patient_NotificacionesPaciente.class);
+                    intentNotificacion.putExtra("matricula",matricula);
+                    intentNotificacion.putExtra("nombre", nombre);
+                    startActivity(intentNotificacion);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
                     break;

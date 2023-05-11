@@ -9,6 +9,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
 
 public class controller_patient_NotificacionesPaciente extends AppCompatActivity {
+    String matricula,nombre;
 
     BottomNavigationView menuNav;
 
@@ -16,7 +17,9 @@ public class controller_patient_NotificacionesPaciente extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_patient_notificaciones_paciente);
-
+        Intent intent = getIntent();
+        matricula = intent.getStringExtra("matricula");
+        nombre = intent.getStringExtra("nombre");
         menuNav = findViewById(R.id.menu_patient_menu);
         menuNav.setSelectedItemId(R.id.menu_patient_notificacion);
 
@@ -24,20 +27,28 @@ public class controller_patient_NotificacionesPaciente extends AppCompatActivity
         menuNav.setOnItemSelectedListener(item ->{
             switch (item.getItemId()){
                 case R.id.menu_patient_home:
-                    startActivity(new Intent(this, controller_patient_MenuPaciente.class));
+                    Intent intentHome = new Intent(this, controller_patient_MenuPaciente.class);
+                    intentHome.putExtra("matricula",matricula);
+                    intentHome.putExtra("nombre", nombre);
+                    startActivity(intentHome);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
                     break;
                 case R.id.menu_patient_cita:
-                    startActivity(new Intent(this, controller_patient_OpcionesCitas.class));
+                    Intent intentCita = new Intent(this, controller_patient_OpcionesCitas.class);
+                    intentCita.putExtra("matricula",matricula);
+                    intentCita.putExtra("nombre", nombre);
+                    startActivity(intentCita);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
                     break;
                 case R.id.menu_patient_historial:
-                    startActivity(new Intent(this, controller_patient_HistorialCitasLayout.class));
+                    Intent intentHistorial = new Intent(this, controller_patient_HistorialCitasLayout.class);
+                    intentHistorial.putExtra("matricula",matricula);
+                    intentHistorial.putExtra("nombre", nombre);
+                    startActivity(intentHistorial);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
-                    break;
 
             }
             return false;

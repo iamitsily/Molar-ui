@@ -2,15 +2,31 @@ package com.haku.molar.controller.patient;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.haku.molar.R;
 
 public class controller_patient_AvisoCitaError extends AppCompatActivity {
+    String matricula, nombre, rol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_patient_avisocitaerror);
+
+        Intent intent = getIntent();
+        matricula = intent.getStringExtra("matricula");
+        nombre = intent.getStringExtra("nombre");
+        rol = intent.getStringExtra("rol");
+    }
+    public void terminarMenu(View view){
+        Intent intent = new Intent(this, controller_patient_MenuPaciente.class);
+        intent.putExtra("matricula",matricula);
+        intent.putExtra("nombre",nombre);
+        intent.putExtra("rol","1");
+        startActivity(intent);
+        finish();
     }
 }
