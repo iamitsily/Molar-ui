@@ -24,6 +24,7 @@
         android:layout_height="52dp"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="76dp"
+        android:background="@drawable/drawable_roundedbutton_general"
         android:backgroundTint="#1C6BA4"
         android:fontFamily="sans-serif"
         android:text="Terminar"

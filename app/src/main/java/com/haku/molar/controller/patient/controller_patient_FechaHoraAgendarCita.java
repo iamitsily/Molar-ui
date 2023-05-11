@@ -3,6 +3,7 @@ package com.haku.molar.controller.patient;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -20,11 +21,14 @@ import com.haku.molar.model.patient.model_Patient;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity implements Callback_cita {
     String hora="",fecha="",motivo="",descripcion="",nombre="", matricula="", matriculaDoctor="";
+    int toleranciaDoctor=0;
     Button hora1,hora2,hora3,hora4,hora5,hora6;
     CalendarView calendarView;
+    ProgressDialog progressDialogMedico;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +47,9 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
         hora4 = findViewById(R.id.view_patient_fechaHora_btn4);
         hora5 = findViewById(R.id.view_patient_fechaHora_btn5);
         hora6 = findViewById(R.id.view_patient_fechaHora_btn6);
+
+        progressDialogMedico = new ProgressDialog(this);
+        progressDialogMedico.setMessage("Asignando medico");
 
         horasCita(getDiaCalendar());
 
@@ -160,9 +167,16 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
             Toast.makeText(this, "Seleccione una hora disponible", Toast.LENGTH_SHORT).show();
         }else{
             obtenerNumDoctor();
-            //model_cita model_cita = new model_cita(generarId(),fecha,hora,motivo,"1","1",matricula,this,this,descripcion);
-            //model_cita.agendarCita();
+            progressDialogMedico.show();
         }
+    }
+    public void disponibilidadDoctor(String pos){
+        model_cita model_cita = new model_cita("",this, this,pos);
+        model_cita.disponibilidadDoctor();
+    }
+    public void obtenerNumDoctor(){
+        model_cita model_cita = new model_cita(this, this);
+        model_cita.obtenerNumDoctor();
     }
     public String generarId(){
         String id = "0";
@@ -181,11 +195,6 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
         System.out.println("getDiaCalendar: "+date);
         fecha = date;
         return date;
-    }
-
-    public void horasCita(String dia){
-        model_cita model_cita = new model_cita(dia,this, this);
-        model_cita.horasCita();
     }
     public void limpiarBtn(){
         hora1.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#E3F4E1")));
@@ -211,9 +220,9 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
         hora6.setTextColor(ColorStateList.valueOf(Color.parseColor("#1C6BA4")));
         hora6.setEnabled(true);
     }
-    public void obtenerNumDoctor(){
-        model_cita model_cita = new model_cita(this, this);
-        model_cita.obtenerNumDoctor();
+    public void horasCita(String dia){
+        model_cita model_cita = new model_cita(dia,this, this,"");
+        model_cita.horasCita();
     }
     @Override
     public void onSuccesshoraCitas(String[] datos) {
@@ -270,8 +279,36 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
 
     @Override
     public void onErrorAgendarCita(String mensaje) {
+
         Intent intent = new Intent(this, controller_patient_AvisoCitaError.class);
         startActivity(intent);
         finish();
+
+    }
+
+    @Override
+    public void onSuccessNumDoctor(String num) {
+        Random random = new Random();
+        int randomNumber = random.nextInt(Integer.parseInt(num)) + 1;
+        disponibilidadDoctor(String.valueOf(randomNumber));
+
+    }
+
+    @Override
+    public void onErrorNumDoctor(String mensaje) {
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSuccessdisponibilidadDoctor(String matricula) {
+        matriculaDoctor = matricula;
+        progressDialogMedico.dismiss();
+        model_cita model_cita = new model_cita(generarId(),fecha,hora,motivo,"1","1",this.matricula,matriculaDoctor,this,this,descripcion);
+        model_cita.agendarCita();
+    }
+
+    @Override
+    public void onErrordisponibilidadDoctor(String mensaje) {
+        obtenerNumDoctor();
     }
 }
