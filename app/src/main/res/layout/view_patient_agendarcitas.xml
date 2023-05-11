@@ -6,15 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".controller.patient.controller_patient_AgendarCitas">
 
-    <ImageView
+    <ImageButton
         android:id="@+id/AC1_iv1"
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:backgroundTint="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/view_patient_reagendar_citas1_regresarbtn" />
+        app:srcCompat="@drawable/vectorasset_general_back" />
 
     <ScrollView
         android:id="@+id/AC1_sv1"

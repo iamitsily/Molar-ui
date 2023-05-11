@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class model_cita {
-    String id, dia, hora, motivo, estado, status, idUusario, idMedico, descripcion;
+    String id, dia, hora, motivo, estado, status, idUusario, idMedico, descripcion,idPos,idDoctor;
     Context context;
     Callback_cita callback_cita;
     String[] res = new String[6];
@@ -45,13 +45,14 @@ public class model_cita {
         this.idMedico = idMedico;
     }
 
-    public model_cita(String dia, Context context, Callback_cita callback_cita) {
+    public model_cita(String dia, Context context, Callback_cita callback_cita, String idPos) {
         this.dia = dia;
         this.context = context;
         this.callback_cita = callback_cita;
+        this.idPos = idPos;
     }
 
-    public model_cita(String id, String dia, String hora, String motivo, String estado, String status, String idUusario, Context context, Callback_cita callback_cita, String descripcion) {
+    public model_cita(String id, String dia, String hora, String motivo, String estado, String status, String idUusario,String idMedico, Context context, Callback_cita callback_cita, String descripcion) {
         this.id = id;
         this.dia = dia;
         this.hora = hora;
@@ -60,6 +61,7 @@ public class model_cita {
         this.status = status;
         this.idUusario = idUusario;
         this.context = context;
+        this.idMedico = idMedico;
         this.callback_cita = callback_cita;
         this.descripcion = descripcion;
     }
@@ -109,7 +111,7 @@ public class model_cita {
         requestQueue.add(request);
     }
     public void agendarCita(){
-        System.out.println("modelCita: "+id + " "+dia+ " "+hora+ " "+motivo+ " "+estado+ " "+status+ " "+idUusario+descripcion);
+        System.out.println("modelCita: "+id + " "+dia+ " "+hora+ " "+motivo+ " "+estado+ " "+status+ " "+idUusario+" "+idMedico+" "+descripcion);
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Agendando cita");
         progressDialog.show();
@@ -145,6 +147,7 @@ public class model_cita {
                 params.put("estado",estado);
                 params.put("status",status);
                 params.put("idUsuario",idUusario);
+                params.put("idMedico",idMedico);
                 params.put("descripcion",descripcion);
                 return params;
             }
@@ -153,10 +156,6 @@ public class model_cita {
         requestQueue.add(request);
     }
     public void obtenerNumDoctor(){
-        ProgressDialog progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Obteniendo medico");
-        progressDialog.show();
-
         String url = "https://molarservices.azurewebsites.net/doctor/service_contarDoctor.php";
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -171,14 +170,14 @@ public class model_cita {
                         if (exito.equals("1")){
                             JSONObject object = jsonArray.getJSONObject(0);
                             String num = object.getString("Num");
-                            System.out.println(num);
-                            progressDialog.dismiss();
+                            System.out.println("CountDoctor: "+num);
+                            callback_cita.onSuccessNumDoctor(num);
                         }
                     }
                 } catch (JSONException e) {
                     System.out.println("model_Patient -> obtenerMedico -> JSONException: "+e);
                     e.printStackTrace();
-                    progressDialog.dismiss();
+                    callback_cita.onErrorNumDoctor(e.getMessage());
                 }
             }
         }, new Response.ErrorListener() {
@@ -191,10 +190,49 @@ public class model_cita {
                     }else{
                         Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
                     }
-                    progressDialog.dismiss();
                 }
             }
         });
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+    public void disponibilidadDoctor(){
+        String url = "https://molarservices.azurewebsites.net/doctor/service_disponibilidad.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito = jsonObject.getString("exito");
+                    if (exito.equals("1")){
+                        JSONArray jsonArray = jsonObject.getJSONArray("datos");
+                        JSONObject object = jsonArray.getJSONObject(0);
+                            String matricula = object.getString("matricula");
+                                callback_cita.onSuccessdisponibilidadDoctor(matricula);
+                    }else{
+                        System.out.println("No hay exito en disponibilidadDoctor");
+                        callback_cita.onErrordisponibilidadDoctor("");
+                    }
+                }catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("model_cita -> horasCita -> onErrorResponse: "+error.getMessage());
+                callback_cita.onErrordisponibilidadDoctor(error.getMessage());
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                System.out.println("idPos enviado: "+idPos);
+                params.put("idPos",idPos);
+                return params;
+            }
+        };
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
