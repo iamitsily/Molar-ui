@@ -33,6 +33,7 @@
         app:srcCompat="@mipmap/view_patient_ajustes_de_cuenta_menu_foto_perfil" />
 
     <ListView
+        android:id="@+id/HC_lv1"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"

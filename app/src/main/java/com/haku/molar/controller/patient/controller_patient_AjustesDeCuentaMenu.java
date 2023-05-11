@@ -26,6 +26,7 @@ public class controller_patient_AjustesDeCuentaMenu extends AppCompatActivity {
         nombre = intent.getStringExtra("nombre");
         rol = intent.getStringExtra("rol");
 
+
         //Cast
         imageView = findViewById(R.id.view_patient_ajustescuentamenu_imvw);
         tvNombre = findViewById(R.id.view_patient_ajustesCuentaMenuNombre);
@@ -60,7 +61,7 @@ public class controller_patient_AjustesDeCuentaMenu extends AppCompatActivity {
                 tvRol.setText("Asistente");
                 break;
             default:
-            tvRol.setText("Consulte su rol con el Administrador");
+                tvRol.setText("Consulte su rol con el Administrador");
                 break;
         }
     }
@@ -72,6 +73,14 @@ public class controller_patient_AjustesDeCuentaMenu extends AppCompatActivity {
     }
     public void cerrarSesion(View view){
         startActivity(new Intent(this, controller_General_Login.class));
+        finish();
+    }
+    public void regresar(View view){
+        Intent i = new Intent(this,controller_patient_HistorialCitasLayout.class);
+        i.putExtra("matricula",matricula);
+        i.putExtra("nombre",nombre);
+        i.putExtra("rol",rol);
+        startActivity(i);
         finish();
     }
 }

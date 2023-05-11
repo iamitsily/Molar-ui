@@ -4,14 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
+import com.haku.molar.model.cita.Callback_cita;
+import com.haku.molar.model.cita.model_cita;
 
-public class controller_patient_HistorialCitasLayout extends AppCompatActivity {
-    String matricula,nombre;
+import java.util.ArrayList;
+
+public class controller_patient_HistorialCitasLayout extends AppCompatActivity implements Callback_cita {
+    String matricula,nombre,rol;
 
     BottomNavigationView menuNav;
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +29,12 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity {
         Intent intent = getIntent();
         matricula = intent.getStringExtra("matricula");
         nombre = intent.getStringExtra("nombre");
+        rol = intent.getStringExtra("rol");
+        listView = findViewById(R.id.HC_lv1);
+
+        model_cita model_cita = new model_cita(matricula,this,this);
+        model_cita.listarCitas();
+
         menuNav = findViewById(R.id.menu_patient_menu);
         menuNav.setSelectedItemId(R.id.menu_patient_historial);
 
@@ -30,6 +45,7 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity {
                     Intent intentHome = new Intent(this, controller_patient_MenuPaciente.class);
                     intentHome.putExtra("matricula",matricula);
                     intentHome.putExtra("nombre", nombre);
+                    intentHome.putExtra("rol", rol);
                     startActivity(intentHome);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
@@ -38,6 +54,7 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity {
                     Intent intentCita = new Intent(this, controller_patient_OpcionesCitas.class);
                     intentCita.putExtra("matricula",matricula);
                     intentCita.putExtra("nombre", nombre);
+                    intentCita.putExtra("rol", rol);
                     startActivity(intentCita);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
@@ -46,6 +63,7 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity {
                     Intent intentNotificacion = new Intent(this, controller_patient_NotificacionesPaciente.class);
                     intentNotificacion.putExtra("matricula",matricula);
                     intentNotificacion.putExtra("nombre", nombre);
+                    intentNotificacion.putExtra("rol", rol);
                     startActivity(intentNotificacion);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
@@ -53,5 +71,84 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity {
             }
             return false;
         });
+    }
+    public void cargar(int position){
+        Intent i = new Intent(this,controller_patient_CancelarCitaMotivo.class);
+        i.putExtra("matricula",matricula);
+        i.putExtra("nombre",nombre);
+        i.putExtra("rol",rol);
+        startActivity(i);
+        finish();
+    }
+
+    @Override
+    public void onSuccesshoraCitas(String[] datos) {
+
+    }
+
+    @Override
+    public void onErrorhoraCitas(String mensaje) {
+
+    }
+
+    @Override
+    public void onSuccessAgendarCita() {
+
+    }
+
+    @Override
+    public void onErrorAgendarCita(String mensaje) {
+
+    }
+
+    @Override
+    public void onSuccessNumDoctor(String num) {
+
+    }
+
+    @Override
+    public void onErrorNumDoctor(String mensaje) {
+
+    }
+
+    @Override
+    public void onSuccessdisponibilidadDoctor(String matricula) {
+
+    }
+
+    @Override
+    public void onErrordisponibilidadDoctor(String mensaje) {
+
+    }
+
+    @Override
+    public void onSuccessHistorial(ArrayList<model_cita> historial) {
+        ArrayAdapter<String> adapter;
+        String estado;
+        String[] cita = new String[historial.size()];
+
+        for(int i = 0; i < historial.size();i++){
+            if((historial.get(i)).getEstado().equalsIgnoreCase("1")){
+                estado = "Pendiente";
+            } else {
+                estado = "Cancelada";
+            }
+            cita[i] = "\nFolio: " + ((historial.get(i)).getId())+ "\n" + "Fecha: " + ((historial.get(i)).getDia()) + "\n" + "Estado: " + estado + "\nClick para cancelar cita\n";
+        }
+        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, cita);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                cargar(position);
+
+            }
+        });
+    }
+
+    @Override
+    public void onErrorhoraHistorial(String mensaje) {
+
     }
 }
