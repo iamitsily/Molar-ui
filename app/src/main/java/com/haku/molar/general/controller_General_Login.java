@@ -66,9 +66,14 @@ public class controller_General_Login extends AppCompatActivity implements Callb
 
         SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
 
-        if (loginDatos.contains("matricula")&&loginDatos.contains("password")){
+        if (loginDatos.contains("matricula")&&loginDatos.contains("password")&&loginDatos.contains("checkbox")){
             matricula.setText(loginDatos.getString("matricula",""));
             password.setText(loginDatos.getString("password",""));
+            if (loginDatos.getString("checkbox","").equals("1")){
+                checkBoxDatos.setChecked(true);
+            }else{
+                checkBoxDatos.setChecked(false);
+            }
         }
 
         clBackground.setOnTouchListener(new View.OnTouchListener() {
@@ -172,6 +177,14 @@ public class controller_General_Login extends AppCompatActivity implements Callb
             SharedPreferences.Editor editor = loginDatos.edit();
             editor.putString("matricula",matricula.getText().toString().trim());
             editor.putString("password",password.getText().toString().trim());
+            editor.putString("checkbox","1");
+            editor.apply();
+        }else{
+            SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = loginDatos.edit();
+            editor.putString("matricula","");
+            editor.putString("password","");
+            editor.putString("checkbox","0");
             editor.apply();
         }
         try {
