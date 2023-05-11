@@ -1,5 +1,7 @@
 package com.haku.molar.model.cita;
 
+import java.util.ArrayList;
+
 public interface Callback_cita {
 
     void onSuccesshoraCitas(String[] datos);
@@ -10,4 +12,6 @@ public interface Callback_cita {
     void onErrorNumDoctor(String mensaje);
     void onSuccessdisponibilidadDoctor(String matricula);
     void onErrordisponibilidadDoctor(String mensaje);
+    void onSuccessHistorial(ArrayList<model_cita> historial);
+    void onErrorhoraHistorial(String mensaje);
 }
