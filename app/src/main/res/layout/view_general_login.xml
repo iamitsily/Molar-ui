@@ -104,6 +104,7 @@
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="264dp"
+        android:buttonTint="#1C6BA4"
         android:text="Recordar Datos"
         android:textColor="@color/gris"
         android:theme="@style/MyCheckBox"
