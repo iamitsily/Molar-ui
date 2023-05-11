@@ -13,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.haku.molar.controller.patient.controller_patient_HistorialCitasLayout;
 import com.haku.molar.model.patient.Callback_patient;
 import com.haku.molar.utils.MolarMail;
 
@@ -20,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,6 +67,20 @@ public class model_cita {
         this.callback_cita = callback_cita;
         this.descripcion = descripcion;
     }
+    public model_cita(String id, String dia, String hora, String motivo, String estado, String descripcion) {
+        this.id = id;
+        this.dia = dia;
+        this.hora = hora;
+        this.motivo = motivo;
+        this.estado = estado;
+        this.descripcion = descripcion;
+    }
+
+    public model_cita(String idUusario, controller_patient_HistorialCitasLayout controller_patient_historialCitasLayout, controller_patient_HistorialCitasLayout controller_patient_historialCitasLayout1) {
+        this.idUusario = idUusario;
+        this.context = controller_patient_historialCitasLayout;
+        this.callback_cita = (Callback_cita) controller_patient_historialCitasLayout1;
+    }
 
     public void horasCita(){
 
@@ -104,6 +120,61 @@ public class model_cita {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("dia",getDia());
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+    public void listarCitas(){
+        System.out.println("modelCita: "+idUusario);
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Cargando historial");
+        progressDialog.show();
+        String url = "https://molarservices.azurewebsites.net/citas/service_listarCitasPaciente.php";
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito =jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+
+                    if(jsonArray.length() == 0){
+                        System.out.println("model_cita -> historial -> datos vacío");
+                        Toast.makeText(context, "Historial vacio, no se han encontrado registros", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    } else if(exito.equals("1")){
+                        ArrayList<model_cita> cita = new ArrayList<>();
+                        System.out.println(jsonArray.length());
+                        for (int i = 0;i < jsonArray.length();i++){
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            cita.add(new model_cita(object.getString("id"),object.getString("dia"),object.getString("hora"),object.getString("motivo"),object.getString("estado"),object.getString("descripcion")));
+                        }
+
+                        callback_cita.onSuccessHistorial(cita);
+                        progressDialog.dismiss();
+                    }
+                } catch (JSONException e) {
+                    System.out.println("model_general_usuario -> login -> JSONException: "+e);
+                    callback_cita.onErrorhoraHistorial(e.getMessage());
+                    System.out.println("Error");
+                    progressDialog.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println("Error: "+error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("matricula",idUusario);
+
                 return params;
             }
         };
@@ -207,8 +278,8 @@ public class model_cita {
                     if (exito.equals("1")){
                         JSONArray jsonArray = jsonObject.getJSONArray("datos");
                         JSONObject object = jsonArray.getJSONObject(0);
-                            String matricula = object.getString("matricula");
-                                callback_cita.onSuccessdisponibilidadDoctor(matricula);
+                        String matricula = object.getString("matricula");
+                        callback_cita.onSuccessdisponibilidadDoctor(matricula);
                     }else{
                         System.out.println("No hay exito en disponibilidadDoctor");
                         callback_cita.onErrordisponibilidadDoctor("");

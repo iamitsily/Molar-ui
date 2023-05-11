@@ -19,6 +19,7 @@ import com.haku.molar.model.cita.model_cita;
 import com.haku.molar.model.patient.model_Patient;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
@@ -315,5 +316,15 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
     @Override
     public void onErrordisponibilidadDoctor(String mensaje) {
         obtenerNumDoctor();
+    }
+
+    @Override
+    public void onSuccessHistorial(ArrayList<model_cita> historial) {
+
+    }
+
+    @Override
+    public void onErrorhoraHistorial(String mensaje) {
+
     }
 }

@@ -38,6 +38,7 @@ public class controller_patient_MenuPaciente extends AppCompatActivity {
                     Intent intentCita = new Intent(this, controller_patient_OpcionesCitas.class);
                     intentCita.putExtra("matricula",matricula);
                     intentCita.putExtra("nombre", nombre);
+                    intentCita.putExtra("rol", rol);
                     startActivity(intentCita);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
@@ -46,6 +47,7 @@ public class controller_patient_MenuPaciente extends AppCompatActivity {
                     Intent intentHistorial = new Intent(this, controller_patient_HistorialCitasLayout.class);
                     intentHistorial.putExtra("matricula",matricula);
                     intentHistorial.putExtra("nombre", nombre);
+                    intentHistorial.putExtra("rol", rol);
                     startActivity(intentHistorial);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
@@ -54,6 +56,7 @@ public class controller_patient_MenuPaciente extends AppCompatActivity {
                     Intent intentNotificacion = new Intent(this, controller_patient_NotificacionesPaciente.class);
                     intentNotificacion.putExtra("matricula",matricula);
                     intentNotificacion.putExtra("nombre", nombre);
+                    intentNotificacion.putExtra("rol", rol);
                     startActivity(intentNotificacion);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
