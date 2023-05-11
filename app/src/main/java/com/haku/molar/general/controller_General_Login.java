@@ -5,7 +5,9 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
@@ -61,19 +63,13 @@ public class controller_General_Login extends AppCompatActivity implements Callb
         edtCodefp = (EditText) findViewById(R.id.edtCode_login_fp);
         edtPassfp = (EditText) findViewById(R.id.edtPass_login_fp);
         edtPassConfirmedfp = (EditText) findViewById(R.id.edtPassConfirmed_login_fp);
-        password.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int DRAWABLE_RIGHT = 2;
 
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (password.getRight() - password.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        password.setInputType(InputType.TYPE_CLASS_TEXT);
-                    }
-                }
-                return false;
-            }
-        });
+        SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
+
+        if (loginDatos.contains("matricula")&&loginDatos.contains("password")){
+            matricula.setText(loginDatos.getString("matricula",""));
+            password.setText(loginDatos.getString("password",""));
+        }
 
         clBackground.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -160,6 +156,9 @@ public class controller_General_Login extends AppCompatActivity implements Callb
         if ((matriculaInt==1001) && (passwordString.equals("admin"))){
             startActivity(new Intent(getApplicationContext(), controller_patient_MenuPaciente.class));
             finish();
+        }if((matriculaInt==2002) && (passwordString.equals("asistant"))) {
+            startActivity(new Intent(getApplicationContext(), controller_assistant_MenuAsistente.class));
+            finish();
         }else{
             model_General_Usuario model_general_usuario = new model_General_Usuario(matriculaInt, passwordString,this,this);
             model_general_usuario.login();
@@ -168,7 +167,13 @@ public class controller_General_Login extends AppCompatActivity implements Callb
     @Override
     public void onSuccess(String[] datos) {
         System.out.println("controller_General_Login"+datos[0] + datos[1] + datos[2] + datos[3]);
-
+        if (checkBoxDatos.isChecked()){
+            SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = loginDatos.edit();
+            editor.putString("matricula",matricula.getText().toString().trim());
+            editor.putString("password",password.getText().toString().trim());
+            editor.apply();
+        }
         try {
             if (passwordString.equals(MolarCrypt.decrypt(datos[2]))){
                 System.out.println("controller_General_Login -> loginOnSuccess -> rol: "+datos[3]);

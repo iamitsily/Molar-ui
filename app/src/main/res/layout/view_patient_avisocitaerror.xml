@@ -26,6 +26,7 @@
         android:background="@drawable/drawable_roundedbutton_general"
         android:backgroundTint="#1C6BA4"
         android:fontFamily="sans-serif"
+        android:onClick="terminarMenu"
         android:text="Terminar"
         android:textColor="@color/white"
         android:textSize="20sp"

@@ -273,14 +273,19 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
     @Override
     public void onSuccessAgendarCita() {
         Intent intent = new Intent(this, controller_patient_AvisoCitaAgendada.class);
+        intent.putExtra("matricula",matricula);
+        intent.putExtra("nombre",nombre);
+        intent.putExtra("rol","1");
         startActivity(intent);
         finish();
     }
 
     @Override
     public void onErrorAgendarCita(String mensaje) {
-
         Intent intent = new Intent(this, controller_patient_AvisoCitaError.class);
+        intent.putExtra("matricula",matricula);
+        intent.putExtra("nombre",nombre);
+        intent.putExtra("rol","1");
         startActivity(intent);
         finish();
 

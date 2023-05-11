@@ -51,10 +51,7 @@ public class controller_patient_MenuPaciente extends AppCompatActivity {
                     finish();
                     break;
                 case R.id.menu_patient_notificacion:
-                    startActivity(new Intent(this, controller_patient_NotificacionesPaciente.class));
-                    overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
-                    finish();
-                    Intent intentNotificacion = new Intent(this, controller_patient_HistorialCitasLayout.class);
+                    Intent intentNotificacion = new Intent(this, controller_patient_NotificacionesPaciente.class);
                     intentNotificacion.putExtra("matricula",matricula);
                     intentNotificacion.putExtra("nombre", nombre);
                     startActivity(intentNotificacion);
