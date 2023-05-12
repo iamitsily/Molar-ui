@@ -37,7 +37,7 @@ import javax.crypto.NoSuchPaddingException;
 
 public class controller_General_Login extends AppCompatActivity implements Callback_General_Login {
     EditText matricula, password, edtEmailfp, edtCodefp, edtPassfp, edtPassConfirmedfp;
-    String passwordString;
+    String passwordString, emailString;
     CardView emailCV, codeCV,passCV, succesCV;
     ConstraintLayout clBackground;
     Button forgetPassbtn, loginBtn;
@@ -108,6 +108,7 @@ public class controller_General_Login extends AppCompatActivity implements Callb
             emailCV.setVisibility(View.INVISIBLE);
             codeCV.setVisibility(View.VISIBLE);
             Codefp = genCode();
+            emailString = edtEmailfp.getText().toString().trim();
             System.out.println(String.valueOf(Codefp));
             MolarMail molarMail = new MolarMail(edtEmailfp.getText().toString().trim(), String.valueOf(Codefp),this);
             molarMail.codeMail();
@@ -139,7 +140,7 @@ public class controller_General_Login extends AppCompatActivity implements Callb
                 } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
                     throw new RuntimeException(e);
                 }
-                model_General_Usuario model_general_usuario = new model_General_Usuario(edtEmailfp.getText().toString(),password,this,this);
+                model_General_Usuario model_general_usuario = new model_General_Usuario(emailString,password,this,this);
                 model_general_usuario.restorePass();
             }else{
                 Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
