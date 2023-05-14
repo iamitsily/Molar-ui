@@ -13,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.haku.molar.utils.MolarConfig;
 import com.haku.molar.utils.MolarMail;
 
 import org.json.JSONArray;
@@ -28,7 +29,7 @@ public class model_Patient {
     String nombre, apellidoPaterno, apellidoMaterno, email, telefono, password, passwordNoCrypt;
     Context context;
     private Callback_patient buscarDatosCallback;
-
+    MolarConfig molarConfig = new MolarConfig();
     //Constructores
     public model_Patient() {
     }
@@ -55,8 +56,7 @@ public class model_Patient {
 
     //Funciones
     public void buscarDatos(){
-        String url = "https://molarservices.azurewebsites.net/patient/service_seleccionPaciente.php";
-        //String url = "https://molarservices.azurewebsites.net/general/login.php";
+        String url = molarConfig.getDomainAzure()+"/patient/service_seleccionPaciente.php";
 
         String matricula = String.valueOf(getMatricula());
         ProgressDialog progressDialog = new ProgressDialog(context);
@@ -111,7 +111,7 @@ public class model_Patient {
         requestQueue.add(request);
     }
     public void udpatebyUser(){
-        String url = "http://192.168.1.70/Molar-Backend/patient/service_modificacionPaciente.php";
+        String url = molarConfig.getDomainAzure()+"/patient/service_modificacionPaciente.php";
         //String url = "https://molarservices.azurewebsites.net/general/login.php";
 
         String matricula = String.valueOf(getMatricula());
@@ -140,7 +140,7 @@ public class model_Patient {
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Registrando");
         progressDialog.show();
-        String url = "https://molarservices.azurewebsites.net/patient/service_registrarPaciente.php";
+        String url = molarConfig.getDomainAzure()+"/patient/service_registrarPaciente.php";
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

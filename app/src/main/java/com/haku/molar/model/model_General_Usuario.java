@@ -14,6 +14,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.haku.molar.general.Callback_General_Login;
+import com.haku.molar.utils.MolarConfig;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,7 +29,7 @@ public class model_General_Usuario {
     String nombre, apellidoPaterno, apellidoMaterno, email, telefono, password;
     Context context;
     private Callback_General_Login loginCallback;
-
+    MolarConfig  molarConfig = new MolarConfig();
     //Constructores
 
     public model_General_Usuario() {
@@ -50,8 +51,7 @@ public class model_General_Usuario {
 
     //Funciones
     public void login(){
-        //String url = "http://192.168.1.70/Molar-Backend/general/login.php";
-        String url = "https://molarservices.azurewebsites.net/general/login.php";
+        String url = molarConfig.getDomainAzure()+"/general/login.php";
 
         String matricula = String.valueOf(getMatricula());
         ProgressDialog progressDialog = new ProgressDialog(context);
@@ -96,6 +96,7 @@ public class model_General_Usuario {
                     Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
                 }
                 progressDialog.dismiss();
+                System.out.println("Error: "+error.getMessage());
             }
         }){
             @Nullable
@@ -115,7 +116,7 @@ public class model_General_Usuario {
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Actualizando contraseña");
         progressDialog.show();
-        String url = "https://molarservices.azurewebsites.net/general/restablecerPass.php";
+        String url = molarConfig.getDomainAzure()+"/general/restablecerPass.php";
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -131,7 +132,13 @@ public class model_General_Usuario {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println("model_general_usuario -> login -> onErrorResponse: "+error.getMessage());
+                if (error==null){
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }
+                progressDialog.dismiss();
                 System.out.println("Error: "+error.getMessage());
             }
         }){
@@ -141,6 +148,55 @@ public class model_General_Usuario {
                 Map<String, String> params = new HashMap<>();
                 params.put("email",getEmail());
                 params.put("password",getPassword());
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+    public void validarEmail(){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Validando email");
+        progressDialog.show();
+        String url = molarConfig.getDomainAzure()+"/general/validarEmail.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito = jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+                    if (jsonArray.length() == 0){
+                        loginCallback.onErrorValidarEmail("No hay ninguna cuenta asociada a ese email");
+                        progressDialog.dismiss();
+                    }else{
+                        progressDialog.dismiss();
+                        loginCallback.onSuccesValidarEmail();
+                    }
+                }catch (JSONException e){
+                    System.out.println("model_general_usuario -> validarEmail -> JSONException: "+e);
+                    e.printStackTrace();
+                    progressDialog.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("model_general_usuario -> login -> onErrorResponse: "+error.getMessage());
+                if (error==null){
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }
+                System.out.println("Error: "+error.getMessage());
+                progressDialog.dismiss();
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("email",email);
                 return params;
             }
         };

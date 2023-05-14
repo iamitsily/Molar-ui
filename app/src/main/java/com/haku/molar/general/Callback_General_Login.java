@@ -5,5 +5,7 @@ public interface Callback_General_Login {
     void onError(String mensaje);
     void onSuccessForgetPass();
     void onErrorForgetPass();
+    void onSuccesValidarEmail();
+    void onErrorValidarEmail(String mensaje);
 
 }

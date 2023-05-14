@@ -105,13 +105,9 @@ public class controller_General_Login extends AppCompatActivity implements Callb
         if(edtEmailfp.getText().toString().trim().equals("")){
             Toast.makeText(this, "Por favor ingrese su email", Toast.LENGTH_SHORT).show();
         }else{
-            emailCV.setVisibility(View.INVISIBLE);
-            codeCV.setVisibility(View.VISIBLE);
-            Codefp = genCode();
             emailString = edtEmailfp.getText().toString().trim();
-            System.out.println(String.valueOf(Codefp));
-            MolarMail molarMail = new MolarMail(edtEmailfp.getText().toString().trim(), String.valueOf(Codefp),this);
-            molarMail.codeMail();
+            model_General_Usuario model_general_usuario = new model_General_Usuario(emailString,"",this,this);
+            model_general_usuario.validarEmail();
         }
     }
     //Fase codigo
@@ -292,5 +288,20 @@ public class controller_General_Login extends AppCompatActivity implements Callb
         Random random = new Random();
         code = random.nextInt(99999 - 10000 + 1) + 10000;
         return code;
+    }
+
+    @Override
+    public void onSuccesValidarEmail() {
+        emailCV.setVisibility(View.INVISIBLE);
+        codeCV.setVisibility(View.VISIBLE);
+        Codefp = genCode();
+        System.out.println(String.valueOf(Codefp));
+        //MolarMail molarMail = new MolarMail(edtEmailfp.getText().toString().trim(), String.valueOf(Codefp),this);
+        //molarMail.codeMail();
+    }
+
+    @Override
+    public void onErrorValidarEmail(String mensaje) {
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
 }
