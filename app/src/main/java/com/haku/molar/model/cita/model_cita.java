@@ -15,6 +15,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.haku.molar.controller.patient.controller_patient_HistorialCitasLayout;
 import com.haku.molar.model.patient.Callback_patient;
+import com.haku.molar.utils.MolarConfig;
 import com.haku.molar.utils.MolarMail;
 
 import org.json.JSONArray;
@@ -30,6 +31,7 @@ public class model_cita {
     Context context;
     Callback_cita callback_cita;
     String[] res = new String[6];
+    MolarConfig molarConfig = new MolarConfig();
     public model_cita() {
     }
     public model_cita(Context context, Callback_cita callback_cita){
@@ -84,7 +86,7 @@ public class model_cita {
 
     public void horasCita(){
 
-        String url = "https://molarservices.azurewebsites.net/citas/service_citasDia.php";
+        String url = molarConfig.getDomainAzure()+"/citas/service_citasDia.php";
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Revisando disponibilidad");
         progressDialog.show();
@@ -131,7 +133,7 @@ public class model_cita {
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Cargando historial");
         progressDialog.show();
-        String url = "https://molarservices.azurewebsites.net/citas/service_listarCitasPaciente.php";
+        String url = molarConfig.getDomainAzure()+"/citas/service_listarCitasPaciente.php";
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -186,7 +188,7 @@ public class model_cita {
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Agendando cita");
         progressDialog.show();
-        String url = "https://molarservices.azurewebsites.net/citas/service_crearcitasPaciente.php";
+        String url = molarConfig.getDomainAzure()+"/citas/service_crearcitasPaciente.php";
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -227,7 +229,7 @@ public class model_cita {
         requestQueue.add(request);
     }
     public void obtenerNumDoctor(){
-        String url = "https://molarservices.azurewebsites.net/doctor/service_contarDoctor.php";
+        String url = molarConfig.getDomainAzure()+"/doctor/service_contarDoctor.php";
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -268,7 +270,7 @@ public class model_cita {
         requestQueue.add(request);
     }
     public void disponibilidadDoctor(){
-        String url = "https://molarservices.azurewebsites.net/doctor/service_disponibilidad.php";
+        String url = molarConfig.getDomainAzure()+"/doctor/service_disponibilidad.php";
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
