@@ -184,7 +184,8 @@ public class model_Patient {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
-    public void listarCitas(){
+
+   public void listarCitas(){
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Cargando Menu");
         progressDialog.show();
@@ -225,6 +226,35 @@ public class model_Patient {
                 }
 
             }
+              
+     public void obtenerPass(){
+        String url = "https://molarservices.azurewebsites.net/general/login.php";
+
+        String matricula = String.valueOf(getMatricula());
+        StringRequest request = new StringRequest(Request.Method.POST,url , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito = jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+                    if (jsonArray.length() == 0){
+                        buscarDatosCallback.onErrorObternerPass("Verificar Usuario");
+                    }else{
+                        if (exito.equals("1")){
+                            JSONObject object = jsonArray.getJSONObject(0);
+                            String matricula = object.getString("matricula");
+                            String nombre = object.getString("nombre");
+                            String password = object.getString("password");
+                            String rol = object.getString("rol");
+                            String[] res = {matricula, nombre, password, rol};
+                            buscarDatosCallback.onSuccessObternerPass(res);
+                        }
+                    }
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -234,20 +264,19 @@ public class model_Patient {
                 }else{
                     Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
                 }
-                progressDialog.dismiss();
-                System.out.println("Error: "+error.getMessage());
             }
         }){
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("matricula",String.valueOf(matricula));
+                params.put("matricula",matricula);
                 return params;
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
+
     }
     //Getters y setters
     public int getMatricula() {

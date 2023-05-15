@@ -140,6 +140,7 @@
                 android:background="@drawable/drawable_ajustesdecuenta_profile"
                 android:hint="+52 "
                 android:inputType="number"
+                android:maxLength="10"
                 android:paddingRight="10dp" />
 
             <TextView
@@ -219,7 +220,7 @@
                 android:padding="20dp">
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/view_patient_ajustesCuentaGuardarBtn"
                     android:layout_width="262dp"
                     android:layout_height="51dp"
                     android:background="@drawable/drawable_roundedbutton_general"

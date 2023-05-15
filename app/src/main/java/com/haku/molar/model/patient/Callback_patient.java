@@ -11,4 +11,6 @@ public interface Callback_patient {
     void onErrorudpatebyUser(String mensaje);
     void OnSuccesslistarCitas(ArrayList<model_cita> citas);
     void OneErrorlistarCitas(String mensaje);
+    void onSuccessObternerPass(String[]datos);
+    void onErrorObternerPass(String mensaje);
 }
