@@ -1,7 +1,7 @@
 package com.haku.molar.utils;
 
 public class MolarConfig {
-     //ServiceMolarNormal -> https://molarservices.azurewebsites.net
+    //ServiceMolarNormal -> https://molarservices.azurewebsites.net
     //ServiceMolarAux -> https://molarservicesaux.azurewebsites.net (Normalmente apagado, solo para emergencias)
     //Local -> http://[DireccionIpPropia]/Molar-Backend
     private String domainAzure = "https://molarservices.azurewebsites.net";

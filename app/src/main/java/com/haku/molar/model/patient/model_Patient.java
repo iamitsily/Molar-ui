@@ -13,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.haku.molar.model.cita.model_cita;
 import com.haku.molar.utils.MolarConfig;
 import com.haku.molar.utils.MolarMail;
 
@@ -20,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -182,7 +184,50 @@ public class model_Patient {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
-    public void obtenerPass(){
+
+   public void listarCitas(){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Cargando Menu");
+        progressDialog.show();
+
+        String url = molarConfig.getDomainAzure()+"/citas/service_listarCitasMenuPaciente.php";
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito =jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+                        if (jsonArray.length()==0){
+                            buscarDatosCallback.OneErrorlistarCitas("No hay citas agendadas para mostrar en el menu");
+                            progressDialog.dismiss();
+                        }else if (exito.equals("1")){
+                            ArrayList<model_cita> citasPaciente = new ArrayList<>();
+                            for (int i=0;i < jsonArray.length();i++){
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                citasPaciente.add(new model_cita(
+                                        object.getString("id"),
+                                        object.getString("dia"),
+                                        object.getString("hora"),
+                                        object.getString("motivo"),
+                                        "1",
+                                        object.getString("nombre"),
+                                        object.getString("apellidoPaterno")
+                                ));
+                            }
+                            buscarDatosCallback.OnSuccesslistarCitas(citasPaciente);
+                            progressDialog.dismiss();
+                        }
+                } catch (JSONException e) {
+                    System.out.println("model_general_usuario -> listarCitas -> JSONException: "+e);
+                    e.printStackTrace();
+                    progressDialog.dismiss();
+                }
+
+            }
+              
+     public void obtenerPass(){
         String url = "https://molarservices.azurewebsites.net/general/login.php";
 
         String matricula = String.valueOf(getMatricula());
