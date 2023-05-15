@@ -129,8 +129,8 @@ public class controller_patient_AjustesCuentaDatos extends AppCompatActivity imp
         model_patient.obtenerPass();
     }
     public void actualizarUsuario(){
-        model_Patient model_patient = new model_Patient();
-        model_patient.udpatebyUser();
+        //model_Patient model_patient = new model_Patient();
+        //model_patient.udpatebyUser();
         progressDialog.dismiss();
         Toast.makeText(this, "TODO BIEN:D", Toast.LENGTH_SHORT).show();
     }

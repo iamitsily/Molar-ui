@@ -122,4 +122,14 @@ public class controller_patient_MenuPaciente extends AppCompatActivity implement
     public void OneErrorlistarCitas(String mensaje) {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onSuccessObternerPass(String[] datos) {
+
+    }
+
+    @Override
+    public void onErrorObternerPass(String mensaje) {
+
+    }
 }

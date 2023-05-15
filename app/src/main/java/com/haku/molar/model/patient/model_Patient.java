@@ -185,7 +185,7 @@ public class model_Patient {
         requestQueue.add(request);
     }
 
-   public void listarCitas(){
+    public void listarCitas(){
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Cargando Menu");
         progressDialog.show();
@@ -199,26 +199,26 @@ public class model_Patient {
                     JSONObject jsonObject = new JSONObject(response);
                     String exito =jsonObject.getString("exito");
                     JSONArray jsonArray = jsonObject.getJSONArray("datos");
-                        if (jsonArray.length()==0){
-                            buscarDatosCallback.OneErrorlistarCitas("No hay citas agendadas para mostrar en el menu");
-                            progressDialog.dismiss();
-                        }else if (exito.equals("1")){
-                            ArrayList<model_cita> citasPaciente = new ArrayList<>();
-                            for (int i=0;i < jsonArray.length();i++){
-                                JSONObject object = jsonArray.getJSONObject(i);
-                                citasPaciente.add(new model_cita(
-                                        object.getString("id"),
-                                        object.getString("dia"),
-                                        object.getString("hora"),
-                                        object.getString("motivo"),
-                                        "1",
-                                        object.getString("nombre"),
-                                        object.getString("apellidoPaterno")
-                                ));
-                            }
-                            buscarDatosCallback.OnSuccesslistarCitas(citasPaciente);
-                            progressDialog.dismiss();
+                    if (jsonArray.length()==0){
+                        buscarDatosCallback.OneErrorlistarCitas("No hay citas agendadas para mostrar en el menu");
+                        progressDialog.dismiss();
+                    }else if (exito.equals("1")){
+                        ArrayList<model_cita> citasPaciente = new ArrayList<>();
+                        for (int i=0;i < jsonArray.length();i++){
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            citasPaciente.add(new model_cita(
+                                    object.getString("id"),
+                                    object.getString("dia"),
+                                    object.getString("hora"),
+                                    object.getString("motivo"),
+                                    "1",
+                                    object.getString("nombre"),
+                                    object.getString("apellidoPaterno")
+                            ));
                         }
+                        buscarDatosCallback.OnSuccesslistarCitas(citasPaciente);
+                        progressDialog.dismiss();
+                    }
                 } catch (JSONException e) {
                     System.out.println("model_general_usuario -> listarCitas -> JSONException: "+e);
                     e.printStackTrace();
@@ -226,7 +226,31 @@ public class model_Patient {
                 }
 
             }
-              
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("model_general_usuario -> login -> onErrorResponse: "+error.getMessage());
+                if (error==null){
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }
+                progressDialog.dismiss();
+                System.out.println("Error: "+error.getMessage());
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("matricula",String.valueOf(matricula));
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+
      public void obtenerPass(){
         String url = "https://molarservices.azurewebsites.net/general/login.php";
 
