@@ -12,9 +12,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.haku.molar.R;
+import com.haku.molar.model.cita.model_cita;
 import com.haku.molar.model.model_General_Usuario;
 import com.haku.molar.model.patient.Callback_patient;
 import com.haku.molar.model.patient.model_Patient;
+
+import java.util.ArrayList;
 
 public class controller_patient_AjustesCuentaDatos extends AppCompatActivity implements Callback_patient {
     String matricula;
@@ -111,6 +114,16 @@ public class controller_patient_AjustesCuentaDatos extends AppCompatActivity imp
 
     @Override
     public void onErrorudpatebyUser(String mensaje) {
+
+    }
+
+    @Override
+    public void OnSuccesslistarCitas(ArrayList<model_cita> citas) {
+
+    }
+
+    @Override
+    public void OneErrorlistarCitas(String mensaje) {
 
     }
 }

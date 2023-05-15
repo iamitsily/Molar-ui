@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class model_cita {
-    String id, dia, hora, motivo, estado, status, idUusario, idMedico, descripcion,idPos,idDoctor;
+    String id, dia, hora, motivo, estado, status, idUusario, idMedico, descripcion,idPos,idDoctor, nombreDoctor, apellidoDoctor;
     Context context;
     Callback_cita callback_cita;
     String[] res = new String[6];
@@ -47,6 +47,16 @@ public class model_cita {
         this.status = status;
         this.idUusario = idUusario;
         this.idMedico = idMedico;
+    }
+
+    public model_cita(String id, String dia, String hora, String motivo, String idDoctor, String nombreDoctor, String apellidoDoctor) {
+        this.id = id;
+        this.dia = dia;
+        this.hora = hora;
+        this.motivo = motivo;
+        this.idDoctor = idDoctor;
+        this.nombreDoctor = nombreDoctor;
+        this.apellidoDoctor = apellidoDoctor;
     }
 
     public model_cita(String dia, Context context, Callback_cita callback_cita, String idPos) {
@@ -387,5 +397,37 @@ public class model_cita {
 
     public void setCallback_cita(Callback_cita callback_cita) {
         this.callback_cita = callback_cita;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getIdDoctor() {
+        return idDoctor;
+    }
+
+    public void setIdDoctor(String idDoctor) {
+        this.idDoctor = idDoctor;
+    }
+
+    public String getNombreDoctor() {
+        return nombreDoctor;
+    }
+
+    public void setNombreDoctor(String nombreDoctor) {
+        this.nombreDoctor = nombreDoctor;
+    }
+
+    public String getApellidoDoctor() {
+        return apellidoDoctor;
+    }
+
+    public void setApellidoDoctor(String apellidoDoctor) {
+        this.apellidoDoctor = apellidoDoctor;
     }
 }
