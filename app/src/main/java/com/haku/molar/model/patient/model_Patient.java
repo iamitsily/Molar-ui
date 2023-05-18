@@ -35,6 +35,16 @@ public class model_Patient {
     //Constructores
     public model_Patient() {
     }
+
+    public model_Patient(int matricula, String email, String telefono, String password, Context context, Callback_patient buscarDatosCallback) {
+        this.matricula = matricula;
+        this.email = email;
+        this.telefono = telefono;
+        this.password = password;
+        this.context = context;
+        this.buscarDatosCallback = buscarDatosCallback;
+    }
+
     public model_Patient(int matricula, Context context, Callback_patient callback_patient) {
         this.matricula = matricula;
         this.context = context;
@@ -113,30 +123,40 @@ public class model_Patient {
         requestQueue.add(request);
     }
     public void udpatebyUser(){
+        System.out.println(matricula);
+        System.out.println(email);
+        System.out.println(telefono);
+        System.out.println(password);
         String url = molarConfig.getDomainAzure()+"/patient/service_modificacionPaciente.php";
         //String url = "https://molarservices.azurewebsites.net/general/login.php";
-
-        String matricula = String.valueOf(getMatricula());
-        ProgressDialog progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Obteniendo datos");
-        progressDialog.show();
-
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                try{
-                    JSONObject jsonObject = new JSONObject(response);
-                }catch (JSONException e){
-                    e.printStackTrace();
-                    progressDialog.dismiss();
+                if (response.equalsIgnoreCase("Modificacion exitosa")){
+                    buscarDatosCallback.onSuccessUpdatebyUser();
+                }else{
+                    buscarDatosCallback.onErrorudpatebyUser("Error al actualizar la cuenta");
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                System.out.println("model_general_usuario -> udpatebyUser -> onErrorResponse: "+error.getMessage());
             }
-        });
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("matricula",String.valueOf(matricula));
+                params.put("email",email);
+                params.put("telefono",telefono);
+                params.put("password",password);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
     }
     public void registrarPaciente(){
         ProgressDialog progressDialog = new ProgressDialog(context);

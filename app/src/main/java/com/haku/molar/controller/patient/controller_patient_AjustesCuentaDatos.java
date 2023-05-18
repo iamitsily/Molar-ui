@@ -3,7 +3,9 @@ package com.haku.molar.controller.patient;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -105,6 +107,16 @@ public class controller_patient_AjustesCuentaDatos extends AppCompatActivity imp
                 actualizarDatos();
             }
         });
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Aviso");
+        builder.setMessage("Por favor antes de actualizar sus datos, asegurese " +
+                "de que el email y numero de telefono sean correctos").setPositiveButton("Ok",new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        }).setCancelable(true).show();
     }
     public void backCuentaMenuBtn(View view){
         Intent intent = new Intent(this, controller_patient_AjustesDeCuentaMenu.class);
@@ -129,10 +141,14 @@ public class controller_patient_AjustesCuentaDatos extends AppCompatActivity imp
         model_patient.obtenerPass();
     }
     public void actualizarUsuario(){
-        //model_Patient model_patient = new model_Patient();
-        //model_patient.udpatebyUser();
-        progressDialog.dismiss();
-        Toast.makeText(this, "TODO BIEN:D", Toast.LENGTH_SHORT).show();
+        String passCrypt = "";
+        try {
+            passCrypt = MolarCrypt.encrypt(passNueva);
+            model_Patient model_patient = new model_Patient(Integer.parseInt(matricula),email,telefonno,passCrypt,this,this);
+            model_patient.udpatebyUser();
+        } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
+            System.out.println("Error al encriptar la contraseña");
+        }
     }
     public boolean validarDatos(String pass) {
         boolean error = false;
@@ -182,8 +198,14 @@ public class controller_patient_AjustesCuentaDatos extends AppCompatActivity imp
     }
 
     @Override
-    public void onSuccessudpatebyUser(String[] datos) {
+    public void onSuccessUpdatebyUser() {
+        progressDialog.dismiss();
+        Toast.makeText(this, "Datos actualizados", Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void OnErrorUpdateByUser(String mensaje) {
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -193,7 +215,7 @@ public class controller_patient_AjustesCuentaDatos extends AppCompatActivity imp
 
     @Override
     public void OnSuccesslistarCitas(ArrayList<model_cita> citas) {
-
+        progressDialog.dismiss();
     }
 
     @Override
@@ -213,6 +235,6 @@ public class controller_patient_AjustesCuentaDatos extends AppCompatActivity imp
     }
     @Override
     public void onErrorObternerPass(String datos) {
-
+        Toast.makeText(this, datos, Toast.LENGTH_SHORT).show();
     }
 }

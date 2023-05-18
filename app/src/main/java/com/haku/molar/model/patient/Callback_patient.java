@@ -7,7 +7,8 @@ import java.util.ArrayList;
 public interface Callback_patient {
     void onSuccessbuscarDatos(String[] datos);
     void onErrorbuscarDatos(String mensaje);
-    void onSuccessudpatebyUser(String[] datos);
+    void onSuccessUpdatebyUser();
+    void OnErrorUpdateByUser(String mensaje);
     void onErrorudpatebyUser(String mensaje);
     void OnSuccesslistarCitas(ArrayList<model_cita> citas);
     void OneErrorlistarCitas(String mensaje);
