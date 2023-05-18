@@ -107,8 +107,6 @@ public class controller_patient_MenuPaciente extends AppCompatActivity implement
     @Override
     public void onErrorbuscarDatos(String mensaje) {}
     @Override
-    public void onSuccessudpatebyUser(String[] datos) {}
-    @Override
     public void onErrorudpatebyUser(String mensaje) {}
     @Override
     public void OnSuccesslistarCitas(ArrayList<model_cita> citas) {
@@ -130,6 +128,16 @@ public class controller_patient_MenuPaciente extends AppCompatActivity implement
 
     @Override
     public void onErrorObternerPass(String mensaje) {
+
+    }
+
+    @Override
+    public void onSuccessUpdatebyUser() {
+
+    }
+
+    @Override
+    public void OnErrorUpdateByUser(String mensaje) {
 
     }
 }
