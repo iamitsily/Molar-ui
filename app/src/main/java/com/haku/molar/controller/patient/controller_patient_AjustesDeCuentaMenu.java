@@ -39,9 +39,7 @@ public class controller_patient_AjustesDeCuentaMenu extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), controller_patient_MenuPaciente.class);
-                startActivity(intent);
-                finish();
+               regresar(v);
             }
         });
     }
@@ -68,6 +66,9 @@ public class controller_patient_AjustesDeCuentaMenu extends AppCompatActivity {
     public void ajustdesCuenta(View view){
         Intent intentAjustesCuenta = new Intent(this, controller_patient_AjustesCuentaDatos.class);
         intentAjustesCuenta.putExtra("matricula",matricula);
+        intentAjustesCuenta.putExtra("nombre",nombre);
+        intentAjustesCuenta.putExtra("rol",rol);
+
         startActivity(intentAjustesCuenta);
         finish();
     }
@@ -76,7 +77,7 @@ public class controller_patient_AjustesDeCuentaMenu extends AppCompatActivity {
         finish();
     }
     public void regresar(View view){
-        Intent i = new Intent(this,controller_patient_HistorialCitasLayout.class);
+        Intent i = new Intent(this, controller_patient_MenuPaciente.class);
         i.putExtra("matricula",matricula);
         i.putExtra("nombre",nombre);
         i.putExtra("rol",rol);
