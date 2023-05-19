@@ -160,57 +160,66 @@
                 android:inputType="textEmailAddress"
                 android:paddingRight="10dp" />
 
-            <TextView
-                android:id="@+id/textView66"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="Contraseña actual"
-                android:textColor="#1C6BA4" />
 
-            <EditText
-                android:id="@+id/view_patient_ajustesCuentaPasswordActual"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/drawable_ajustesdecuenta_profile"
-                android:drawableRight="@mipmap/login_layaut_ocultar"
-                android:inputType="textPassword"
-                android:paddingRight="10dp" />
+                android:layout_height="match_parent"
+                app:endIconMode="password_toggle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_bias="0.050000012">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="Nueva contraseña:"
-                android:textColor="#1C6BA4" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/view_patient_ajustesCuentaPasswordActual"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:hint="Contraseña actual"
+                    android:inputType="textPassword"
+                    android:maxLength="30"
+                    android:textColor="#000000" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/view_patient_ajustesCuentaPassword"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/drawable_ajustesdecuenta_profile"
-                android:drawableRight="@mipmap/login_layaut_ocultar"
-                android:inputType="textPassword"
-                android:paddingRight="10dp" />
+                android:layout_height="match_parent"
+                app:endIconMode="password_toggle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_bias="0.050000012">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="Confirmar contraseña:"
-                android:textColor="#1C6BA4" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/view_patient_ajustesCuentaPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:hint="Nueva Contraseña"
+                    android:inputType="textPassword"
+                    android:maxLength="30"
+                    android:textColor="#000000" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/view_patient_ajustesCuentaConfirmedPassword"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/drawable_ajustesdecuenta_profile"
-                android:drawableRight="@mipmap/login_layaut_ocultar"
-                android:inputType="textPassword"
-                android:paddingRight="10dp" />
+                android:layout_height="match_parent"
+                app:endIconMode="password_toggle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_bias="0.050000012">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/view_patient_ajustesCuentaConfirmedPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:hint="Confirmar Contraseña"
+                    android:inputType="textPassword"
+                    android:maxLength="30"
+                    android:textColor="#000000" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

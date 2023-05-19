@@ -37,7 +37,7 @@ import java.util.ArrayList;
 
 public class controller_patient_AjustesCuentaDatos extends AppCompatActivity implements Callback_patient {
     EditText edt_telefono, edt_email, edt_passActual, edt_passNueva, edt_passconfirmed;
-    String matricula, passwordActual,passNueva,passwordConfirmar, email, telefonno;
+    String matricula, nombre, rol, passwordActual,passNueva,passwordConfirmar, email, telefonno;
     Button btnGuardar;
     int pos = 0;
     ProgressDialog progressDialog;
@@ -50,6 +50,8 @@ public class controller_patient_AjustesCuentaDatos extends AppCompatActivity imp
         //Intent
         Intent intent = getIntent();
         matricula = intent.getStringExtra("matricula");
+        nombre = intent.getStringExtra("nombre");
+        rol = intent.getStringExtra("rol");
 
         System.out.println(matricula);
 
@@ -62,45 +64,6 @@ public class controller_patient_AjustesCuentaDatos extends AppCompatActivity imp
         btnGuardar = findViewById(R.id.view_patient_ajustesCuentaGuardarBtn);
         inicioUI();
 
-        edt_passActual.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int DRAWABLE_RIGHT = 2;
-
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (edt_passActual.getRight() - edt_passActual.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                            edt_passActual.setInputType(InputType.TYPE_CLASS_TEXT);
-                    }
-                }
-                return false;
-            }
-        });
-        edt_passNueva.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int DRAWABLE_RIGHT = 2;
-
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (edt_passNueva.getRight() - edt_passNueva.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        edt_passNueva.setInputType(InputType.TYPE_CLASS_TEXT);
-                    }
-                }
-                return false;
-            }
-        });
-        edt_passconfirmed.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int DRAWABLE_RIGHT = 2;
-
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (edt_passconfirmed.getRight() - edt_passconfirmed.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        edt_passconfirmed.setInputType(InputType.TYPE_CLASS_TEXT);
-                    }
-                }
-                return false;
-            }
-        });
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,6 +83,9 @@ public class controller_patient_AjustesCuentaDatos extends AppCompatActivity imp
     }
     public void backCuentaMenuBtn(View view){
         Intent intent = new Intent(this, controller_patient_AjustesDeCuentaMenu.class);
+        intent.putExtra("matricula",matricula);
+        intent.putExtra("nombre",nombre);
+        intent.putExtra("rol",rol);
         startActivity(intent);
         finish();
     }
