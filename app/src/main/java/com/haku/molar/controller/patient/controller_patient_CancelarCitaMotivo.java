@@ -21,7 +21,7 @@ public class controller_patient_CancelarCitaMotivo extends AppCompatActivity {
         Intent intent = getIntent();
         matricula = intent.getStringExtra("matricula");
         nombre = intent.getStringExtra("nombre");
-        nombre = intent.getStringExtra("rol");
+        rol = intent.getStringExtra("rol");
 
         imageView = findViewById(R.id.imageButton8);
     }

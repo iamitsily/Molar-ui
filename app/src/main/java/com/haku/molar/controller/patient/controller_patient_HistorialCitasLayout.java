@@ -132,30 +132,6 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity i
         RVLista.setLayoutManager(linearLayoutManager);
         adaptadorRecyclerHistorialCitas = new adaptadorRecyclerHistorialCitas(historial,matricula,nombre,rol,this);
         RVLista.setAdapter(adaptadorRecyclerHistorialCitas);
-        /*
-                ArrayAdapter<String> adapter;
-        String estado;
-        String[] cita = new String[historial.size()];
-
-        for(int i = 0; i < historial.size();i++){
-            if((historial.get(i)).getEstado().equalsIgnoreCase("1")){
-                estado = "Pendiente";
-            } else {
-                estado = "Cancelada";
-            }
-            cita[i] = "\nFolio: " + ((historial.get(i)).getId())+ "\n" + "Fecha: " + ((historial.get(i)).getDia()) + "\n" + "Estado: " + estado + "\nClick para cancelar cita\n";
-        }
-        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, cita);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                cargar(position);
-
-            }
-        });
-         */
     }
 
     @Override
