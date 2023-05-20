@@ -1,6 +1,8 @@
 package com.haku.molar.controller.patient;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +13,8 @@ import android.widget.ListView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
+import com.haku.molar.controller.patient.adapter.adaptadorRecyclerHistorialCitas;
+import com.haku.molar.controller.patient.adapter.adaptadorRecyclerMenuPaciente;
 import com.haku.molar.model.cita.Callback_cita;
 import com.haku.molar.model.cita.model_cita;
 
@@ -20,7 +24,8 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity i
     String matricula,nombre,rol;
 
     BottomNavigationView menuNav;
-    ListView listView;
+    RecyclerView RVLista;
+    private com.haku.molar.controller.patient.adapter.adaptadorRecyclerHistorialCitas adaptadorRecyclerHistorialCitas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +35,7 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity i
         matricula = intent.getStringExtra("matricula");
         nombre = intent.getStringExtra("nombre");
         rol = intent.getStringExtra("rol");
-        listView = findViewById(R.id.HC_lv1);
+        RVLista = findViewById(R.id.HC_RV1);
 
         model_cita model_cita = new model_cita(matricula,this,this);
         model_cita.listarCitas();
@@ -123,7 +128,12 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity i
 
     @Override
     public void onSuccessHistorial(ArrayList<model_cita> historial) {
-        ArrayAdapter<String> adapter;
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        RVLista.setLayoutManager(linearLayoutManager);
+        adaptadorRecyclerHistorialCitas = new adaptadorRecyclerHistorialCitas(historial,matricula,nombre,rol,this);
+        RVLista.setAdapter(adaptadorRecyclerHistorialCitas);
+        /*
+                ArrayAdapter<String> adapter;
         String estado;
         String[] cita = new String[historial.size()];
 
@@ -145,6 +155,7 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity i
 
             }
         });
+         */
     }
 
     @Override
