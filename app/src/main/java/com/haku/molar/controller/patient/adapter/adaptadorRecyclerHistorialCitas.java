@@ -61,11 +61,11 @@ public class adaptadorRecyclerHistorialCitas extends RecyclerView.Adapter<adapta
                 holder.estado.setTextColor(0xFFFFFFFF);
                 holder.estado.setText("Terminada");
                 break;
-            case "3": //Pendiente
+            case "1": //Pendiente
                 holder.estado.setBackgroundColor(0xFFFFFF00);
                 holder.estado.setText("Pendiente");
                 break;
-            case "1": //Cancelada
+            case "2": //Cancelada
                 holder.estado.setBackgroundColor(0xFFDD0000);
                 holder.estado.setTextColor(0xFFFFFFFF);
                 holder.estado.setText("Cancelada");
