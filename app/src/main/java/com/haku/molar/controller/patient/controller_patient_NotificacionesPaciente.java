@@ -79,6 +79,6 @@ public class controller_patient_NotificacionesPaciente extends AppCompatActivity
     @Override
     public void onErrorNotificaciones(String mensajeError) {
         //por si hay algun error
-        Toast.makeText(this, "Error al cargar las notificaciones: " + mensajeError, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, mensajeError, Toast.LENGTH_SHORT).show();
     }
 }

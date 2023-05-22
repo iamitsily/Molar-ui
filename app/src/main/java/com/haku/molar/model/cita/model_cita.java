@@ -13,10 +13,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.haku.molar.controller.patient.controller_patient_HistorialCitasLayout;
-import com.haku.molar.model.patient.Callback_patient;
+import com.haku.molar.controller.patient.interfaces.Callback_patient_fechaHoraAgendarCita;
+import com.haku.molar.controller.patient.interfaces.Callback_patient_historialCitas;
+import com.haku.molar.controller.patient.interfaces.Callback_patient_listarCitasActivas;
 import com.haku.molar.utils.MolarConfig;
-import com.haku.molar.utils.MolarMail;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,15 +29,20 @@ import java.util.Map;
 public class model_cita {
     String id, dia, hora, motivo, estado, status, idUusario, idMedico, descripcion,idPos,idDoctor, nombreDoctor, apellidoDoctor;
     Context context;
-    Callback_cita callback_cita;
+    Callback_patient_listarCitasActivas callback_patient_listarCitasActivas;
+    Callback_patient_fechaHoraAgendarCita callback_patient_fechaHoraAgendarCita;
+    Callback_patient_historialCitas callback_patient_historialCitas;
     String[] res = new String[6];
     MolarConfig molarConfig = new MolarConfig();
     public model_cita() {
     }
-    public model_cita(Context context, Callback_cita callback_cita){
+
+    //controller_patient_fechaHoraAgendarCita
+    public model_cita(Context context, Callback_patient_fechaHoraAgendarCita callback_patient_fechaHoraAgendarCita) {
         this.context = context;
-        this.callback_cita = callback_cita;
+        this.callback_patient_fechaHoraAgendarCita = callback_patient_fechaHoraAgendarCita;
     }
+
     public model_cita(String id, String dia, String hora, String motivo, String estado, String status, String idUusario, String idMedico) {
         this.id = id;
         this.dia = dia;
@@ -58,15 +63,15 @@ public class model_cita {
         this.nombreDoctor = nombreDoctor;
         this.apellidoDoctor = apellidoDoctor;
     }
-
-    public model_cita(String dia, Context context, Callback_cita callback_cita, String idPos) {
+    //controller_patient_fechaHoraAgendarCita
+    public model_cita(String dia, Context context, Callback_patient_fechaHoraAgendarCita callback_patient_fechaHoraAgendarCita, String idPos) {
         this.dia = dia;
         this.context = context;
-        this.callback_cita = callback_cita;
+        this.callback_patient_fechaHoraAgendarCita = callback_patient_fechaHoraAgendarCita;
         this.idPos = idPos;
     }
-
-    public model_cita(String id, String dia, String hora, String motivo, String estado, String status, String idUusario,String idMedico, Context context, Callback_cita callback_cita, String descripcion) {
+    //controller_patient_FechaHoraAgendarCita
+    public model_cita(String id, String dia, String hora, String motivo, String estado, String status, String idUusario,String idMedico, Context context, Callback_patient_fechaHoraAgendarCita callback_patient_fechaHoraAgendarCita, String descripcion) {
         this.id = id;
         this.dia = dia;
         this.hora = hora;
@@ -76,7 +81,7 @@ public class model_cita {
         this.idUusario = idUusario;
         this.context = context;
         this.idMedico = idMedico;
-        this.callback_cita = callback_cita;
+        this.callback_patient_fechaHoraAgendarCita = callback_patient_fechaHoraAgendarCita;
         this.descripcion = descripcion;
     }
     public model_cita(String id, String dia, String hora, String motivo, String estado, String descripcion) {
@@ -87,11 +92,17 @@ public class model_cita {
         this.estado = estado;
         this.descripcion = descripcion;
     }
-
-    public model_cita(String idUusario, controller_patient_HistorialCitasLayout controller_patient_historialCitasLayout, controller_patient_HistorialCitasLayout controller_patient_historialCitasLayout1) {
+    //controller_patient_HistorialCitasLayout
+    public model_cita(String idUusario, Context context, Callback_patient_historialCitas callback_patient_historialCitas) {
         this.idUusario = idUusario;
-        this.context = controller_patient_historialCitasLayout;
-        this.callback_cita = (Callback_cita) controller_patient_historialCitasLayout1;
+        this.context = context;
+        this.callback_patient_historialCitas = callback_patient_historialCitas;
+    }
+    //controller_patient_listarCitasActivas
+    public model_cita(String idUusario, Context context, Callback_patient_listarCitasActivas callback_patient_listarCitasActivas) {
+        this.idUusario = idUusario;
+        this.context = context;
+        this.callback_patient_listarCitasActivas = callback_patient_listarCitasActivas;
     }
 
     public void horasCita(){
@@ -113,8 +124,10 @@ public class model_cita {
                             String hora = object.getString("hora");
                             res[i] = hora;
                         }
-                        callback_cita.onSuccesshoraCitas(res);
+                        callback_patient_fechaHoraAgendarCita.onSuccesshoraCitas(res);
                         progressDialog.dismiss();
+                    }else{
+                        callback_patient_fechaHoraAgendarCita.onErrorhoraCitas("");
                     }
                 }catch (JSONException e) {
                     throw new RuntimeException(e);
@@ -155,6 +168,61 @@ public class model_cita {
 
                     if(jsonArray.length() == 0){
                         System.out.println("model_cita -> historial -> datos vacío");
+                        callback_patient_historialCitas.onErrorhoraHistorial("Historial vacio, no se han encontrado registros");
+                        progressDialog.dismiss();
+                    } else if(exito.equals("1")){
+                        ArrayList<model_cita> cita = new ArrayList<>();
+                        System.out.println(jsonArray.length());
+                        for (int i = 0;i < jsonArray.length();i++){
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            cita.add(new model_cita(object.getString("id"),object.getString("dia"),object.getString("hora"),object.getString("motivo"),object.getString("estado"),object.getString("descripcion")));
+                        }
+
+                        callback_patient_historialCitas.onSuccessHistorial(cita);
+                        progressDialog.dismiss();
+                    }
+                } catch (JSONException e) {
+                    System.out.println("model_general_usuario -> login -> JSONException: "+e);
+                    callback_patient_historialCitas.onErrorhoraHistorial(e.getMessage());
+                    System.out.println("Error");
+                    progressDialog.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println("Error: "+error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("matricula",idUusario);
+
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+    public void listarCitasActivas(){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Obteniendo citas activas");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        String url = molarConfig.getDomainAzure()+"/citas/service_listarCitasPaciente.php";
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito =jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+
+                    if(jsonArray.length() == 0){
+                        System.out.println("model_cita -> historial -> datos vacío");
                         Toast.makeText(context, "Historial vacio, no se han encontrado registros", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                     } else if(exito.equals("1")){
@@ -165,12 +233,12 @@ public class model_cita {
                             cita.add(new model_cita(object.getString("id"),object.getString("dia"),object.getString("hora"),object.getString("motivo"),object.getString("estado"),object.getString("descripcion")));
                         }
 
-                        callback_cita.onSuccessHistorial(cita);
+                        callback_patient_listarCitasActivas.onSuccessListarCitasActivas(cita);
                         progressDialog.dismiss();
                     }
                 } catch (JSONException e) {
                     System.out.println("model_general_usuario -> login -> JSONException: "+e);
-                    callback_cita.onErrorhoraHistorial(e.getMessage());
+                    callback_patient_listarCitasActivas.onErrorListarCitasActivas(e.getMessage());
                     System.out.println("Error");
                     progressDialog.dismiss();
                 }
@@ -206,11 +274,11 @@ public class model_cita {
                 if (response.equalsIgnoreCase("Registro exitoso")) {
                     Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
-                    callback_cita.onSuccessAgendarCita();
+                    callback_patient_fechaHoraAgendarCita.onSuccessAgendarCita();
                 } else {
                     Toast.makeText(context, "No se puede registrar", Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
-                    callback_cita.onErrorAgendarCita("No se puede registrar");
+                    callback_patient_fechaHoraAgendarCita.onErrorAgendarCita("No se puede registrar");
                 }
             }
         }, new Response.ErrorListener() {
@@ -248,19 +316,19 @@ public class model_cita {
                     String exito = jsonObject.getString("exito");
                     JSONArray jsonArray = jsonObject.getJSONArray("datos");
                     if (jsonArray.length() == 0){
-                        Toast.makeText(context, "No hay medicos", Toast.LENGTH_SHORT).show();
+                        callback_patient_fechaHoraAgendarCita.onErrorNumDoctor("No hay medicos");
                     }else{
                         if (exito.equals("1")){
                             JSONObject object = jsonArray.getJSONObject(0);
                             String num = object.getString("Num");
                             System.out.println("CountDoctor: "+num);
-                            callback_cita.onSuccessNumDoctor(num);
+                            callback_patient_fechaHoraAgendarCita.onSuccessNumDoctor(num);
                         }
                     }
                 } catch (JSONException e) {
                     System.out.println("model_Patient -> obtenerMedico -> JSONException: "+e);
                     e.printStackTrace();
-                    callback_cita.onErrorNumDoctor(e.getMessage());
+                    callback_patient_fechaHoraAgendarCita.onErrorNumDoctor(e.getMessage());
                 }
             }
         }, new Response.ErrorListener() {
@@ -291,10 +359,10 @@ public class model_cita {
                         JSONArray jsonArray = jsonObject.getJSONArray("datos");
                         JSONObject object = jsonArray.getJSONObject(0);
                         String matricula = object.getString("matricula");
-                        callback_cita.onSuccessdisponibilidadDoctor(matricula);
+                        callback_patient_fechaHoraAgendarCita.onSuccessdisponibilidadDoctor(matricula);
                     }else{
                         System.out.println("No hay exito en disponibilidadDoctor");
-                        callback_cita.onErrordisponibilidadDoctor("");
+                        callback_patient_fechaHoraAgendarCita.onErrordisponibilidadDoctor("");
                     }
                 }catch (JSONException e) {
                     throw new RuntimeException(e);
@@ -304,7 +372,7 @@ public class model_cita {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println("model_cita -> horasCita -> onErrorResponse: "+error.getMessage());
-                callback_cita.onErrordisponibilidadDoctor(error.getMessage());
+                callback_patient_fechaHoraAgendarCita.onErrordisponibilidadDoctor(error.getMessage());
             }
         }){
             @Nullable
@@ -389,14 +457,6 @@ public class model_cita {
 
     public void setContext(Context context) {
         this.context = context;
-    }
-
-    public Callback_cita getCallback_cita() {
-        return callback_cita;
-    }
-
-    public void setCallback_cita(Callback_cita callback_cita) {
-        this.callback_cita = callback_cita;
     }
 
     public String getDescripcion() {

@@ -14,17 +14,15 @@ import android.widget.CalendarView;
 import android.widget.Toast;
 
 import com.haku.molar.R;
-import com.haku.molar.model.cita.Callback_cita;
+import com.haku.molar.controller.patient.interfaces.Callback_patient_fechaHoraAgendarCita;
 import com.haku.molar.model.cita.model_cita;
-import com.haku.molar.model.patient.model_Patient;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
-public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity implements Callback_cita {
+public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity implements Callback_patient_fechaHoraAgendarCita {
     String hora="",fecha="",motivo="",descripcion="",nombre="", matricula="", matriculaDoctor="";
     int toleranciaDoctor=0;
     Button hora1,hora2,hora3,hora4,hora5,hora6;
@@ -316,15 +314,5 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
     @Override
     public void onErrordisponibilidadDoctor(String mensaje) {
         obtenerNumDoctor();
-    }
-
-    @Override
-    public void onSuccessHistorial(ArrayList<model_cita> historial) {
-
-    }
-
-    @Override
-    public void onErrorhoraHistorial(String mensaje) {
-
     }
 }

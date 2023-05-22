@@ -7,20 +7,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
 import com.haku.molar.controller.patient.adapter.adaptadorRecyclerMenuPaciente;
+import com.haku.molar.controller.patient.interfaces.Callback_patient_menu;
 import com.haku.molar.model.cita.model_cita;
-import com.haku.molar.model.patient.Callback_patient;
 import com.haku.molar.model.patient.model_Patient;
 
 import java.util.ArrayList;
 
-public class controller_patient_MenuPaciente extends AppCompatActivity implements Callback_patient {
+public class controller_patient_MenuPaciente extends AppCompatActivity implements Callback_patient_menu {
     TextView tvNombre;
     String matricula, nombre, rol;
 
@@ -101,13 +100,6 @@ public class controller_patient_MenuPaciente extends AppCompatActivity implement
         startActivity(intentAjustesCuenta);
         finish();
     }
-
-    @Override
-    public void onSuccessbuscarDatos(String[] datos) {}
-    @Override
-    public void onErrorbuscarDatos(String mensaje) {}
-    @Override
-    public void onErrorudpatebyUser(String mensaje) {}
     @Override
     public void OnSuccesslistarCitas(ArrayList<model_cita> citas) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -121,23 +113,4 @@ public class controller_patient_MenuPaciente extends AppCompatActivity implement
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onSuccessObternerPass(String[] datos) {
-
-    }
-
-    @Override
-    public void onErrorObternerPass(String mensaje) {
-
-    }
-
-    @Override
-    public void onSuccessUpdatebyUser() {
-
-    }
-
-    @Override
-    public void OnErrorUpdateByUser(String mensaje) {
-
-    }
 }

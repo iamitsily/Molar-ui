@@ -45,10 +45,10 @@ public class adaptadorRecyclerMenuPaciente extends RecyclerView.Adapter<adaptado
         TextView dia, diaString, hora, medico, motivo;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            dia = (TextView) itemView.findViewById(R.id.recyclerViewMenuPacienteDia);
-            diaString = (TextView) itemView.findViewById(R.id.recyclerViewMenuPacienteDiaString);
-            hora = (TextView) itemView.findViewById(R.id.recyclerViewMenuPacienteHora);
-            medico = (TextView) itemView.findViewById(R.id.recyclerViewMenuPacienteMedico);
+            dia = (TextView) itemView.findViewById(R.id.recyclerViewListarCitasActivasDia);
+            diaString = (TextView) itemView.findViewById(R.id.recyclerViewListarCitasActivasMes);
+            hora = (TextView) itemView.findViewById(R.id.recyclerViewListarCitasActivasHora);
+            medico = (TextView) itemView.findViewById(R.id.recyclerViewListarCitasActivasAsunto);
             motivo = (TextView) itemView.findViewById(R.id.recyclerViewMenuPacienteMotivo);
 
         }

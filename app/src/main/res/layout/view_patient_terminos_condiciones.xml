@@ -43,7 +43,7 @@
                 tools:text="Esta aplicación es propiedad de HAKU y está protegida por las leyes de propiedad intelectual. Queda prohibido cualquier uso no autorizado de los contenidos de esta aplicación." />
 
             <TextView
-                android:id="@+id/textView19"
+                android:id="@+id/patient_listarCitasActivasNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
@@ -76,7 +76,7 @@
                 tools:text="Esta aplicación recopila cierta información personal del usuario, incluyendo nombre, correo electrónico y número de teléfono. Esta información será utilizada únicamente para proporcionar los servicios de la aplicación y no será compartida con terceros sin el consentimiento del usuario." />
 
             <TextView
-                android:id="@+id/textView23"
+                android:id="@+id/patient_listarCitasActivaMatricula"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"

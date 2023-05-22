@@ -77,7 +77,7 @@ public class model_General_Notificaciones {
                         callback_notificaciones.onSuccessNotificaciones(notificaciones);
                     }else{
                         progressDialog.dismiss();
-                        callback_notificaciones.onErrorNotificaciones("No hay notis");
+                        callback_notificaciones.onErrorNotificaciones("No hay notificaciones");
                     }
                 } catch (JSONException e) {
                     System.out.println("model_notificaciones -> listarNotificaciones -> JSONException: " + e);
