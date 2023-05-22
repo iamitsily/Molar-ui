@@ -13,6 +13,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.haku.molar.controller.patient.interfaces.Callback_patient_ajustesPaciente;
+import com.haku.molar.controller.patient.interfaces.Callback_patient_menu;
 import com.haku.molar.model.cita.model_cita;
 import com.haku.molar.utils.MolarConfig;
 import com.haku.molar.utils.MolarMail;
@@ -30,25 +32,32 @@ public class model_Patient {
     String[] res = new String[4];
     String nombre, apellidoPaterno, apellidoMaterno, email, telefono, password, passwordNoCrypt;
     Context context;
-    private Callback_patient buscarDatosCallback;
+    private Callback_patient_menu callback_patient_menu;
+    private Callback_patient_ajustesPaciente callback_patient_ajustesPaciente;
     MolarConfig molarConfig = new MolarConfig();
     //Constructores
     public model_Patient() {
     }
 
-    public model_Patient(int matricula, String email, String telefono, String password, Context context, Callback_patient buscarDatosCallback) {
+    public model_Patient(int matricula, Context context, Callback_patient_menu callback_patient_menu) {
+        this.matricula = matricula;
+        this.context = context;
+        this.callback_patient_menu = callback_patient_menu;
+    }
+
+    public model_Patient(int matricula, Context context, Callback_patient_ajustesPaciente callback_patient_ajustesPaciente) {
+        this.matricula = matricula;
+        this.context = context;
+        this.callback_patient_ajustesPaciente = callback_patient_ajustesPaciente;
+    }
+
+    public model_Patient(int matricula, String email, String telefono, String password, Context context, Callback_patient_ajustesPaciente callback_patient_ajustesPaciente) {
         this.matricula = matricula;
         this.email = email;
         this.telefono = telefono;
         this.password = password;
         this.context = context;
-        this.buscarDatosCallback = buscarDatosCallback;
-    }
-
-    public model_Patient(int matricula, Context context, Callback_patient callback_patient) {
-        this.matricula = matricula;
-        this.context = context;
-        this.buscarDatosCallback = callback_patient;
+        this.callback_patient_ajustesPaciente = callback_patient_ajustesPaciente;
     }
 
     public model_Patient(int matricula, int rol, int sexo, String nombre, String apellidoPaterno, String apellidoMaterno, String email, String telefono, String password, Context context, String ContraseñaNoCrypt) {
@@ -84,7 +93,7 @@ public class model_Patient {
                     JSONArray jsonArray = jsonObject.getJSONArray("datos");
                     if (jsonArray.length() == 0){
                         System.out.println("model_general_usuario -> buscarDatos -> datos vacío");
-                        buscarDatosCallback.onErrorbuscarDatos("Datos no encontrados");
+                        callback_patient_ajustesPaciente.onErrorbuscarDatos("Datos no encontrados");
                         progressDialog.dismiss();
                     }else{
                         if (exito.equals("1")){
@@ -95,7 +104,7 @@ public class model_Patient {
                             String password = object.getString("password");
                             String[] res = {matricula, email, telefono, password};
                             progressDialog.dismiss();
-                            buscarDatosCallback.onSuccessbuscarDatos(res);
+                            callback_patient_ajustesPaciente.onSuccessbuscarDatos(res);
                         }
                     }
                 }catch (JSONException e){
@@ -133,9 +142,9 @@ public class model_Patient {
             @Override
             public void onResponse(String response) {
                 if (response.equalsIgnoreCase("Modificacion exitosa")){
-                    buscarDatosCallback.onSuccessUpdatebyUser();
+                    callback_patient_ajustesPaciente.onSuccessUpdatebyUser();
                 }else{
-                    buscarDatosCallback.onErrorudpatebyUser("Error al actualizar la cuenta");
+                    callback_patient_ajustesPaciente.onErrorudpatebyUser("Error al actualizar la cuenta");
                 }
             }
         }, new Response.ErrorListener() {
@@ -220,7 +229,7 @@ public class model_Patient {
                     String exito =jsonObject.getString("exito");
                     JSONArray jsonArray = jsonObject.getJSONArray("datos");
                     if (jsonArray.length()==0){
-                        buscarDatosCallback.OneErrorlistarCitas("No hay citas agendadas para mostrar en el menu");
+                        callback_patient_menu.OneErrorlistarCitas("No hay citas agendadas para mostrar en el menu");
                         progressDialog.dismiss();
                     }else if (exito.equals("1")){
                         ArrayList<model_cita> citasPaciente = new ArrayList<>();
@@ -236,7 +245,7 @@ public class model_Patient {
                                     object.getString("apellidoPaterno")
                             ));
                         }
-                        buscarDatosCallback.OnSuccesslistarCitas(citasPaciente);
+                        callback_patient_menu.OnSuccesslistarCitas(citasPaciente);
                         progressDialog.dismiss();
                     }
                 } catch (JSONException e) {
@@ -283,7 +292,7 @@ public class model_Patient {
                     String exito = jsonObject.getString("exito");
                     JSONArray jsonArray = jsonObject.getJSONArray("datos");
                     if (jsonArray.length() == 0){
-                        buscarDatosCallback.onErrorObternerPass("Verificar Usuario");
+                        callback_patient_ajustesPaciente.onErrorObternerPass("Verificar Usuario");
                     }else{
                         if (exito.equals("1")){
                             JSONObject object = jsonArray.getJSONObject(0);
@@ -292,7 +301,7 @@ public class model_Patient {
                             String password = object.getString("password");
                             String rol = object.getString("rol");
                             String[] res = {matricula, nombre, password, rol};
-                            buscarDatosCallback.onSuccessObternerPass(res);
+                            callback_patient_ajustesPaciente.onSuccessObternerPass(res);
                         }
                     }
                 }catch (JSONException e){

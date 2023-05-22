@@ -2,24 +2,19 @@ package com.haku.molar.controller.patient;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.InputType;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.haku.molar.R;
-import com.haku.molar.model.cita.model_cita;
-import com.haku.molar.model.model_General_Usuario;
-import com.haku.molar.model.patient.Callback_patient;
+import com.haku.molar.controller.patient.interfaces.Callback_patient_ajustesPaciente;
 import com.haku.molar.model.patient.model_Patient;
 import com.haku.molar.utils.MolarCrypt;
 
@@ -33,15 +28,12 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-import java.util.ArrayList;
-
-public class controller_patient_AjustesCuentaDatos extends AppCompatActivity implements Callback_patient {
+public class controller_patient_AjustesCuentaDatos extends AppCompatActivity implements Callback_patient_ajustesPaciente {
     EditText edt_telefono, edt_email, edt_passActual, edt_passNueva, edt_passconfirmed;
     String matricula, nombre, rol, passwordActual,passNueva,passwordConfirmar, email, telefonno;
     Button btnGuardar;
     int pos = 0;
     ProgressDialog progressDialog;
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,24 +162,10 @@ public class controller_patient_AjustesCuentaDatos extends AppCompatActivity imp
     }
 
     @Override
-    public void OnErrorUpdateByUser(String mensaje) {
+    public void onErrorudpatebyUser(String mensaje) {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onErrorudpatebyUser(String mensaje) {
-
-    }
-
-    @Override
-    public void OnSuccesslistarCitas(ArrayList<model_cita> citas) {
-        progressDialog.dismiss();
-    }
-
-    @Override
-    public void OneErrorlistarCitas(String mensaje) {
-    
-    }
     @Override
     public void onSuccessObternerPass(String[] datos) {
         try {

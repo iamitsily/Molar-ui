@@ -1,9 +1,6 @@
-package com.haku.molar.model.cita;
+package com.haku.molar.controller.patient.interfaces;
 
-import java.util.ArrayList;
-
-public interface Callback_cita {
-
+public interface Callback_patient_fechaHoraAgendarCita {
     void onSuccesshoraCitas(String[] datos);
     void onErrorhoraCitas(String mensaje);
     void onSuccessAgendarCita();
@@ -12,6 +9,4 @@ public interface Callback_cita {
     void onErrorNumDoctor(String mensaje);
     void onSuccessdisponibilidadDoctor(String matricula);
     void onErrordisponibilidadDoctor(String mensaje);
-    void onSuccessHistorial(ArrayList<model_cita> historial);
-    void onErrorhoraHistorial(String mensaje);
 }

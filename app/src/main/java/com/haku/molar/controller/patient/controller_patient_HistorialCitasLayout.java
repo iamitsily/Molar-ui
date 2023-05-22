@@ -6,21 +6,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
 import com.haku.molar.controller.patient.adapter.adaptadorRecyclerHistorialCitas;
-import com.haku.molar.controller.patient.adapter.adaptadorRecyclerMenuPaciente;
-import com.haku.molar.model.cita.Callback_cita;
+import com.haku.molar.controller.patient.interfaces.Callback_patient_historialCitas;
 import com.haku.molar.model.cita.model_cita;
 
 import java.util.ArrayList;
 
-public class controller_patient_HistorialCitasLayout extends AppCompatActivity implements Callback_cita {
+public class controller_patient_HistorialCitasLayout extends AppCompatActivity implements Callback_patient_historialCitas {
     String matricula,nombre,rol;
 
     BottomNavigationView menuNav;
@@ -86,45 +81,6 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity i
         finish();
     }
 
-    @Override
-    public void onSuccesshoraCitas(String[] datos) {
-
-    }
-
-    @Override
-    public void onErrorhoraCitas(String mensaje) {
-
-    }
-
-    @Override
-    public void onSuccessAgendarCita() {
-
-    }
-
-    @Override
-    public void onErrorAgendarCita(String mensaje) {
-
-    }
-
-    @Override
-    public void onSuccessNumDoctor(String num) {
-
-    }
-
-    @Override
-    public void onErrorNumDoctor(String mensaje) {
-
-    }
-
-    @Override
-    public void onSuccessdisponibilidadDoctor(String matricula) {
-
-    }
-
-    @Override
-    public void onErrordisponibilidadDoctor(String mensaje) {
-
-    }
 
     @Override
     public void onSuccessHistorial(ArrayList<model_cita> historial) {
@@ -138,4 +94,5 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity i
     public void onErrorhoraHistorial(String mensaje) {
 
     }
+
 }
