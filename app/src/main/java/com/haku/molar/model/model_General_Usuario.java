@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class model_General_Usuario {
+
     int matricula, rol, sexo;
     String[] res = new String[4];
     String nombre, apellidoPaterno, apellidoMaterno, email, telefono, password;
