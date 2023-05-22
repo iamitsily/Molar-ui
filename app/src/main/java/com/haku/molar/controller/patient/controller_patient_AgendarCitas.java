@@ -17,6 +17,7 @@ public class controller_patient_AgendarCitas extends AppCompatActivity {
     Spinner spinner;
     String matricula,nombre;
     EditText descripcion;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

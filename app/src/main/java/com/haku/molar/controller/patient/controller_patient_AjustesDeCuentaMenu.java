@@ -26,7 +26,6 @@ public class controller_patient_AjustesDeCuentaMenu extends AppCompatActivity {
         nombre = intent.getStringExtra("nombre");
         rol = intent.getStringExtra("rol");
 
-
         //Cast
         imageView = findViewById(R.id.view_patient_ajustescuentamenu_imvw);
         tvNombre = findViewById(R.id.view_patient_ajustesCuentaMenuNombre);
