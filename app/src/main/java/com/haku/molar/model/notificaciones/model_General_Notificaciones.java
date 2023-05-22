@@ -52,8 +52,7 @@ public class model_General_Notificaciones {
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Cargando notificaciones");
         progressDialog.show();
-//        String url = molarConfig.getDomainAzure() + "/patient/service_listarNotificaciones.php";
-        String url = "http://192.168.0.107/Molar-Backend/patient/service_listarNotificaciones.php";
+        String url = molarConfig.getDomainAzure() + "/patient/service_listarNotificaciones.php";
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
