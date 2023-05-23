@@ -20,7 +20,7 @@ import com.haku.molar.model.patient.model_Patient;
 import java.util.ArrayList;
 
 public class controller_patient_MenuPaciente extends AppCompatActivity implements Callback_patient_menu {
-    TextView tvNombre;
+    TextView tvNombre, tvMatricula;
     String matricula, nombre, rol;
 
     BottomNavigationView menuNav;
@@ -37,6 +37,7 @@ public class controller_patient_MenuPaciente extends AppCompatActivity implement
         nombre = intent.getStringExtra("nombre");
         rol = intent.getStringExtra("rol");
         tvNombre = (TextView) findViewById(R.id.tvNombre_patient_MenuPaciente);
+        tvMatricula = findViewById(R.id.tvMatricula_patient_MenuPaciente);
         RvListCitas = findViewById(R.id.view_patient_menuPacienteReciclerView);
 
         inicioUI();
@@ -85,6 +86,7 @@ public class controller_patient_MenuPaciente extends AppCompatActivity implement
     }
     public void inicioUI() {
         tvNombre.setText(nombre);
+        tvMatricula.setText(matricula);
     }
 
     public void registrar(View view) {

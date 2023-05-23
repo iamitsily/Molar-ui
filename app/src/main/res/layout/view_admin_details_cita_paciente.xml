@@ -160,7 +160,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/vector2"
+        android:id="@+id/ivBackBtnDetallesCitaPatient"
         android:layout_width="40dp"
         android:layout_height="39dp"
         android:layout_marginTop="20dp"

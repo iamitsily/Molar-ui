@@ -4,7 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haku.molar.R;
@@ -15,16 +19,35 @@ import com.haku.molar.model.cita.model_cita;
 import java.util.ArrayList;
 
 public class controller_patient_listarCitasActivas extends AppCompatActivity implements Callback_patient_listarCitasActivas {
-    String matricula, nombre;
+    String matricula, nombre, opcion;
     RecyclerView RvListCitas;
+    ImageView ivBackBtn;
+    TextView tvNombre, tvMatricula;
     private adaptadorRecyclerCitasActivas adaptadorRecyclerCitasActivas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_patient_listar_citas_activas);
-
+        Intent intent = getIntent();
+        matricula = intent.getStringExtra("matricula");
+        nombre = intent.getStringExtra("nombre");
+        opcion = intent.getStringExtra("opcion");
         RvListCitas = findViewById(R.id.patient_listarCitasActivasRV);
-        matricula="2023057300";
+        ivBackBtn = findViewById(R.id.ivBackbtnListarCitasActivas);
+        tvNombre = findViewById(R.id.patient_detallesCitaNombre);
+        tvMatricula = findViewById(R.id.patient_detallesCitaMatricula);
+        tvNombre.setText(nombre);
+        tvMatricula.setText(matricula);
+        ivBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), controller_patient_OpcionesCitas.class);
+                intent.putExtra("matricula",matricula);
+                intent.putExtra("nombre",nombre);
+                startActivity(intent);
+                finish();
+            }
+        });
         model_cita model_cita = new model_cita(matricula, this, this);
         model_cita.listarCitasActivas();
     }

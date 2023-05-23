@@ -68,7 +68,7 @@
 
 
         <View
-            android:id="@+id/dos"
+            android:id="@+id/view_reagendarCita_patient_opcionescita"
             android:layout_width="319dp"
             android:layout_height="112.45dp"
             android:layout_marginStart="20dp"
@@ -78,7 +78,7 @@
             android:id="@+id/imageView3"
             android:layout_width="61dp"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@id/dos"
+            android:layout_alignStart="@id/view_reagendarCita_patient_opcionescita"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="23dp"
@@ -195,7 +195,7 @@
 
 
         <View
-            android:id="@+id/tress"
+            android:id="@+id/view_CancelarCita_patient_opcionescita"
             android:layout_width="319dp"
             android:layout_height="112.45dp"
             android:layout_marginStart="20dp"
@@ -207,7 +207,7 @@
             android:id="@+id/imageView2"
             android:layout_width="61dp"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@id/tress"
+            android:layout_alignStart="@id/view_CancelarCita_patient_opcionescita"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="23dp"

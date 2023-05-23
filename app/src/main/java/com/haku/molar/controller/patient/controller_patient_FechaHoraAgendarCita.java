@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.haku.molar.R;
@@ -26,6 +27,7 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
     String hora="",fecha="",motivo="",descripcion="",nombre="", matricula="", matriculaDoctor="";
     int toleranciaDoctor=0;
     Button hora1,hora2,hora3,hora4,hora5,hora6;
+    ImageButton backbtn;
     CalendarView calendarView;
     ProgressDialog progressDialogMedico;
     @Override
@@ -46,13 +48,19 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
         hora4 = findViewById(R.id.view_patient_fechaHora_btn4);
         hora5 = findViewById(R.id.view_patient_fechaHora_btn5);
         hora6 = findViewById(R.id.view_patient_fechaHora_btn6);
-
+        backbtn = findViewById(R.id.IbPatientFechaHoraAgendarBacnbtn);
         progressDialogMedico = new ProgressDialog(this);
         progressDialogMedico.setMessage("Asignando medico");
 
         horasCita(getDiaCalendar());
 
         //Listeners
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backAsuntoCitaBtn();
+            }
+        });
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -160,6 +168,13 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
                 System.out.println("Click");
             }
         });
+    }
+    public void backAsuntoCitaBtn(){
+        Intent intent = new Intent(this, controller_patient_AgendarCitas.class);
+        intent.putExtra("matricula",matricula);
+        intent.putExtra("nombre",nombre);
+        startActivity(intent);
+        finish();
     }
     public void agendarCita(View view){
         if (hora.equals("")){

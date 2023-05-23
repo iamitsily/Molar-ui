@@ -43,7 +43,7 @@
             app:srcCompat="@mipmap/view_doctor_patient_ajustesdecuenta_profile" />
 
         <TextView
-            android:id="@+id/patient_listarCitasActivasNombre"
+            android:id="@+id/patient_detallesCitaNombre"
             android:layout_width="136dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -56,7 +56,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/patient_listarCitasActivaMatricula"
+            android:id="@+id/patient_detallesCitaMatricula"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -160,7 +160,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/vector2"
+        android:id="@+id/ivBackBtnDetallesCitaPatient"
         android:layout_width="40dp"
         android:layout_height="39dp"
         android:layout_marginTop="20dp"
@@ -185,7 +185,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/relativeLayout3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/vector2"
+        app:layout_constraintStart_toEndOf="@+id/ivBackBtnDetallesCitaPatient"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout

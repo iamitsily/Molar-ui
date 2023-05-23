@@ -28,7 +28,6 @@ public class adaptadorRecyclerMenuPaciente extends RecyclerView.Adapter<adaptado
 
     @Override
     public void onBindViewHolder(@NonNull adaptadorRecyclerMenuPaciente.ViewHolder holder, int position) {
-            holder.dia.setText(model_citas.get(position).getDia());
             holder.dia.setText(divdirDate(model_citas.get(position).getDia()));
             holder.diaString.setText(diaSemana(model_citas.get(position).getDia()));
             holder.hora.setText(model_citas.get(position).getHora());
