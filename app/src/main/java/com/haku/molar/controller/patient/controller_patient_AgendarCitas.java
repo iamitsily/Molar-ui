@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.haku.molar.R;
@@ -17,6 +18,7 @@ public class controller_patient_AgendarCitas extends AppCompatActivity {
     Spinner spinner;
     String matricula,nombre;
     EditText descripcion;
+    ImageView IVBtnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ public class controller_patient_AgendarCitas extends AppCompatActivity {
 
         spinner = findViewById(R.id.view_patient_agendarcitas_spinnerMotivo);
         descripcion = findViewById(R.id.view_patient_agendarcitas_descripcion);
+        IVBtnBack = findViewById(R.id.AC1_iv1);
 
         ArrayList<motivo> Motivos = new ArrayList<>();
             Motivos.add(new motivo("Revision"));
@@ -41,6 +44,12 @@ public class controller_patient_AgendarCitas extends AppCompatActivity {
         ArrayAdapter<motivo> adapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,Motivos);
         spinner.setAdapter(adapter);
 
+        IVBtnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backMenubtn();
+            }
+        });
     }
     public void fechaHorabtn(View view){
 
@@ -50,6 +59,13 @@ public class controller_patient_AgendarCitas extends AppCompatActivity {
         intentFechaHora.putExtra("motivo", spinner.getSelectedItem().toString());
         intentFechaHora.putExtra("descripcion", descripcion.getText().toString().trim());
         startActivity(intentFechaHora);
+        finish();
+    }
+    public void backMenubtn(){
+        Intent intent = new Intent(this, controller_patient_OpcionesCitas.class);
+        intent.putExtra("matricula",matricula);
+        intent.putExtra("nombre",nombre);
+        startActivity(intent);
         finish();
     }
     public class motivo{

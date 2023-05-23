@@ -12,6 +12,7 @@ import com.haku.molar.R;
 import com.haku.molar.model.cita.model_cita;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class adaptadorRecyclerCitasActivas extends RecyclerView.Adapter<adaptadorRecyclerCitasActivas.ViewHolder> {
     ArrayList<model_cita> model_citas = new ArrayList<>();
@@ -29,8 +30,8 @@ public class adaptadorRecyclerCitasActivas extends RecyclerView.Adapter<adaptado
 
     @Override
     public void onBindViewHolder(@NonNull adaptadorRecyclerCitasActivas.ViewHolder holder, int position) {
-        holder.dia.setText(model_citas.get(position).getDia());
-        holder.mes.setText(model_citas.get(position).getDia());
+        holder.dia.setText(divdirDate(model_citas.get(position).getDia()));
+        holder.mes.setText(diaSemana(model_citas.get(position).getDia()));
         holder.hora.setText(model_citas.get(position).getHora());
         holder.asunto.setText(model_citas.get(position).getMotivo());
         holder.id.setText(model_citas.get(position).getId());
@@ -52,5 +53,23 @@ public class adaptadorRecyclerCitasActivas extends RecyclerView.Adapter<adaptado
             asunto = (TextView) itemView.findViewById(R.id.recyclerViewListarCitasActivasAsunto);
             id = (TextView) itemView.findViewById(R.id.recyclerViewListarCitasActivasidCita);
         }
+    }
+    public String diaSemana(String date){
+        String diaSemn = "";
+        String[] dateParts = date.split("-");
+        int day = Integer.parseInt(dateParts[0]);
+        int month = Integer.parseInt(dateParts[1]);
+        int year = Integer.parseInt(dateParts[2]);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year,month - 1, day);
+
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        String[]dias = { "Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb" };
+        return dias[dayOfWeek -1];
+    }
+    public String divdirDate(String date){
+        String[] dateParts = date.split("-");
+        return dateParts[0];
     }
 }

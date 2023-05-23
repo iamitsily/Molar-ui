@@ -13,7 +13,7 @@ import com.haku.molar.R;
 public class controller_patient_OpcionesCitas extends AppCompatActivity {
     String matricula,nombre;
     BottomNavigationView menuNav;
-    View view;
+    View viewAgendarCita, viewReagendarCita, viewCancelarCita;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,8 +24,11 @@ public class controller_patient_OpcionesCitas extends AppCompatActivity {
         nombre = intent.getStringExtra("nombre");
         menuNav = findViewById(R.id.menu_patient_menu);
         menuNav.setSelectedItemId(R.id.menu_patient_cita);
-        view = findViewById(R.id.view_agendarCita_patient_opcionescita);
-        view.setOnClickListener(new View.OnClickListener() {
+        viewAgendarCita = findViewById(R.id.view_agendarCita_patient_opcionescita);
+        viewReagendarCita = findViewById(R.id.view_reagendarCita_patient_opcionescita);
+        viewCancelarCita = findViewById(R.id.view_CancelarCita_patient_opcionescita);
+        //Listeners
+        viewAgendarCita.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentAgendarCita = new Intent(getApplicationContext(), controller_patient_AgendarCitas.class);
@@ -35,7 +38,28 @@ public class controller_patient_OpcionesCitas extends AppCompatActivity {
                 finish();
             }
         });
-        //Listeners
+        viewReagendarCita.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentAgendarCita = new Intent(getApplicationContext(), controller_patient_listarCitasActivas.class);
+                intentAgendarCita.putExtra("matricula",matricula);
+                intentAgendarCita.putExtra("nombre", nombre);
+                intentAgendarCita.putExtra("opcion", "0");
+                startActivity(intentAgendarCita);
+                finish();
+            }
+        });
+        viewCancelarCita.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentAgendarCita = new Intent(getApplicationContext(), controller_patient_listarCitasActivas.class);
+                intentAgendarCita.putExtra("matricula",matricula);
+                intentAgendarCita.putExtra("nombre", nombre);
+                intentAgendarCita.putExtra("opcion", "1");
+                startActivity(intentAgendarCita);
+                finish();
+            }
+        });
         menuNav.setOnItemSelectedListener(item ->{
             switch (item.getItemId()){
                 case R.id.menu_patient_home:

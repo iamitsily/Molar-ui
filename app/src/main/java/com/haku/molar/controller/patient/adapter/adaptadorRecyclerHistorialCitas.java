@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.haku.molar.R;
-import com.haku.molar.controller.patient.controller_patient_CancelarCitaMotivo;
+import com.haku.molar.controller.patient.*;
 import com.haku.molar.model.cita.model_cita;
 
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class adaptadorRecyclerHistorialCitas extends RecyclerView.Adapter<adapta
         holder.status.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, controller_patient_CancelarCitaMotivo.class);
+                Intent i = new Intent(context, controller_patient_DetallesCitaPaciente.class);
                 i.putExtra("matricula",matricula);
                 i.putExtra("nombre",nombre);
                 i.putExtra("rol",rol);
