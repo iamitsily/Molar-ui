@@ -67,8 +67,17 @@ public class controller_patient_AjustesDeCuentaMenu extends AppCompatActivity {
         intentAjustesCuenta.putExtra("matricula",matricula);
         intentAjustesCuenta.putExtra("nombre",nombre);
         intentAjustesCuenta.putExtra("rol",rol);
-
         startActivity(intentAjustesCuenta);
+        overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+        finish();
+    }
+    public void terminosCondiciones(View view){
+        Intent terminosCondiciones = new Intent(this, controller_patient_TerminosCondiciones.class);
+        terminosCondiciones.putExtra("matricula",matricula);
+        terminosCondiciones.putExtra("nombre",nombre);
+        terminosCondiciones.putExtra("rol",rol);
+        startActivity(terminosCondiciones);
+        overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
         finish();
     }
     public void cerrarSesion(View view){

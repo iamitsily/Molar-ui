@@ -6,6 +6,73 @@
     android:layout_height="match_parent"
     android:textAlignment="center">
 
+    <RelativeLayout
+        android:id="@+id/relativeLayout5"
+        android:layout_width="288dp"
+        android:layout_height="102dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_terminar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout5">
+
+
+        <View
+            android:id="@+id/rectangle_15"
+            android:layout_width="273dp"
+            android:layout_height="86dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/drawable_patient_details_cita_paciente_regresarborder"
+            android:backgroundTint="#EBF0F0" />
+
+        <View
+            android:layout_width="61dp"
+            android:layout_height="59dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="27dp"
+            android:layout_marginBottom="26dp"
+            android:background="@drawable/drawable_patient_reagendar_cita_borderhora" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="26dp"
+            android:layout_height="27dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="46dp"
+            android:layout_marginTop="34dp"
+            android:tint="#1B6AA4"
+            app:srcCompat="@drawable/vectorasset_patient_calendar" />
+
+        <TextView
+            android:id="@+id/textView24"
+            android:layout_width="151dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/rectangle_15"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="26dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="47dp"
+            android:text="Fecha de consulta" />
+
+        <TextView
+            android:id="@+id/textView25"
+            android:layout_width="94dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="84dp"
+            android:layout_marginBottom="31dp"
+            android:text="Fecha"
+            android:textColor="#0E1012"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
     <View
         android:id="@+id/view_pricipal"
         android:layout_width="413dp"
@@ -88,7 +155,8 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/drawable_patient_details_cita_paciente_regresarborder" />
+            android:background="@drawable/drawable_patient_details_cita_paciente_regresarborder"
+            android:backgroundTint="#EBF0F0" />
 
         <View
             android:layout_width="61dp"
@@ -135,11 +203,12 @@
 
     </RelativeLayout>
 
+
     <Button
         android:id="@+id/btn_terminar"
         android:layout_width="273dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/drawable_roundedbutton_general"
         android:backgroundTint="#1B6AA4"
         android:text="Terminar"
@@ -147,9 +216,8 @@
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintHorizontal_bias="0.449"
         app:layout_constraintStart_toStartOf="parent" />
-
 
     <ImageView
         android:id="@+id/ivBackBtnDetallesCitaPatient"
@@ -185,12 +253,11 @@
         android:layout_width="324dp"
         android:layout_height="130dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="184dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/relativeLayout4"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.43">
 
         <TextView
             android:id="@+id/tv_folio"
@@ -241,7 +308,6 @@
         android:id="@+id/tv7"
         android:layout_width="288dp"
         android:layout_height="39dp"
-        android:layout_marginTop="152dp"
         android:text="Hora en la que tendrá su cita"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -251,8 +317,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.443"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout3"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        app:layout_constraintVertical_bias="0.04000002" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
