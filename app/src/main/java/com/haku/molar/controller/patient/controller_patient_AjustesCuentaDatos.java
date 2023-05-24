@@ -79,6 +79,7 @@ public class controller_patient_AjustesCuentaDatos extends AppCompatActivity imp
         intent.putExtra("nombre",nombre);
         intent.putExtra("rol",rol);
         startActivity(intent);
+        overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
         finish();
     }
     public void inicioUI(){
