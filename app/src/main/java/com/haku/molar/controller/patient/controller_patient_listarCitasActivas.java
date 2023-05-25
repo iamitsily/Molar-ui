@@ -56,7 +56,26 @@ public class controller_patient_listarCitasActivas extends AppCompatActivity imp
     public void onSuccessListarCitasActivas(ArrayList<model_cita> listaActivas) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         RvListCitas.setLayoutManager(linearLayoutManager);
-        adaptadorRecyclerCitasActivas = new adaptadorRecyclerCitasActivas(listaActivas);
+        adaptadorRecyclerCitasActivas = new adaptadorRecyclerCitasActivas(listaActivas, this, new adaptadorRecyclerCitasActivas.ItemClickListener() {
+            @Override
+            public void OnItemClick(model_cita details) {
+                if (opcion.equals("1")){
+                    Intent intentCancelar = new Intent(getApplicationContext(), controller_patient_CancelarCitaMotivo.class);
+                    intentCancelar.putExtra("id",details.getId());
+                    intentCancelar.putExtra("matricula",matricula);
+                    intentCancelar.putExtra("nombre",nombre);
+                    startActivity(intentCancelar);
+                    finish();
+                }else{
+                    Intent intentReagendar = new Intent(getApplicationContext(), controller_patient_ReagendarCitas.class);
+                    intentReagendar.putExtra("id",details.getId());
+                    intentReagendar.putExtra("matricula",matricula);
+                    intentReagendar.putExtra("nombre",nombre);
+                    startActivity(intentReagendar);
+                    finish();
+                }
+            }
+        });
         RvListCitas.setAdapter(adaptadorRecyclerCitasActivas);
     }
 

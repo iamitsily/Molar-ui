@@ -27,10 +27,11 @@ public class controller_patient_CancelarCitaMotivo extends AppCompatActivity {
     }
 
     public void regresar(View view){
-        Intent i = new Intent(this,controller_patient_HistorialCitasLayout.class);
+        Intent i = new Intent(this,controller_patient_listarCitasActivas.class);
         i.putExtra("matricula",matricula);
         i.putExtra("nombre",nombre);
         i.putExtra("rol",rol);
+        i.putExtra("opcion","1");
         startActivity(i);
         finish();
     }

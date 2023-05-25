@@ -191,8 +191,9 @@ public class model_cita {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
                 System.out.println("Error: "+error.getMessage());
+                progressDialog.dismiss();
+                callback_patient_historialCitas.onErrorhoraHistorial("No hay conexión con el servidor");
             }
         }){
             @Override

@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/AC1_iv"
-        android:layout_width="44dp"
-        android:layout_height="44dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -16,9 +16,12 @@
 
     <ScrollView
         android:id="@+id/AC1_sv1"
-        android:layout_width="340dp"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +46,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:text="Describanos el motivo de Reagendar su cita..."
+                android:text="Describa el motivo de reagendar su cita:"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -51,16 +54,16 @@
             <EditText
                 android:id="@+id/view_patient_agendarcitas_descripcion"
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
+                android:layout_height="250dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/drawable_patient_reagendar_cita_txt"
                 android:ems="10"
                 android:gravity="start|top"
+                android:inputType="textMultiLine"
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
-                android:inputType="textMultiLine"
-                android:textSize="15dp"
-                android:textColor="#7B8D9E"/>
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
             <View
                 android:id="@+id/AC1_tv2"
@@ -75,8 +78,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="#306BA5"
+                android:background="@drawable/drawable_roundedbutton_general"
                 android:text="Continuar"
+                android:textColor="#FFFFFF"
                 app:cornerRadius="15dp" />
         </LinearLayout>
     </ScrollView>
