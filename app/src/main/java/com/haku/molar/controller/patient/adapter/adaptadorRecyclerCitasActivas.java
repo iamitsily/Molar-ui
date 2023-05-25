@@ -1,11 +1,13 @@
 package com.haku.molar.controller.patient.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.haku.molar.R;
@@ -16,9 +18,12 @@ import java.util.Calendar;
 
 public class adaptadorRecyclerCitasActivas extends RecyclerView.Adapter<adaptadorRecyclerCitasActivas.ViewHolder> {
     ArrayList<model_cita> model_citas = new ArrayList<>();
-
-    public adaptadorRecyclerCitasActivas(ArrayList<model_cita> model_citas) {
+    private ItemClickListener itemClickListener;
+    Context context;
+    public adaptadorRecyclerCitasActivas(ArrayList<model_cita> model_citas, Context context, ItemClickListener itemClickListener) {
         this.model_citas = model_citas;
+        this.context = context;
+        this.itemClickListener = itemClickListener;
     }
 
     @NonNull
@@ -35,9 +40,14 @@ public class adaptadorRecyclerCitasActivas extends RecyclerView.Adapter<adaptado
         holder.hora.setText(model_citas.get(position).getHora());
         holder.asunto.setText(model_citas.get(position).getMotivo());
         holder.id.setText(model_citas.get(position).getId());
+        holder.cita.setOnClickListener(view -> {
+            itemClickListener.OnItemClick(model_citas.get(position));
+        });
 
     }
-
+    public interface ItemClickListener{
+        void OnItemClick(model_cita details);
+    }
     @Override
     public int getItemCount() {
         return model_citas.size();
@@ -45,6 +55,7 @@ public class adaptadorRecyclerCitasActivas extends RecyclerView.Adapter<adaptado
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView dia, mes, hora, asunto, id;
+        CardView cita;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             dia = (TextView) itemView.findViewById(R.id.recyclerViewListarCitasActivasDia);
@@ -52,6 +63,7 @@ public class adaptadorRecyclerCitasActivas extends RecyclerView.Adapter<adaptado
             hora = (TextView) itemView.findViewById(R.id.recyclerViewListarCitasActivasHora);
             asunto = (TextView) itemView.findViewById(R.id.recyclerViewListarCitasActivasAsunto);
             id = (TextView) itemView.findViewById(R.id.recyclerViewListarCitasActivasidCita);
+            cita = (CardView) itemView.findViewById(R.id.cv_itempatient_citasActivas);
         }
     }
     public String diaSemana(String date){
