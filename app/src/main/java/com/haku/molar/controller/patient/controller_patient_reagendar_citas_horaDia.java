@@ -15,46 +15,44 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.haku.molar.R;
-import com.haku.molar.controller.patient.interfaces.Callback_patient_fechaHoraAgendarCita;
+import com.haku.molar.controller.patient.interfaces.Callback_patient_reagendarCitas;
 import com.haku.molar.model.cita.model_cita;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
 
-public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity implements Callback_patient_fechaHoraAgendarCita {
-    String hora="",fecha="",motivo="",descripcion="",nombre="", matricula="", matriculaDoctor="";
-    int toleranciaDoctor=0;
+public class controller_patient_reagendar_citas_horaDia extends AppCompatActivity implements Callback_patient_reagendarCitas {
+    String hora="",fecha="",motivo="",nombre="", matricula="", idCita="", rol = "";
     Button hora1,hora2,hora3,hora4,hora5,hora6;
     ImageButton backbtn;
     CalendarView calendarView;
-    ProgressDialog progressDialogMedico;
+    ProgressDialog progressDialogReagendar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_patient_fecha_hora_agendar_cita);
+        setContentView(R.layout.view_patient_reagendar_horadia);
 
         Intent intent = getIntent();
         matricula = intent.getStringExtra("matricula");
         nombre = intent.getStringExtra("nombre");
+        rol = intent.getStringExtra("rol");
+        idCita = intent.getStringExtra("idCita");
         motivo = intent.getStringExtra("motivo");
-        descripcion = intent.getStringExtra("descripcion");
 
-        calendarView = findViewById(R.id.view_patient_calendarCita);
-        hora1 = findViewById(R.id.view_patient_fechaHora_btn1);
-        hora2 = findViewById(R.id.view_patient_fechaHora_btn2);
-        hora3 = findViewById(R.id.view_patient_fechaHora_btn3);
-        hora4 = findViewById(R.id.view_patient_fechaHora_btn4);
-        hora5 = findViewById(R.id.view_patient_fechaHora_btn5);
-        hora6 = findViewById(R.id.view_patient_fechaHora_btn6);
-        backbtn = findViewById(R.id.IbPatientFechaHoraAgendarBacnbtn);
-        progressDialogMedico = new ProgressDialog(this);
-        progressDialogMedico.setMessage("Asignando medico");
+        calendarView = findViewById(R.id.view_patient_ReagendarcalendarCita);
+        hora1 = findViewById(R.id.view_patient_ReagendarfechaHora_btn1);
+        hora2 = findViewById(R.id.view_patient_ReagendarfechaHora_btn2);
+        hora3 = findViewById(R.id.view_patient_ReagendarfechaHora_btn3);
+        hora4 = findViewById(R.id.view_patient_ReagendarfechaHora_btn4);
+        hora5 = findViewById(R.id.view_patient_ReagendarfechaHora_btn5);
+        hora6 = findViewById(R.id.view_patient_ReagendarfechaHora_btn6);
+        backbtn = findViewById(R.id.IbPatientReagendarFechaHoraAgendarBacnbtn);
+
+        progressDialogReagendar = new ProgressDialog(this);
+        progressDialogReagendar.setMessage("Reagendando cita");
+        progressDialogReagendar.setCancelable(false);
 
         horasCita(getDiaCalendar());
 
-        //Listeners
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +69,7 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
                 horasCita(currentDate);
             }
         });
+
         hora1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,35 +162,17 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
             }
         });
     }
-    public void backAsuntoCitaBtn(){
-        Intent intent = new Intent(this, controller_patient_AgendarCitas.class);
-        intent.putExtra("matricula",matricula);
-        intent.putExtra("nombre",nombre);
-        startActivity(intent);
-        finish();
-    }
-    public void agendarCita(View view){
+    public void reagendarCita(View view){
         if (hora.equals("")){
-            Toast.makeText(this, "Seleccione una hora disponible", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Selecciona una hora disponible", Toast.LENGTH_SHORT).show();
         }else{
-            obtenerNumDoctor();
-            progressDialogMedico.show();
+            model_cita model_cita = new model_cita(idCita, fecha, hora, "3",this, this);
+            model_cita.reagendarCita();
         }
     }
-    public void disponibilidadDoctor(String pos){
-        model_cita model_cita = new model_cita("",this, this,pos);
-        model_cita.disponibilidadDoctor();
-    }
-    public void obtenerNumDoctor(){
-        model_cita model_cita = new model_cita(this, this);
-        model_cita.obtenerNumDoctor();
-    }
-    public String generarId(){
-        String id = "0";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        String currentDateandTime = simpleDateFormat.format(new Date());
-        id = currentDateandTime.substring(6,10)+hora.replace(":","")+matricula.substring(7,10);
-        return id;
+    public void horasCita(String dia){
+        model_cita model_cita = new model_cita(dia,this, this);
+        model_cita.horasCitaReagendar();
     }
     public String getDiaCalendar(){
         String date = "";
@@ -228,100 +209,72 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
         hora6.setTextColor(ColorStateList.valueOf(Color.parseColor("#1C6BA4")));
         hora6.setEnabled(true);
     }
-    public void horasCita(String dia){
-        model_cita model_cita = new model_cita(dia,this, this,"");
-        model_cita.horasCita();
+    public void backAsuntoCitaBtn(){
+        Intent intent = new Intent(this, controller_patient_ReagendarCitas.class);
+        intent.putExtra("matricula",matricula);
+        intent.putExtra("nombre",nombre);
+        startActivity(intent);
+        finish();
     }
+
     @Override
     public void onSuccesshoraCitas(String[] datos) {
-            for (int i=0; i< datos.length; i++){
-                System.out.println("Datos"+i+" "+datos[i]);
-                if (datos[i]==null){
+        for (int i=0; i< datos.length; i++){
+            System.out.println("Datos"+i+" "+datos[i]);
+            if (datos[i]==null){
 
-                }else{
-                    if (datos[i].equals("12:30")){
-                        hora1.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
-                        hora1.setTextColor(Color.WHITE);
-                        hora1.setEnabled(false);
-                    } else
-                    if (datos[i].equals("1:30")){
-                        hora2.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
-                        hora2.setTextColor(Color.WHITE);
-                        hora2.setEnabled(false);
-                    }else
-                    if (datos[i].equals("2:30")){
-                        hora3.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
-                        hora3.setTextColor(Color.WHITE);
-                        hora3.setEnabled(false);
-                    }else
-                    if (datos[i].equals("4:30")){
-                        hora4.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
-                        hora4.setTextColor(Color.WHITE);
-                        hora4.setEnabled(false);
-                    }else
-                    if (datos[i].equals("5:30")){
-                        hora5.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
-                        hora5.setTextColor(Color.WHITE);
-                        hora5.setEnabled(false);
-                    }else
-                    if (datos[i].equals("6:30")){
-                        hora6.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
-                        hora6.setTextColor(Color.WHITE);
-                        hora6.setEnabled(false);
-                    }
+            }else{
+                if (datos[i].equals("12:30")){
+                    hora1.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+                    hora1.setTextColor(Color.WHITE);
+                    hora1.setEnabled(false);
+                } else
+                if (datos[i].equals("1:30")){
+                    hora2.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+                    hora2.setTextColor(Color.WHITE);
+                    hora2.setEnabled(false);
+                }else
+                if (datos[i].equals("2:30")){
+                    hora3.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+                    hora3.setTextColor(Color.WHITE);
+                    hora3.setEnabled(false);
+                }else
+                if (datos[i].equals("4:30")){
+                    hora4.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+                    hora4.setTextColor(Color.WHITE);
+                    hora4.setEnabled(false);
+                }else
+                if (datos[i].equals("5:30")){
+                    hora5.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+                    hora5.setTextColor(Color.WHITE);
+                    hora5.setEnabled(false);
+                }else
+                if (datos[i].equals("6:30")){
+                    hora6.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+                    hora6.setTextColor(Color.WHITE);
+                    hora6.setEnabled(false);
                 }
             }
+        }
     }
 
     @Override
     public void onErrorhoraCitas(String mensaje) {
-        Toast.makeText(this, "Error al recuperar disponibilidad: "+mensaje, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onSuccessAgendarCita() {
-        Intent intent = new Intent(this, controller_patient_AvisoCitaAgendada.class);
-        intent.putExtra("matricula",matricula);
-        intent.putExtra("nombre",nombre);
-        intent.putExtra("rol","1");
-        startActivity(intent);
-        finish();
-    }
-
-    @Override
-    public void onErrorAgendarCita(String mensaje) {
-        Intent intent = new Intent(this, controller_patient_AvisoCitaError.class);
-        intent.putExtra("matricula",matricula);
-        intent.putExtra("nombre",nombre);
-        intent.putExtra("rol","1");
-        startActivity(intent);
-        finish();
-
-    }
-
-    @Override
-    public void onSuccessNumDoctor(String num) {
-        Random random = new Random();
-        int randomNumber = random.nextInt(Integer.parseInt(num)) + 1;
-        disponibilidadDoctor(String.valueOf(randomNumber));
-
-    }
-
-    @Override
-    public void onErrorNumDoctor(String mensaje) {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onSuccessdisponibilidadDoctor(String matricula) {
-        matriculaDoctor = matricula;
-        progressDialogMedico.dismiss();
-        model_cita model_cita = new model_cita(generarId(),fecha,hora,motivo,"1","1",this.matricula,matriculaDoctor,this,this,descripcion);
-        model_cita.agendarCita();
+    public void onSuccessReagendarCita() {
+        Intent i = new Intent(this, controller_patient_AvisoCitaReagendada.class);
+        i.putExtra("matricula",matricula);
+        i.putExtra("nombre",nombre);
+        i.putExtra("rol",rol);
+        startActivity(i);
+        finish();
     }
 
     @Override
-    public void onErrordisponibilidadDoctor(String mensaje) {
-        obtenerNumDoctor();
+    public void onErrorReagendarCita(String mensaje) {
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
 }

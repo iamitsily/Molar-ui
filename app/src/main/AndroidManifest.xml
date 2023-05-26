@@ -15,6 +15,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".controller.patient.controller_patient_AvisoCitaReagendada"
+            android:exported="false" />
+        <activity
+            android:name=".controller.patient.controller_patient_reagendar_citas_horaDia"
+            android:exported="false" />
+        <activity
             android:name=".controller.patient.controller_patient_ReagendarCitas"
             android:exported="false" />
         <activity
