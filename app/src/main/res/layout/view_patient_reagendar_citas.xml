@@ -79,6 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/drawable_roundedbutton_general"
+                android:onClick="reagendarHoraDia"
                 android:text="Continuar"
                 android:textColor="#FFFFFF"
                 app:cornerRadius="15dp" />

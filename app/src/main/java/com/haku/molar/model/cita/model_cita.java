@@ -16,6 +16,7 @@ import com.android.volley.toolbox.Volley;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_fechaHoraAgendarCita;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_historialCitas;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_listarCitasActivas;
+import com.haku.molar.controller.patient.interfaces.Callback_patient_reagendarCitas;
 import com.haku.molar.utils.MolarConfig;
 
 import org.json.JSONArray;
@@ -32,6 +33,7 @@ public class model_cita {
     Callback_patient_listarCitasActivas callback_patient_listarCitasActivas;
     Callback_patient_fechaHoraAgendarCita callback_patient_fechaHoraAgendarCita;
     Callback_patient_historialCitas callback_patient_historialCitas;
+    Callback_patient_reagendarCitas callback_patient_reagendarCitas;
     String[] res = new String[6];
     MolarConfig molarConfig = new MolarConfig();
     public model_cita() {
@@ -104,6 +106,23 @@ public class model_cita {
         this.context = context;
         this.callback_patient_listarCitasActivas = callback_patient_listarCitasActivas;
     }
+    //controller_patient_reagendar_citas_horaDia -> consultar citas de un dia del calendario
+    public model_cita(String dia, Context context, Callback_patient_reagendarCitas callback_patient_reagendarCitas) {
+        this.dia = dia;
+        this.context = context;
+        this.callback_patient_reagendarCitas = callback_patient_reagendarCitas;
+    }
+    //controller_patient_reagendar_citas_horaDia -> reagendarCita
+
+
+    public model_cita(String id, String dia, String hora, String estado, Context context, Callback_patient_reagendarCitas callback_patient_reagendarCitas) {
+        this.id = id;
+        this.dia = dia;
+        this.hora = hora;
+        this.estado = estado;
+        this.context = context;
+        this.callback_patient_reagendarCitas = callback_patient_reagendarCitas;
+    }
 
     public void horasCita(){
 
@@ -145,6 +164,89 @@ public class model_cita {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("dia",getDia());
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+    public void horasCitaReagendar(){
+
+        String url = molarConfig.getDomainAzure()+"/citas/service_citasDia.php";
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Revisando disponibilidad");
+        progressDialog.show();
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito = jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+                    if (exito.equals("1")){
+                        for (int i=0;i<jsonArray.length();i++){
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            String hora = object.getString("hora");
+                            res[i] = hora;
+                        }
+                        callback_patient_reagendarCitas.onSuccesshoraCitas(res);
+                        progressDialog.dismiss();
+                    }else{
+                        callback_patient_reagendarCitas.onErrorhoraCitas("");
+                    }
+                }catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("model_cita -> horasCita -> onErrorResponse: "+error.getMessage());
+                progressDialog.dismiss();
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("dia",getDia());
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+    public void reagendarCita(){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Reagendando cita");
+        progressDialog.show();
+        String url = molarConfig.getDomainAzure()+"/citas/service_reagendarCita.php";
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.equalsIgnoreCase("Modificacion exitosa")) {
+                    progressDialog.dismiss();
+                    callback_patient_reagendarCitas.onSuccessReagendarCita();
+                } else {
+                    progressDialog.dismiss();
+                    callback_patient_reagendarCitas.onErrorReagendarCita("No se pudo reagendar");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println("Error: "+error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id",id);
+                params.put("dia",dia);
+                params.put("hora",hora);
+                params.put("estado",estado);
                 return params;
             }
         };
@@ -207,6 +309,7 @@ public class model_cita {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
+
     public void listarCitasActivas(){
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Obteniendo citas activas");
@@ -238,7 +341,7 @@ public class model_cita {
                         progressDialog.dismiss();
                     }
                 } catch (JSONException e) {
-                    System.out.println("model_general_usuario -> login -> JSONException: "+e);
+                    System.out.println("model_general_usuario -> listarCitasActivas -> JSONException: "+e);
                     callback_patient_listarCitasActivas.onErrorListarCitasActivas(e.getMessage());
                     System.out.println("Error");
                     progressDialog.dismiss();

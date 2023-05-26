@@ -11,7 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
 
 public class controller_patient_OpcionesCitas extends AppCompatActivity {
-    String matricula,nombre;
+    String matricula,nombre,rol;
     BottomNavigationView menuNav;
     View viewAgendarCita, viewReagendarCita, viewCancelarCita;
     @Override
@@ -22,6 +22,7 @@ public class controller_patient_OpcionesCitas extends AppCompatActivity {
         Intent intent = getIntent();
         matricula = intent.getStringExtra("matricula");
         nombre = intent.getStringExtra("nombre");
+        rol = intent.getStringExtra("rol");
         menuNav = findViewById(R.id.menu_patient_menu);
         menuNav.setSelectedItemId(R.id.menu_patient_cita);
         viewAgendarCita = findViewById(R.id.view_agendarCita_patient_opcionescita);
@@ -34,6 +35,7 @@ public class controller_patient_OpcionesCitas extends AppCompatActivity {
                 Intent intentAgendarCita = new Intent(getApplicationContext(), controller_patient_AgendarCitas.class);
                 intentAgendarCita.putExtra("matricula",matricula);
                 intentAgendarCita.putExtra("nombre", nombre);
+                intentAgendarCita.putExtra("rol", rol);
                 startActivity(intentAgendarCita);
                 finish();
             }
@@ -45,6 +47,7 @@ public class controller_patient_OpcionesCitas extends AppCompatActivity {
                 intentAgendarCita.putExtra("matricula",matricula);
                 intentAgendarCita.putExtra("nombre", nombre);
                 intentAgendarCita.putExtra("opcion", "0");
+                intentAgendarCita.putExtra("rol", rol);
                 startActivity(intentAgendarCita);
                 finish();
             }
@@ -56,6 +59,7 @@ public class controller_patient_OpcionesCitas extends AppCompatActivity {
                 intentAgendarCita.putExtra("matricula",matricula);
                 intentAgendarCita.putExtra("nombre", nombre);
                 intentAgendarCita.putExtra("opcion", "1");
+                intentAgendarCita.putExtra("rol", rol);
                 startActivity(intentAgendarCita);
                 finish();
             }
@@ -66,6 +70,7 @@ public class controller_patient_OpcionesCitas extends AppCompatActivity {
                     Intent intentHome = new Intent(this, controller_patient_MenuPaciente.class);
                     intentHome.putExtra("matricula",matricula);
                     intentHome.putExtra("nombre", nombre);
+                    intentHome.putExtra("rol", rol);
                     startActivity(intentHome);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
@@ -74,6 +79,7 @@ public class controller_patient_OpcionesCitas extends AppCompatActivity {
                     Intent intentHistorial = new Intent(this, controller_patient_HistorialCitasLayout.class);
                     intentHistorial.putExtra("matricula",matricula);
                     intentHistorial.putExtra("nombre", nombre);
+                    intentHistorial.putExtra("rol", rol);
                     startActivity(intentHistorial);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
@@ -82,6 +88,7 @@ public class controller_patient_OpcionesCitas extends AppCompatActivity {
                     Intent intentNotificacion = new Intent(this, controller_patient_NotificacionesPaciente.class);
                     intentNotificacion.putExtra("matricula",matricula);
                     intentNotificacion.putExtra("nombre", nombre);
+                    intentNotificacion.putExtra("rol", rol);
                     startActivity(intentNotificacion);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
