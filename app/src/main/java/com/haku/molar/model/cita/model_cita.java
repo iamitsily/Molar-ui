@@ -13,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.haku.molar.controller.patient.interfaces.Callback_patient_cancelarCitas;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_fechaHoraAgendarCita;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_historialCitas;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_listarCitasActivas;
@@ -34,6 +35,7 @@ public class model_cita {
     Callback_patient_fechaHoraAgendarCita callback_patient_fechaHoraAgendarCita;
     Callback_patient_historialCitas callback_patient_historialCitas;
     Callback_patient_reagendarCitas callback_patient_reagendarCitas;
+    Callback_patient_cancelarCitas callback_patient_cancelarCitas;
     String[] res = new String[6];
     MolarConfig molarConfig = new MolarConfig();
     public model_cita() {
@@ -44,7 +46,7 @@ public class model_cita {
         this.context = context;
         this.callback_patient_fechaHoraAgendarCita = callback_patient_fechaHoraAgendarCita;
     }
-
+    //controller_patient_fechaHoraAgendarCita
     public model_cita(String id, String dia, String hora, String motivo, String estado, String status, String idUusario, String idMedico) {
         this.id = id;
         this.dia = dia;
@@ -113,8 +115,6 @@ public class model_cita {
         this.callback_patient_reagendarCitas = callback_patient_reagendarCitas;
     }
     //controller_patient_reagendar_citas_horaDia -> reagendarCita
-
-
     public model_cita(String id, String dia, String hora, String estado, Context context, Callback_patient_reagendarCitas callback_patient_reagendarCitas) {
         this.id = id;
         this.dia = dia;
@@ -122,6 +122,13 @@ public class model_cita {
         this.estado = estado;
         this.context = context;
         this.callback_patient_reagendarCitas = callback_patient_reagendarCitas;
+    }
+    //controller_patient_cancelarCitas -> idCita
+
+    public model_cita(String id, Context context, Callback_patient_cancelarCitas callback_patient_cancelarCitas) {
+        this.id = id;
+        this.context = context;
+        this.callback_patient_cancelarCitas = callback_patient_cancelarCitas;
     }
 
     public void horasCita(){
@@ -247,6 +254,77 @@ public class model_cita {
                 params.put("dia",dia);
                 params.put("hora",hora);
                 params.put("estado",estado);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+
+    public void pendienteCancelarCita(){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Cancelando cita");
+        progressDialog.show();
+        String url = molarConfig.getDomainAzure()+"/citas/service_cancelarCita.php";
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.equalsIgnoreCase("Modificacion exitosa")) {
+                    progressDialog.dismiss();
+                    callback_patient_cancelarCitas.onSuccessReagendarCita();
+                } else {
+                    progressDialog.dismiss();
+                    callback_patient_cancelarCitas.onErrorReagendarCita("No se pudo cancelar");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println("Error: "+error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id",id);
+                params.put("estado","4");
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+    public void cancelarCita(){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Cancelando cita");
+        progressDialog.show();
+        String url = molarConfig.getDomainAzure()+"/citas/service_cancelarCita.php";
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.equalsIgnoreCase("Modificacion exitosa")) {
+                    progressDialog.dismiss();
+                    callback_patient_cancelarCitas.onSuccessReagendarCita();
+                } else {
+                    progressDialog.dismiss();
+                    callback_patient_cancelarCitas.onErrorReagendarCita("No se pudo cancelar");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println("Error: "+error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id",id);
+                params.put("estado","2");
                 return params;
             }
         };

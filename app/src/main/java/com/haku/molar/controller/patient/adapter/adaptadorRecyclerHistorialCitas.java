@@ -75,6 +75,12 @@ public class adaptadorRecyclerHistorialCitas extends RecyclerView.Adapter<adapta
                 holder.estado.setTextColor(0xFFFFFFFF);
                 holder.estado.setText("Reagendada");
                 break;
+            case "4": //Pendiente a cancelar
+                holder.estado.setBackgroundColor(Color.DKGRAY);
+                holder.estado.setTextColor(0xFFFFFFFF);
+                holder.estado.setTextSize(18);
+                holder.estado.setText("Pendiente de cancelación");
+                break;
             default:
                 holder.estado.setBackgroundColor(Color.GRAY);
                 holder.estado.setTextColor(0xFFFFFFFF);
