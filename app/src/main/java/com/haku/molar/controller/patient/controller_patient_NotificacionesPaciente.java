@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -17,7 +19,7 @@ import com.haku.molar.model.notificaciones.model_General_Notificaciones;
 import java.util.ArrayList;
 
 public class controller_patient_NotificacionesPaciente extends AppCompatActivity implements Callback_notificaciones {
-    String matricula, nombre;
+    String matricula, nombre,rol;
 
     BottomNavigationView menuNav;
 
@@ -31,6 +33,7 @@ public class controller_patient_NotificacionesPaciente extends AppCompatActivity
         Intent intent = getIntent();
         matricula = intent.getStringExtra("matricula");
         nombre = intent.getStringExtra("nombre");
+        rol = intent.getStringExtra("rol");
         menuNav = findViewById(R.id.menu_patient_menu);
         menuNav.setSelectedItemId(R.id.menu_patient_notificacion);
         RV_notis = findViewById(R.id.RV_Notis);
@@ -45,6 +48,7 @@ public class controller_patient_NotificacionesPaciente extends AppCompatActivity
                 Intent intentHome = new Intent(this, controller_patient_MenuPaciente.class);
                 intentHome.putExtra("matricula", matricula);
                 intentHome.putExtra("nombre", nombre);
+                intentHome.putExtra("rol", rol);
                 startActivity(intentHome);
                 overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                 finish();
@@ -52,6 +56,7 @@ public class controller_patient_NotificacionesPaciente extends AppCompatActivity
                 Intent intentCita = new Intent(this, controller_patient_OpcionesCitas.class);
                 intentCita.putExtra("matricula", matricula);
                 intentCita.putExtra("nombre", nombre);
+                intentCita.putExtra("rol", rol);
                 startActivity(intentCita);
                 overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                 finish();
@@ -59,6 +64,7 @@ public class controller_patient_NotificacionesPaciente extends AppCompatActivity
                 Intent intentHistorial = new Intent(this, controller_patient_HistorialCitasLayout.class);
                 intentHistorial.putExtra("matricula", matricula);
                 intentHistorial.putExtra("nombre", nombre);
+                intentHistorial.putExtra("rol", rol);
                 startActivity(intentHistorial);
                 overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                 finish();
@@ -66,6 +72,22 @@ public class controller_patient_NotificacionesPaciente extends AppCompatActivity
             return false;
         });
 
+    }
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Molar");
+        builder.setMessage("¿Desea salir de la aplicación?").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        }).setCancelable(false).show();
     }
 
     @Override

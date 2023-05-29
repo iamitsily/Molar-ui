@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -72,6 +74,22 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity i
             return false;
         });
     }
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Molar");
+        builder.setMessage("¿Desea salir de la aplicación?").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        }).setCancelable(false).show();
+    }
     public void cargar(int position){
         Intent i = new Intent(this,controller_patient_CancelarCitaMotivo.class);
         i.putExtra("matricula",matricula);
@@ -86,7 +104,18 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity i
     public void onSuccessHistorial(ArrayList<model_cita> historial) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         RVLista.setLayoutManager(linearLayoutManager);
-        adaptadorRecyclerHistorialCitas = new adaptadorRecyclerHistorialCitas(historial,matricula,nombre,rol,this);
+        adaptadorRecyclerHistorialCitas = new adaptadorRecyclerHistorialCitas(historial, matricula, nombre, rol, this, new adaptadorRecyclerHistorialCitas.ItemClickListenerHistorialCitas() {
+            @Override
+            public void OnItemClick(model_cita details) {
+                Intent intent = new Intent(getApplicationContext(),controller_patient_DetallesCitaPaciente.class);
+                intent.putExtra("matricula",matricula);
+                intent.putExtra("nombre",nombre);
+                intent.putExtra("rol",rol);
+                intent.putExtra("idCita",details.getId());
+                startActivity(intent);
+                finish();
+            }
+        });
         RVLista.setAdapter(adaptadorRecyclerHistorialCitas);
     }
 

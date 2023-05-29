@@ -51,8 +51,11 @@ public class controller_patient_AgendarCitas extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        backMenubtn();
+    }
     public void fechaHorabtn(View view){
-
         Intent intentFechaHora = new Intent(getApplicationContext(), controller_patient_FechaHoraAgendarCita.class);
         intentFechaHora.putExtra("matricula",matricula);
         intentFechaHora.putExtra("nombre", nombre);
@@ -66,6 +69,7 @@ public class controller_patient_AgendarCitas extends AppCompatActivity {
         intent.putExtra("matricula",matricula);
         intent.putExtra("nombre",nombre);
         startActivity(intent);
+        overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
         finish();
     }
     public class motivo{

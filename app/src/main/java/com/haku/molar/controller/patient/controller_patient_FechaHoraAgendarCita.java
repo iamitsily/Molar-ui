@@ -163,11 +163,16 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+       backAsuntoCitaBtn();
+    }
     public void backAsuntoCitaBtn(){
         Intent intent = new Intent(this, controller_patient_AgendarCitas.class);
         intent.putExtra("matricula",matricula);
         intent.putExtra("nombre",nombre);
         startActivity(intent);
+        overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
         finish();
     }
     public void agendarCita(View view){

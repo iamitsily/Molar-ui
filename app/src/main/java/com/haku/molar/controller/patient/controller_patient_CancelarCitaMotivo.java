@@ -12,8 +12,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.haku.molar.R;
+import com.haku.molar.controller.patient.interfaces.Callback_patient_cancelarCitas;
+import com.haku.molar.model.cita.model_cita;
 
-public class controller_patient_CancelarCitaMotivo extends AppCompatActivity {
+public class controller_patient_CancelarCitaMotivo extends AppCompatActivity implements Callback_patient_cancelarCitas {
 
     String matricula,nombre,rol,idCita,motivo,fecha,hora;
     ImageView imageView;
@@ -41,12 +43,13 @@ public class controller_patient_CancelarCitaMotivo extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("¿Cancelar cita?");
             builder.setMessage("Revise los datos de la cita a cancelar.\nIdCita: "+idCita+"\n"+"Motivo: "+motivo+
-                    "\nFecha: "+fecha+"\nHora: "+hora).setPositiveButton("Ok",new DialogInterface.OnClickListener(){
+                    "\nFecha: "+fecha+"\nHora: "+hora).setPositiveButton("Confirmar",new DialogInterface.OnClickListener(){
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    Toast.makeText(controller_patient_CancelarCitaMotivo.this, "Eliminado", Toast.LENGTH_SHORT).show();
+                    model_cita model_cita = new model_cita(idCita,controller_patient_CancelarCitaMotivo.this,controller_patient_CancelarCitaMotivo.this);
+                    model_cita.pendienteCancelarCita();
                 }
-            }).setNegativeButton("Atras", new DialogInterface.OnClickListener() {
+            }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Intent intent = new Intent(getApplicationContext(), controller_patient_OpcionesCitas.class);
@@ -69,4 +72,27 @@ public class controller_patient_CancelarCitaMotivo extends AppCompatActivity {
         finish();
     }
 
+    @Override
+    public void onSuccessReagendarCita() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Aviso");
+        builder.setMessage("Su solicitud será revisada por nuestros asistentes. \n\nEn cuanto se tenga" +
+                " confirmación se le avisará via Email").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intentOpciones = new Intent(getApplicationContext(),controller_patient_OpcionesCitas.class);
+                intentOpciones.putExtra("matricula",matricula);
+                intentOpciones.putExtra("nombre",nombre);
+                intentOpciones.putExtra("rol",rol);
+                intentOpciones.putExtra("opcion","1");
+                startActivity(intentOpciones);
+                finish();
+            }
+        }).show();
+    }
+
+    @Override
+    public void onErrorReagendarCita(String mensaje) {
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+    }
 }

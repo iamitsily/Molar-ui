@@ -73,6 +73,16 @@ public class controller_patient_AjustesCuentaDatos extends AppCompatActivity imp
             }
         }).setCancelable(true).show();
     }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, controller_patient_AjustesDeCuentaMenu.class);
+        intent.putExtra("matricula",matricula);
+        intent.putExtra("nombre",nombre);
+        intent.putExtra("rol",rol);
+        startActivity(intent);
+        overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+        finish();
+    }
     public void backCuentaMenuBtn(View view){
         Intent intent = new Intent(this, controller_patient_AjustesDeCuentaMenu.class);
         intent.putExtra("matricula",matricula);

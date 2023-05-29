@@ -10,7 +10,7 @@
         android:id="@+id/relativeLayout5"
         android:layout_width="288dp"
         android:layout_height="102dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_terminar"
+        app:layout_constraintBottom_toTopOf="@+id/patient_detallesCitaBtnBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout5">
@@ -59,7 +59,7 @@
             android:text="Fecha de consulta" />
 
         <TextView
-            android:id="@+id/textView25"
+            android:id="@+id/patient_detallesCita_fecha"
             android:layout_width="94dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -148,7 +148,6 @@
 
 
         <View
-            android:id="@+id/rectangle_15"
             android:layout_width="273dp"
             android:layout_height="86dp"
             android:layout_alignParentStart="true"
@@ -189,7 +188,7 @@
             android:text="Hora de consulta" />
 
         <TextView
-            android:id="@+id/textView25"
+            android:id="@+id/patient_detallesCita_hora"
             android:layout_width="94dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -205,7 +204,7 @@
 
 
     <Button
-        android:id="@+id/btn_terminar"
+        android:id="@+id/patient_detallesCitaBtnBack"
         android:layout_width="273dp"
         android:layout_height="50dp"
         android:layout_marginBottom="4dp"
@@ -260,31 +259,34 @@
         app:layout_constraintVertical_bias="0.43">
 
         <TextView
-            android:id="@+id/tv_folio"
+            android:id="@+id/patient_detallesCita_folio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:text="Fólio: [NO.ASIGNADO]"
             android:textColor="#4A545E"
-            android:textSize="14dp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/medico"
+            android:id="@+id/patient_detallesCita_medico"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:text="Médico: [Médico asignado]"
             android:textColor="#4A545E"
-            android:textSize="14dp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/motivo"
+            android:id="@+id/patient_detallesCita_motivo"
             android:layout_width="match_parent"
             android:layout_height="33dp"
             android:layout_marginBottom="40dp"
             android:text="Motivo de su cita: [Mótivo de la cita]"
             android:textColor="#4A545E"
-            android:textSize="14dp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
 
     </LinearLayout>

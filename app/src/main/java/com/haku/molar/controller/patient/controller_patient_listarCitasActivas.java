@@ -65,6 +65,15 @@ public class controller_patient_listarCitasActivas extends AppCompatActivity imp
             }
         }).setCancelable(false).show();
     }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), controller_patient_OpcionesCitas.class);
+        intent.putExtra("matricula",matricula);
+        intent.putExtra("nombre",nombre);
+        intent.putExtra("rol",rol);
+        startActivity(intent);
+        finish();
+    }
 
     @Override
     public void onSuccessListarCitasActivas(ArrayList<model_cita> listaActivas) {
