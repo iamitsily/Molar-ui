@@ -42,6 +42,15 @@ public class controller_patient_AjustesDeCuentaMenu extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(this, controller_patient_MenuPaciente.class);
+        i.putExtra("matricula",matricula);
+        i.putExtra("nombre",nombre);
+        i.putExtra("rol",rol);
+        startActivity(i);
+        finish();
+    }
     public void inicioUI(){
         tvNombre.setText(nombre);
         switch (rol){

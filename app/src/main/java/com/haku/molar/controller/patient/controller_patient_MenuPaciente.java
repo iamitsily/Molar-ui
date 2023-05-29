@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -80,6 +82,22 @@ public class controller_patient_MenuPaciente extends AppCompatActivity implement
 
         listarCitas();
     }
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Molar");
+        builder.setMessage("¿Desea salir de la aplicación?").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        }).setCancelable(false).show();
+    }
     public void listarCitas(){
         model_Patient model_patient = new model_Patient(Integer.parseInt(matricula),this,this);
         model_patient.listarCitas();
@@ -100,6 +118,7 @@ public class controller_patient_MenuPaciente extends AppCompatActivity implement
         intentAjustesCuenta.putExtra("nombre", nombre);
         intentAjustesCuenta.putExtra("rol", rol);
         startActivity(intentAjustesCuenta);
+        overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
         finish();
     }
     @Override

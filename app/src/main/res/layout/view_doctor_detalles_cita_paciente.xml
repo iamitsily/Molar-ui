@@ -133,7 +133,7 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/btn_terminar"
+        android:id="@+id/patient_detallesCitaBtnBack"
         android:layout_width="273dp"
         android:layout_height="50dp"
         android:layout_marginBottom="44dp"
@@ -199,7 +199,7 @@
         app:layout_constraintTop_toTopOf="@+id/relativeLayout4">
 
         <TextView
-            android:id="@+id/tv_folio"
+            android:id="@+id/patient_detallesCita_folio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -208,7 +208,7 @@
             android:textSize="14dp" />
 
         <TextView
-            android:id="@+id/medico"
+            android:id="@+id/patient_detallesCita_medico"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -217,7 +217,7 @@
             android:textSize="14dp" />
 
         <TextView
-            android:id="@+id/motivo"
+            android:id="@+id/patient_detallesCita_motivo"
             android:layout_width="match_parent"
             android:layout_height="33dp"
             android:layout_marginBottom="40dp"
