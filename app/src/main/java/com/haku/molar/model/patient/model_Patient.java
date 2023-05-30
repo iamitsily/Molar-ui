@@ -167,6 +167,41 @@ public class model_Patient {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
+    public void updateIcon(String opc){
+        String url = molarConfig.getDomainAzure()+"/patient/service_editarSexo.php";
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Actualizando foto");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.equalsIgnoreCase("Modificacion exitosa")){
+                    callback_patient_ajustesPaciente.onSuccessUpdateIcon();
+                    progressDialog.dismiss();
+                }else{
+                    callback_patient_ajustesPaciente.onErrorUpdateIcon("Error al actualizar la foto de perfil");
+                    progressDialog.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("model_general_usuario -> udpatebyUser -> onErrorResponse: "+error.getMessage());
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("matricula",String.valueOf(matricula));
+                params.put("sexo",opc);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
     public void registrarPaciente(){
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Registrando");

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class controller_patient_AgendarCitas extends AppCompatActivity {
     Spinner spinner;
-    String matricula,nombre;
+    String matricula,nombre,rol,sexo;
     EditText descripcion;
     ImageView IVBtnBack;
 
@@ -28,6 +28,8 @@ public class controller_patient_AgendarCitas extends AppCompatActivity {
         Intent intent = getIntent();
         matricula = intent.getStringExtra("matricula");
         nombre = intent.getStringExtra("nombre");
+        rol = intent.getStringExtra("rol");
+        sexo = intent.getStringExtra("sexo");
 
         spinner = findViewById(R.id.view_patient_agendarcitas_spinnerMotivo);
         descripcion = findViewById(R.id.view_patient_agendarcitas_descripcion);
@@ -38,7 +40,7 @@ public class controller_patient_AgendarCitas extends AppCompatActivity {
         Motivos.add(new motivo("Caries"));
         Motivos.add(new motivo("Limpieza"));
         Motivos.add(new motivo("Muelas"));
-        Motivos.add(new motivo("Molares"));
+        Motivos.add(new motivo("Brackets"));
         Motivos.add(new motivo("Otro"));
 
         ArrayAdapter<motivo> adapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,Motivos);
@@ -59,6 +61,8 @@ public class controller_patient_AgendarCitas extends AppCompatActivity {
         Intent intentFechaHora = new Intent(getApplicationContext(), controller_patient_FechaHoraAgendarCita.class);
         intentFechaHora.putExtra("matricula",matricula);
         intentFechaHora.putExtra("nombre", nombre);
+        intentFechaHora.putExtra("rol", rol);
+        intentFechaHora.putExtra("sexo", sexo);
         intentFechaHora.putExtra("motivo", spinner.getSelectedItem().toString());
         intentFechaHora.putExtra("descripcion", descripcion.getText().toString().trim());
         startActivity(intentFechaHora);
@@ -68,6 +72,8 @@ public class controller_patient_AgendarCitas extends AppCompatActivity {
         Intent intent = new Intent(this, controller_patient_OpcionesCitas.class);
         intent.putExtra("matricula",matricula);
         intent.putExtra("nombre",nombre);
+        intent.putExtra("rol",rol);
+        intent.putExtra("sexo",sexo);
         startActivity(intent);
         overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
         finish();

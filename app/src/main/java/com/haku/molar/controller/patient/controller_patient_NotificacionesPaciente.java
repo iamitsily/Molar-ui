@@ -19,7 +19,7 @@ import com.haku.molar.model.notificaciones.model_General_Notificaciones;
 import java.util.ArrayList;
 
 public class controller_patient_NotificacionesPaciente extends AppCompatActivity implements Callback_notificaciones {
-    String matricula, nombre,rol;
+    String matricula, nombre,rol, sexo;
 
     BottomNavigationView menuNav;
 
@@ -34,6 +34,7 @@ public class controller_patient_NotificacionesPaciente extends AppCompatActivity
         matricula = intent.getStringExtra("matricula");
         nombre = intent.getStringExtra("nombre");
         rol = intent.getStringExtra("rol");
+        sexo = intent.getStringExtra("sexo");
         menuNav = findViewById(R.id.menu_patient_menu);
         menuNav.setSelectedItemId(R.id.menu_patient_notificacion);
         RV_notis = findViewById(R.id.RV_Notis);
@@ -49,6 +50,7 @@ public class controller_patient_NotificacionesPaciente extends AppCompatActivity
                 intentHome.putExtra("matricula", matricula);
                 intentHome.putExtra("nombre", nombre);
                 intentHome.putExtra("rol", rol);
+                intentHome.putExtra("sexo",sexo);
                 startActivity(intentHome);
                 overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                 finish();
@@ -57,6 +59,7 @@ public class controller_patient_NotificacionesPaciente extends AppCompatActivity
                 intentCita.putExtra("matricula", matricula);
                 intentCita.putExtra("nombre", nombre);
                 intentCita.putExtra("rol", rol);
+                intentCita.putExtra("sexo",sexo);
                 startActivity(intentCita);
                 overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                 finish();
@@ -65,6 +68,7 @@ public class controller_patient_NotificacionesPaciente extends AppCompatActivity
                 intentHistorial.putExtra("matricula", matricula);
                 intentHistorial.putExtra("nombre", nombre);
                 intentHistorial.putExtra("rol", rol);
+                intentHistorial.putExtra("sexo",sexo);
                 startActivity(intentHistorial);
                 overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                 finish();

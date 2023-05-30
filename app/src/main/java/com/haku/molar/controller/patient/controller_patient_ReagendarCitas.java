@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.haku.molar.R;
 
 public class controller_patient_ReagendarCitas extends AppCompatActivity {
-    String matricula,nombre,rol,idCita,motivo;
+    String matricula,nombre,rol,idCita,motivo,sexo;
     ImageView ivBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,7 @@ public class controller_patient_ReagendarCitas extends AppCompatActivity {
         nombre = intent.getStringExtra("nombre");
         rol = intent.getStringExtra("rol");
         idCita = intent.getStringExtra("idCita");
+        sexo = intent.getStringExtra("sexo");
 
         ivBack = findViewById(R.id.AC1_iv);
 
@@ -33,6 +34,10 @@ public class controller_patient_ReagendarCitas extends AppCompatActivity {
                 backBtn();
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        backBtn();
     }
     public void reagendarHoraDia(View view){
         EditText editText = findViewById(R.id.view_patient_agendarcitas_descripcion);
@@ -44,6 +49,7 @@ public class controller_patient_ReagendarCitas extends AppCompatActivity {
             intent.putExtra("matricula",matricula);
             intent.putExtra("nombre",nombre);
             intent.putExtra("rol",rol);
+            intent.putExtra("sexo",sexo);
             intent.putExtra("idCita",idCita);
             intent.putExtra("motivo",motivo);
             startActivity(intent);
@@ -55,8 +61,10 @@ public class controller_patient_ReagendarCitas extends AppCompatActivity {
         i.putExtra("matricula",matricula);
         i.putExtra("nombre",nombre);
         i.putExtra("rol",rol);
+        i.putExtra("sexo",sexo);
         i.putExtra("opcion","0");
         startActivity(i);
+        overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
         finish();
     }
 }

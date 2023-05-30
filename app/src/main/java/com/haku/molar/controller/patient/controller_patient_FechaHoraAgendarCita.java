@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.Random;
 
 public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity implements Callback_patient_fechaHoraAgendarCita {
-    String hora="",fecha="",motivo="",descripcion="",nombre="", matricula="", matriculaDoctor="";
+    String hora="",fecha="",motivo="",descripcion="",nombre="", matricula="", matriculaDoctor="",rol,sexo;
     int toleranciaDoctor=0;
     Button hora1,hora2,hora3,hora4,hora5,hora6;
     ImageButton backbtn;
@@ -38,6 +38,8 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
         Intent intent = getIntent();
         matricula = intent.getStringExtra("matricula");
         nombre = intent.getStringExtra("nombre");
+        rol = intent.getStringExtra("rol");
+        sexo = intent.getStringExtra("sexo");
         motivo = intent.getStringExtra("motivo");
         descripcion = intent.getStringExtra("descripcion");
 
@@ -171,6 +173,8 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
         Intent intent = new Intent(this, controller_patient_AgendarCitas.class);
         intent.putExtra("matricula",matricula);
         intent.putExtra("nombre",nombre);
+        intent.putExtra("rol",rol);
+        intent.putExtra("sexo",sexo);
         startActivity(intent);
         overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
         finish();
@@ -288,7 +292,8 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
         Intent intent = new Intent(this, controller_patient_AvisoCitaAgendada.class);
         intent.putExtra("matricula",matricula);
         intent.putExtra("nombre",nombre);
-        intent.putExtra("rol","1");
+        intent.putExtra("rol",rol);
+        intent.putExtra("sexo",sexo);
         startActivity(intent);
         finish();
     }
@@ -298,7 +303,8 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
         Intent intent = new Intent(this, controller_patient_AvisoCitaError.class);
         intent.putExtra("matricula",matricula);
         intent.putExtra("nombre",nombre);
-        intent.putExtra("rol","1");
+        intent.putExtra("rol",rol);
+        intent.putExtra("sexo",sexo);
         startActivity(intent);
         finish();
 

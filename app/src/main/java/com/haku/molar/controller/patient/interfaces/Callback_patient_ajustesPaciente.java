@@ -7,4 +7,6 @@ public interface Callback_patient_ajustesPaciente {
     void onErrorudpatebyUser(String mensaje);
     void onSuccessObternerPass(String[]datos);
     void onErrorObternerPass(String mensaje);
+    void onSuccessUpdateIcon();
+    void onErrorUpdateIcon(String mensaje);
 }

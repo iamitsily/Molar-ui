@@ -57,14 +57,14 @@
             android:layout_height="match_parent" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/patient_menu_ibAjustesCuenta"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_weight="0"
             android:background="@drawable/roundedbutton"
             android:contentDescription="@string/pacienteLayout_imgBtn"
-            android:onClick="ajustesCuenta"
-            android:src="@mipmap/view_doctor_patient_ajustesdecuenta_profile" />
+            android:onClick="ajustesCuenta" />
+
     </LinearLayout>
 
     <LinearLayout

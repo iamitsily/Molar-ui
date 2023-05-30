@@ -21,7 +21,7 @@ import com.haku.molar.model.cita.model_cita;
 import java.util.ArrayList;
 
 public class controller_patient_listarCitasActivas extends AppCompatActivity implements Callback_patient_listarCitasActivas {
-    String matricula, nombre, opcion,rol;
+    String matricula, nombre, opcion,rol,sexo;
     RecyclerView RvListCitas;
     ImageView ivBackBtn;
     TextView tvNombre, tvMatricula;
@@ -35,6 +35,7 @@ public class controller_patient_listarCitasActivas extends AppCompatActivity imp
         nombre = intent.getStringExtra("nombre");
         opcion = intent.getStringExtra("opcion");
         rol = intent.getStringExtra("rol");
+        sexo = intent.getStringExtra("sexo");
         RvListCitas = findViewById(R.id.patient_listarCitasActivasRV);
         ivBackBtn = findViewById(R.id.ivBackbtnListarCitasActivas);
         tvNombre = findViewById(R.id.patient_detallesCitaNombre);
@@ -48,7 +49,9 @@ public class controller_patient_listarCitasActivas extends AppCompatActivity imp
                 intent.putExtra("matricula",matricula);
                 intent.putExtra("nombre",nombre);
                 intent.putExtra("rol",rol);
+                intent.putExtra("sexo",sexo);
                 startActivity(intent);
+                overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                 finish();
             }
         });
@@ -71,7 +74,9 @@ public class controller_patient_listarCitasActivas extends AppCompatActivity imp
         intent.putExtra("matricula",matricula);
         intent.putExtra("nombre",nombre);
         intent.putExtra("rol",rol);
+        intent.putExtra("sexo",sexo);
         startActivity(intent);
+        overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
         finish();
     }
 
@@ -91,6 +96,7 @@ public class controller_patient_listarCitasActivas extends AppCompatActivity imp
                     intentCancelar.putExtra("matricula",matricula);
                     intentCancelar.putExtra("nombre",nombre);
                     intentCancelar.putExtra("rol",rol);
+                    intentCancelar.putExtra("sexo",sexo);
                     startActivity(intentCancelar);
                     finish();
                 }else{
@@ -99,6 +105,7 @@ public class controller_patient_listarCitasActivas extends AppCompatActivity imp
                     intentReagendar.putExtra("matricula",matricula);
                     intentReagendar.putExtra("nombre",nombre);
                     intentReagendar.putExtra("rol",rol);
+                    intentReagendar.putExtra("sexo",sexo);
                     startActivity(intentReagendar);
                     finish();
                 }

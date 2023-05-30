@@ -13,7 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
 
 public class controller_patient_OpcionesCitas extends AppCompatActivity {
-    String matricula,nombre,rol;
+    String matricula,nombre,rol,sexo;
     BottomNavigationView menuNav;
     View viewAgendarCita, viewReagendarCita, viewCancelarCita;
     @Override
@@ -25,6 +25,7 @@ public class controller_patient_OpcionesCitas extends AppCompatActivity {
         matricula = intent.getStringExtra("matricula");
         nombre = intent.getStringExtra("nombre");
         rol = intent.getStringExtra("rol");
+        sexo = intent.getStringExtra("sexo");
         menuNav = findViewById(R.id.menu_patient_menu);
         menuNav.setSelectedItemId(R.id.menu_patient_cita);
         viewAgendarCita = findViewById(R.id.view_agendarCita_patient_opcionescita);
@@ -38,6 +39,7 @@ public class controller_patient_OpcionesCitas extends AppCompatActivity {
                 intentAgendarCita.putExtra("matricula",matricula);
                 intentAgendarCita.putExtra("nombre", nombre);
                 intentAgendarCita.putExtra("rol", rol);
+                intentAgendarCita.putExtra("sexo", sexo);
                 startActivity(intentAgendarCita);
                 finish();
             }
@@ -50,6 +52,7 @@ public class controller_patient_OpcionesCitas extends AppCompatActivity {
                 intentAgendarCita.putExtra("nombre", nombre);
                 intentAgendarCita.putExtra("opcion", "0");
                 intentAgendarCita.putExtra("rol", rol);
+                intentAgendarCita.putExtra("sexo", sexo);
                 startActivity(intentAgendarCita);
                 finish();
             }
@@ -62,6 +65,7 @@ public class controller_patient_OpcionesCitas extends AppCompatActivity {
                 intentAgendarCita.putExtra("nombre", nombre);
                 intentAgendarCita.putExtra("opcion", "1");
                 intentAgendarCita.putExtra("rol", rol);
+                intentAgendarCita.putExtra("sexo", sexo);
                 startActivity(intentAgendarCita);
                 finish();
             }
@@ -73,6 +77,7 @@ public class controller_patient_OpcionesCitas extends AppCompatActivity {
                     intentHome.putExtra("matricula",matricula);
                     intentHome.putExtra("nombre", nombre);
                     intentHome.putExtra("rol", rol);
+                    intentHome.putExtra("sexo", sexo);
                     startActivity(intentHome);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
@@ -82,6 +87,7 @@ public class controller_patient_OpcionesCitas extends AppCompatActivity {
                     intentHistorial.putExtra("matricula",matricula);
                     intentHistorial.putExtra("nombre", nombre);
                     intentHistorial.putExtra("rol", rol);
+                    intentHistorial.putExtra("sexo", sexo);
                     startActivity(intentHistorial);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
@@ -91,6 +97,7 @@ public class controller_patient_OpcionesCitas extends AppCompatActivity {
                     intentNotificacion.putExtra("matricula",matricula);
                     intentNotificacion.putExtra("nombre", nombre);
                     intentNotificacion.putExtra("rol", rol);
+                    intentNotificacion.putExtra("sexo", sexo);
                     startActivity(intentNotificacion);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();

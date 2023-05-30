@@ -21,7 +21,7 @@ import com.haku.molar.model.cita.model_cita;
 import java.util.Calendar;
 
 public class controller_patient_reagendar_citas_horaDia extends AppCompatActivity implements Callback_patient_reagendarCitas {
-    String hora="",fecha="",motivo="",nombre="", matricula="", idCita="", rol = "";
+    String hora="",fecha="",motivo="",nombre="", matricula="", idCita="", rol = "",sexo;
     Button hora1,hora2,hora3,hora4,hora5,hora6;
     ImageButton backbtn;
     CalendarView calendarView;
@@ -35,6 +35,7 @@ public class controller_patient_reagendar_citas_horaDia extends AppCompatActivit
         matricula = intent.getStringExtra("matricula");
         nombre = intent.getStringExtra("nombre");
         rol = intent.getStringExtra("rol");
+        sexo = intent.getStringExtra("sexo");
         idCita = intent.getStringExtra("idCita");
         motivo = intent.getStringExtra("motivo");
 
@@ -209,11 +210,18 @@ public class controller_patient_reagendar_citas_horaDia extends AppCompatActivit
         hora6.setTextColor(ColorStateList.valueOf(Color.parseColor("#1C6BA4")));
         hora6.setEnabled(true);
     }
+    @Override
+    public void onBackPressed() {
+        backAsuntoCitaBtn();
+    }
     public void backAsuntoCitaBtn(){
         Intent intent = new Intent(this, controller_patient_ReagendarCitas.class);
         intent.putExtra("matricula",matricula);
         intent.putExtra("nombre",nombre);
+        intent.putExtra("rol",rol);
+        intent.putExtra("sexo",sexo);
         startActivity(intent);
+        overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
         finish();
     }
 
@@ -269,6 +277,7 @@ public class controller_patient_reagendar_citas_horaDia extends AppCompatActivit
         i.putExtra("matricula",matricula);
         i.putExtra("nombre",nombre);
         i.putExtra("rol",rol);
+        i.putExtra("sexo",sexo);
         startActivity(i);
         finish();
     }

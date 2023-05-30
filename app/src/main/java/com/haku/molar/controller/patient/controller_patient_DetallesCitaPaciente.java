@@ -14,10 +14,9 @@ import com.haku.molar.controller.patient.interfaces.Callback_patient_detallesCit
 import com.haku.molar.model.cita.model_cita;
 
 public class controller_patient_DetallesCitaPaciente extends AppCompatActivity implements Callback_patient_detallesCita {
-    String matricula, nombre, rol,idCita;
-    ImageView ivBackBtn;
+    String matricula, nombre, rol,idCita, sexo;
+    ImageView ivBackBtn,ivPerfil;
     TextView tvNombre, tvMatricula, tvFolio, tvMedico, tvMotivp, tvHora, tvFecha;
-    Button btnBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +26,7 @@ public class controller_patient_DetallesCitaPaciente extends AppCompatActivity i
         matricula = intent.getStringExtra("matricula");
         nombre = intent.getStringExtra("nombre");
         rol = intent.getStringExtra("rol");
+        sexo = intent.getStringExtra("sexo");
         idCita = intent.getStringExtra("idCita");
 
         ivBackBtn = findViewById(R.id.ivBackBtnDetallesCitaPatient);
@@ -37,17 +37,11 @@ public class controller_patient_DetallesCitaPaciente extends AppCompatActivity i
         tvMotivp = findViewById(R.id.patient_detallesCita_motivo);
         tvHora = findViewById(R.id.patient_detallesCita_hora);
         tvFecha = findViewById(R.id.patient_detallesCita_fecha);
-        btnBack = findViewById(R.id.patient_detallesCitaBtnBack);
+        ivPerfil = findViewById(R.id.FotoPerfil);
         inicioUI();
         ivBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backbtn();
-            }
-        });
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
                 backbtn();
             }
         });
@@ -59,6 +53,43 @@ public class controller_patient_DetallesCitaPaciente extends AppCompatActivity i
     public void inicioUI(){
         tvNombre.setText(nombre);
         tvMatricula.setText(matricula);
+        switch (sexo){
+            case "12":
+                ivPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                ivPerfil.setImageResource(R.mipmap.hombredos);
+                break;
+            case "13":
+                ivPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                ivPerfil.setImageResource(R.mipmap.hombretres);
+                break;
+            case "14":
+                ivPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                ivPerfil.setImageResource(R.mipmap.hombrecuatro);
+                break;
+            case "15":
+                ivPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                ivPerfil.setImageResource(R.mipmap.hombrecinco);
+                break;
+            case "22":
+                ivPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                ivPerfil.setImageResource(R.mipmap.mujerdos);
+                break;
+            case "23":
+                ivPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                ivPerfil.setImageResource(R.mipmap.mujertres);
+                break;
+            case "24":
+                ivPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                ivPerfil.setImageResource(R.mipmap.mujercuatro);
+                break;
+            case "25":
+                ivPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                ivPerfil.setImageResource(R.mipmap.mujercinco);
+                break;
+            default:
+                Toast.makeText(this, "Elija una opcion valida", Toast.LENGTH_SHORT).show();
+                break;
+        }
         cargarDatosCita();
     }
     public void cargarDatosCita(){
@@ -70,6 +101,7 @@ public class controller_patient_DetallesCitaPaciente extends AppCompatActivity i
         i.putExtra("matricula",matricula);
         i.putExtra("nombre",nombre);
         i.putExtra("rol",rol);
+        i.putExtra("sexo",sexo);
         startActivity(i);
         overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
         finish();

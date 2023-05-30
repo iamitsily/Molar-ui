@@ -7,14 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.haku.molar.R;
 import com.haku.molar.general.controller_General_Login;
 
 public class controller_patient_AjustesDeCuentaMenu extends AppCompatActivity {
-    ImageView imageView;
+    ImageView imageView, imageViewPerfil;
     TextView tvNombre, tvRol;
-    String matricula, nombre, rol;
+    String matricula, nombre, rol,sexo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,12 +26,13 @@ public class controller_patient_AjustesDeCuentaMenu extends AppCompatActivity {
         matricula = intent.getStringExtra("matricula");
         nombre = intent.getStringExtra("nombre");
         rol = intent.getStringExtra("rol");
+        sexo = intent.getStringExtra("sexo");
 
         //Cast
         imageView = findViewById(R.id.view_patient_ajustescuentamenu_imvw);
         tvNombre = findViewById(R.id.view_patient_ajustesCuentaMenuNombre);
         tvRol = findViewById(R.id.view_patient_ajustesCuentaMenuRol);
-
+        imageViewPerfil = findViewById(R.id.ADC1_iv2);
         //Funciones
         inicioUI();
 
@@ -48,6 +50,7 @@ public class controller_patient_AjustesDeCuentaMenu extends AppCompatActivity {
         i.putExtra("matricula",matricula);
         i.putExtra("nombre",nombre);
         i.putExtra("rol",rol);
+        i.putExtra("sexo",sexo);
         startActivity(i);
         finish();
     }
@@ -70,12 +73,50 @@ public class controller_patient_AjustesDeCuentaMenu extends AppCompatActivity {
                 tvRol.setText("Consulte su rol con el Administrador");
                 break;
         }
+        switch (sexo){
+            case "12":
+                imageViewPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageViewPerfil.setImageResource(R.mipmap.hombredos);
+                break;
+            case "13":
+                imageViewPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageViewPerfil.setImageResource(R.mipmap.hombretres);
+                break;
+            case "14":
+                imageViewPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageViewPerfil.setImageResource(R.mipmap.hombrecuatro);
+                break;
+            case "15":
+                imageViewPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageViewPerfil.setImageResource(R.mipmap.hombrecinco);
+                break;
+            case "22":
+                imageViewPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                imageViewPerfil.setImageResource(R.mipmap.mujerdos);
+                break;
+            case "23":
+                imageViewPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                imageViewPerfil.setImageResource(R.mipmap.mujertres);
+                break;
+            case "24":
+                imageViewPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                imageViewPerfil.setImageResource(R.mipmap.mujercuatro);
+                break;
+            case "25":
+                imageViewPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                imageViewPerfil.setImageResource(R.mipmap.mujercinco);
+                break;
+            default:
+                Toast.makeText(this, "Elija una opcion valida", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
     public void ajustdesCuenta(View view){
         Intent intentAjustesCuenta = new Intent(this, controller_patient_AjustesCuentaDatos.class);
         intentAjustesCuenta.putExtra("matricula",matricula);
         intentAjustesCuenta.putExtra("nombre",nombre);
         intentAjustesCuenta.putExtra("rol",rol);
+        intentAjustesCuenta.putExtra("sexo",sexo);
         startActivity(intentAjustesCuenta);
         overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
         finish();
@@ -85,6 +126,7 @@ public class controller_patient_AjustesDeCuentaMenu extends AppCompatActivity {
         terminosCondiciones.putExtra("matricula",matricula);
         terminosCondiciones.putExtra("nombre",nombre);
         terminosCondiciones.putExtra("rol",rol);
+        terminosCondiciones.putExtra("sexo",sexo);
         startActivity(terminosCondiciones);
         overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
         finish();
@@ -98,6 +140,7 @@ public class controller_patient_AjustesDeCuentaMenu extends AppCompatActivity {
         i.putExtra("matricula",matricula);
         i.putExtra("nombre",nombre);
         i.putExtra("rol",rol);
+        i.putExtra("sexo",sexo);
         startActivity(i);
         finish();
     }

@@ -177,7 +177,7 @@
             android:background="@drawable/drawable_patient_cancelar_cita_view" />
 
         <ImageButton
-            android:id="@+id/imageView2"
+            android:id="@+id/patient_ajustesCuentaPerfil"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignStart="@id/view_CancelarCita_patient_opcionescita"

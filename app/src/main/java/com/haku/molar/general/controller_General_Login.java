@@ -198,7 +198,6 @@ public class controller_General_Login extends AppCompatActivity implements Callb
     }
     @Override
     public void onSuccess(String[] datos) {
-        System.out.println("controller_General_Login"+datos[0] + datos[1] + datos[2] + datos[3]);
         if (checkBoxDatos.isChecked()){
             SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = loginDatos.edit();
@@ -230,6 +229,7 @@ public class controller_General_Login extends AppCompatActivity implements Callb
                         intentPatient.putExtra("matricula",datos[0]);
                         intentPatient.putExtra("nombre", datos[1]);
                         intentPatient.putExtra("rol",datos[3]);
+                        intentPatient.putExtra("sexo",datos[4]);
                         startActivity(intentPatient);
                         finish();
                         break;

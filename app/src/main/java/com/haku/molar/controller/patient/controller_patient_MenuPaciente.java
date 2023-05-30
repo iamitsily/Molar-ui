@@ -9,6 +9,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,8 +25,8 @@ import java.util.ArrayList;
 
 public class controller_patient_MenuPaciente extends AppCompatActivity implements Callback_patient_menu {
     TextView tvNombre, tvMatricula;
-    String matricula, nombre, rol;
-
+    String matricula, nombre, rol,sexo;
+    ImageButton ibAjustesMenu;
     BottomNavigationView menuNav;
     RecyclerView RvListCitas;
     private com.haku.molar.controller.patient.adapter.adaptadorRecyclerMenuPaciente adaptadorRecyclerMenuPaciente;
@@ -38,9 +40,11 @@ public class controller_patient_MenuPaciente extends AppCompatActivity implement
         matricula = intent.getStringExtra("matricula");
         nombre = intent.getStringExtra("nombre");
         rol = intent.getStringExtra("rol");
+        sexo = intent.getStringExtra("sexo");
         tvNombre = (TextView) findViewById(R.id.tvNombre_patient_MenuPaciente);
         tvMatricula = findViewById(R.id.tvMatricula_patient_MenuPaciente);
         RvListCitas = findViewById(R.id.view_patient_menuPacienteReciclerView);
+        ibAjustesMenu = findViewById(R.id.patient_menu_ibAjustesCuenta);
 
         inicioUI();
 
@@ -54,6 +58,7 @@ public class controller_patient_MenuPaciente extends AppCompatActivity implement
                     intentCita.putExtra("matricula", matricula);
                     intentCita.putExtra("nombre", nombre);
                     intentCita.putExtra("rol", rol);
+                    intentCita.putExtra("sexo", sexo);
                     startActivity(intentCita);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
@@ -63,6 +68,7 @@ public class controller_patient_MenuPaciente extends AppCompatActivity implement
                     intentHistorial.putExtra("matricula", matricula);
                     intentHistorial.putExtra("nombre", nombre);
                     intentHistorial.putExtra("rol", rol);
+                    intentHistorial.putExtra("sexo", sexo);
                     startActivity(intentHistorial);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
@@ -72,6 +78,7 @@ public class controller_patient_MenuPaciente extends AppCompatActivity implement
                     intentNotificacion.putExtra("matricula", matricula);
                     intentNotificacion.putExtra("nombre", nombre);
                     intentNotificacion.putExtra("rol", rol);
+                    intentNotificacion.putExtra("sexo", sexo);
                     startActivity(intentNotificacion);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
@@ -105,6 +112,43 @@ public class controller_patient_MenuPaciente extends AppCompatActivity implement
     public void inicioUI() {
         tvNombre.setText(nombre);
         tvMatricula.setText(matricula);
+        switch (sexo){
+            case "12":
+                ibAjustesMenu.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                ibAjustesMenu.setImageResource(R.mipmap.hombredos);
+                break;
+            case "13":
+                ibAjustesMenu.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                ibAjustesMenu.setImageResource(R.mipmap.hombretres);
+                break;
+            case "14":
+                ibAjustesMenu.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                ibAjustesMenu.setImageResource(R.mipmap.hombrecuatro);
+                break;
+            case "15":
+                ibAjustesMenu.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                ibAjustesMenu.setImageResource(R.mipmap.hombrecinco);
+                break;
+            case "22":
+                ibAjustesMenu.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                ibAjustesMenu.setImageResource(R.mipmap.mujerdos);
+                break;
+            case "23":
+                ibAjustesMenu.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                ibAjustesMenu.setImageResource(R.mipmap.mujertres);
+                break;
+            case "24":
+                ibAjustesMenu.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                ibAjustesMenu.setImageResource(R.mipmap.mujercuatro);
+                break;
+            case "25":
+                ibAjustesMenu.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                ibAjustesMenu.setImageResource(R.mipmap.mujercinco);
+                break;
+            default:
+                Toast.makeText(this, "Elija una opcion valida", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     public void registrar(View view) {
@@ -117,6 +161,7 @@ public class controller_patient_MenuPaciente extends AppCompatActivity implement
         intentAjustesCuenta.putExtra("matricula", matricula);
         intentAjustesCuenta.putExtra("nombre", nombre);
         intentAjustesCuenta.putExtra("rol", rol);
+        intentAjustesCuenta.putExtra("sexo", sexo);
         startActivity(intentAjustesCuenta);
         overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
         finish();

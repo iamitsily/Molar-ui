@@ -10,7 +10,7 @@ import android.widget.ImageButton;
 import com.haku.molar.R;
 
 public class controller_patient_TerminosCondiciones extends AppCompatActivity {
-    String matricula, nombre, rol;
+    String matricula, nombre, rol,sexo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +21,7 @@ public class controller_patient_TerminosCondiciones extends AppCompatActivity {
         matricula = intent.getStringExtra("matricula");
         nombre = intent.getStringExtra("nombre");
         rol = intent.getStringExtra("rol");
+        sexo = intent.getStringExtra("sexo");
 
     }
     public void backBtn(View view){
@@ -28,6 +29,7 @@ public class controller_patient_TerminosCondiciones extends AppCompatActivity {
         terminosCondiciones.putExtra("matricula",matricula);
         terminosCondiciones.putExtra("nombre",nombre);
         terminosCondiciones.putExtra("rol",rol);
+        terminosCondiciones.putExtra("sexo",sexo);
         startActivity(terminosCondiciones);
         overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
         finish();
