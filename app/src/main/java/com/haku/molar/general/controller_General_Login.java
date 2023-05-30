@@ -245,11 +245,11 @@ public class controller_General_Login extends AppCompatActivity implements Callb
                         break;
                     //3 -> menuAsistente
                     case "3":
-                        Toast.makeText(this, "MenuAsistente", Toast.LENGTH_SHORT).show();
                         Intent intentAssistant = new Intent(this, controller_assistant_MenuAsistente.class);
                         intentAssistant.putExtra("matricula",datos[0]);
                         intentAssistant.putExtra("nombre", datos[1]);
                         intentAssistant.putExtra("rol",datos[3]);
+                        intentAssistant.putExtra("sexo",datos[4]);
                         startActivity(intentAssistant);
                         finish();
                         break;

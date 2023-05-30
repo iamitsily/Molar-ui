@@ -3,10 +3,16 @@ package com.haku.molar.controller.assistant;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
@@ -14,10 +20,13 @@ import com.haku.molar.controller.patient.controller_patient_HistorialCitasLayout
 import com.haku.molar.controller.patient.controller_patient_NotificacionesPaciente;
 import com.haku.molar.controller.patient.controller_patient_OpcionesCitas;
 
+import java.util.HashMap;
+
 public class controller_assistant_MenuAsistente extends AppCompatActivity {
-    TextView tvNombre;
+    TextView tvNombre,tvMatricula;
     CardView cvRegistrarPaciente, cvGestionCitas;
-    String matricula, nombre, rol;
+    String matricula, nombre, rol,sexo;
+    ImageButton ibPerfil;
     BottomNavigationView menuNav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +37,16 @@ public class controller_assistant_MenuAsistente extends AppCompatActivity {
         matricula = intent.getStringExtra("matricula");
         nombre = intent.getStringExtra("nombre");
         rol = intent.getStringExtra("rol");
+        sexo = intent.getStringExtra("sexo");
 
 
         menuNav = findViewById(R.id.menu_assistant_menu);
         menuNav.setSelectedItemId(R.id.menu_patient_home);
-        tvNombre = (TextView) findViewById(R.id.tv_assistant_nombreAsistente);
+        tvNombre = findViewById(R.id.tv_assistant_nombreAsistente);
+        tvMatricula = findViewById(R.id.tv_assistant_matricula);
         cvRegistrarPaciente = findViewById(R.id.assistant_menu_cvRegistrarPaciente);
         cvGestionCitas = findViewById(R.id.assistant_menu_cvGestionarCita);
+        ibPerfil = findViewById(R.id.assistant_menu_ibIcon);
         inicioUI();
 
         //Listeners
@@ -68,8 +80,44 @@ public class controller_assistant_MenuAsistente extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Molar");
+        builder.setMessage("¿Desea salir de la aplicación?").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
 
+            }
+        }).setCancelable(false).show();
+    }
     public void inicioUI(){
         tvNombre.setText(nombre);
+        tvMatricula.setText(matricula+ " | Asistente");
+        HashMap<String, Pair<Integer, ImageView.ScaleType>> mapaSexo = new HashMap<>();
+        mapaSexo.put("0", new Pair<>(R.mipmap.hombre, ImageView.ScaleType.CENTER_CROP));
+        mapaSexo.put("1", new Pair<>(R.mipmap.mujer, ImageView.ScaleType.CENTER_CROP));
+        mapaSexo.put("12", new Pair<>(R.mipmap.hombredos, ImageView.ScaleType.CENTER_CROP));
+        mapaSexo.put("13", new Pair<>(R.mipmap.hombretres, ImageView.ScaleType.CENTER_CROP));
+        mapaSexo.put("14", new Pair<>(R.mipmap.hombrecuatro, ImageView.ScaleType.CENTER_CROP));
+        mapaSexo.put("15", new Pair<>(R.mipmap.hombrecinco, ImageView.ScaleType.CENTER_CROP));
+        mapaSexo.put("22", new Pair<>(R.mipmap.mujerdos, ImageView.ScaleType.FIT_CENTER));
+        mapaSexo.put("23", new Pair<>(R.mipmap.mujertres, ImageView.ScaleType.FIT_CENTER));
+        mapaSexo.put("24", new Pair<>(R.mipmap.mujercuatro, ImageView.ScaleType.FIT_CENTER));
+        mapaSexo.put("25", new Pair<>(R.mipmap.mujercinco, ImageView.ScaleType.FIT_CENTER));
+
+        Pair<Integer, ImageView.ScaleType> opcionSexo = mapaSexo.get(sexo);
+
+        if (opcionSexo == null) {
+            Toast.makeText(this, "Elija una opción válida", Toast.LENGTH_SHORT).show();
+        } else {
+            ibPerfil.setScaleType(opcionSexo.second);
+            ibPerfil.setImageResource(opcionSexo.first);
+        }
     }
 }

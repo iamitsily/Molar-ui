@@ -29,7 +29,7 @@
             android:padding="10dp">
 
             <TextView
-                android:id="@+id/menuPacienteLayout_tv1"
+                android:id="@+id/tv_assistant_nombreAsistente"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/pacienteLayout_tv1"
