@@ -57,6 +57,7 @@ public class model_General_Usuario {
         String matricula = String.valueOf(getMatricula());
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Iniciando Sesión");
+        progressDialog.setCancelable(false);
         progressDialog.show();
         StringRequest request = new StringRequest(Request.Method.POST,url , new Response.Listener<String>() {
             @Override
