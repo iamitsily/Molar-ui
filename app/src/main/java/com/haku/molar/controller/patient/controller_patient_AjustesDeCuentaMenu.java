@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 
 import com.haku.molar.R;
 import com.haku.molar.general.controller_General_Login;
+
+import java.util.HashMap;
 
 public class controller_patient_AjustesDeCuentaMenu extends AppCompatActivity {
     ImageView imageView, imageViewPerfil;
@@ -73,42 +76,23 @@ public class controller_patient_AjustesDeCuentaMenu extends AppCompatActivity {
                 tvRol.setText("Consulte su rol con el Administrador");
                 break;
         }
-        switch (sexo){
-            case "12":
-                imageViewPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageViewPerfil.setImageResource(R.mipmap.hombredos);
-                break;
-            case "13":
-                imageViewPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageViewPerfil.setImageResource(R.mipmap.hombretres);
-                break;
-            case "14":
-                imageViewPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageViewPerfil.setImageResource(R.mipmap.hombrecuatro);
-                break;
-            case "15":
-                imageViewPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageViewPerfil.setImageResource(R.mipmap.hombrecinco);
-                break;
-            case "22":
-                imageViewPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imageViewPerfil.setImageResource(R.mipmap.mujerdos);
-                break;
-            case "23":
-                imageViewPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imageViewPerfil.setImageResource(R.mipmap.mujertres);
-                break;
-            case "24":
-                imageViewPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imageViewPerfil.setImageResource(R.mipmap.mujercuatro);
-                break;
-            case "25":
-                imageViewPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imageViewPerfil.setImageResource(R.mipmap.mujercinco);
-                break;
-            default:
-                Toast.makeText(this, "Elija una opcion valida", Toast.LENGTH_SHORT).show();
-                break;
+        HashMap<String, Pair<Integer, ImageView.ScaleType>> mapaSexo = new HashMap<>();
+        mapaSexo.put("12", new Pair<>(R.mipmap.hombredos, ImageView.ScaleType.CENTER_CROP));
+        mapaSexo.put("13", new Pair<>(R.mipmap.hombretres, ImageView.ScaleType.CENTER_CROP));
+        mapaSexo.put("14", new Pair<>(R.mipmap.hombrecuatro, ImageView.ScaleType.CENTER_CROP));
+        mapaSexo.put("15", new Pair<>(R.mipmap.hombrecinco, ImageView.ScaleType.CENTER_CROP));
+        mapaSexo.put("22", new Pair<>(R.mipmap.mujerdos, ImageView.ScaleType.FIT_CENTER));
+        mapaSexo.put("23", new Pair<>(R.mipmap.mujertres, ImageView.ScaleType.FIT_CENTER));
+        mapaSexo.put("24", new Pair<>(R.mipmap.mujercuatro, ImageView.ScaleType.FIT_CENTER));
+        mapaSexo.put("25", new Pair<>(R.mipmap.mujercinco, ImageView.ScaleType.FIT_CENTER));
+
+        Pair<Integer, ImageView.ScaleType> opcionSexo = mapaSexo.get(sexo);
+
+        if (opcionSexo == null) {
+            Toast.makeText(this, "Elija una opción válida", Toast.LENGTH_SHORT).show();
+        } else {
+            imageViewPerfil.setScaleType(opcionSexo.second);
+            imageViewPerfil.setImageResource(opcionSexo.first);
         }
     }
     public void ajustdesCuenta(View view){

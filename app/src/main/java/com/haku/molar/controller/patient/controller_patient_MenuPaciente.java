@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -22,6 +23,7 @@ import com.haku.molar.model.cita.model_cita;
 import com.haku.molar.model.patient.model_Patient;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class controller_patient_MenuPaciente extends AppCompatActivity implements Callback_patient_menu {
     TextView tvNombre, tvMatricula;
@@ -112,43 +114,25 @@ public class controller_patient_MenuPaciente extends AppCompatActivity implement
     public void inicioUI() {
         tvNombre.setText(nombre);
         tvMatricula.setText(matricula);
-        switch (sexo){
-            case "12":
-                ibAjustesMenu.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                ibAjustesMenu.setImageResource(R.mipmap.hombredos);
-                break;
-            case "13":
-                ibAjustesMenu.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                ibAjustesMenu.setImageResource(R.mipmap.hombretres);
-                break;
-            case "14":
-                ibAjustesMenu.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                ibAjustesMenu.setImageResource(R.mipmap.hombrecuatro);
-                break;
-            case "15":
-                ibAjustesMenu.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                ibAjustesMenu.setImageResource(R.mipmap.hombrecinco);
-                break;
-            case "22":
-                ibAjustesMenu.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                ibAjustesMenu.setImageResource(R.mipmap.mujerdos);
-                break;
-            case "23":
-                ibAjustesMenu.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                ibAjustesMenu.setImageResource(R.mipmap.mujertres);
-                break;
-            case "24":
-                ibAjustesMenu.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                ibAjustesMenu.setImageResource(R.mipmap.mujercuatro);
-                break;
-            case "25":
-                ibAjustesMenu.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                ibAjustesMenu.setImageResource(R.mipmap.mujercinco);
-                break;
-            default:
-                Toast.makeText(this, "Elija una opcion valida", Toast.LENGTH_SHORT).show();
-                break;
+        HashMap<String, Pair<Integer, ImageView.ScaleType>> mapaSexo = new HashMap<>();
+        mapaSexo.put("12", new Pair<>(R.mipmap.hombredos, ImageView.ScaleType.CENTER_CROP));
+        mapaSexo.put("13", new Pair<>(R.mipmap.hombretres, ImageView.ScaleType.CENTER_CROP));
+        mapaSexo.put("14", new Pair<>(R.mipmap.hombrecuatro, ImageView.ScaleType.CENTER_CROP));
+        mapaSexo.put("15", new Pair<>(R.mipmap.hombrecinco, ImageView.ScaleType.CENTER_CROP));
+        mapaSexo.put("22", new Pair<>(R.mipmap.mujerdos, ImageView.ScaleType.FIT_CENTER));
+        mapaSexo.put("23", new Pair<>(R.mipmap.mujertres, ImageView.ScaleType.FIT_CENTER));
+        mapaSexo.put("24", new Pair<>(R.mipmap.mujercuatro, ImageView.ScaleType.FIT_CENTER));
+        mapaSexo.put("25", new Pair<>(R.mipmap.mujercinco, ImageView.ScaleType.FIT_CENTER));
+
+        Pair<Integer, ImageView.ScaleType> opcionSexo = mapaSexo.get(sexo);
+
+        if (opcionSexo == null) {
+            Toast.makeText(this, "Elija una opción válida", Toast.LENGTH_SHORT).show();
+        } else {
+            ibAjustesMenu.setScaleType(opcionSexo.second);
+            ibAjustesMenu.setImageResource(opcionSexo.first);
         }
+
     }
 
     public void registrar(View view) {
