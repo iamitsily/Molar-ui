@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +25,7 @@ import com.haku.molar.utils.MolarCrypt;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -165,59 +167,26 @@ public class controller_patient_AjustesCuentaDatos extends AppCompatActivity imp
     }
     public void updateIcon(String opc){
         model_Patient model_patient = new model_Patient(Integer.parseInt(matricula),this,this);
-        switch (opc){
-            case "12":
-                model_patient.updateIcon(opc);
-                imageViewPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageViewPerfil.setImageResource(R.mipmap.hombredos);
-                sexo = "12";
-                break;
-            case "13":
-                model_patient.updateIcon(opc);
-                imageViewPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageViewPerfil.setImageResource(R.mipmap.hombretres);
-                sexo = "13";
-                break;
-            case "14":
-                model_patient.updateIcon(opc);
-                imageViewPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageViewPerfil.setImageResource(R.mipmap.hombrecuatro);
-                sexo = "14";
-                break;
-            case "15":
-                model_patient.updateIcon(opc);
-                imageViewPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageViewPerfil.setImageResource(R.mipmap.hombrecinco);
-                sexo = "15";
-                break;
-            case "22":
-                model_patient.updateIcon(opc);
-                imageViewPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imageViewPerfil.setImageResource(R.mipmap.mujerdos);
-                sexo = "22";
-                break;
-            case "23":
-                model_patient.updateIcon(opc);
-                imageViewPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imageViewPerfil.setImageResource(R.mipmap.mujertres);
-                sexo = "23";
-                break;
-            case "24":
-                model_patient.updateIcon(opc);
-                imageViewPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imageViewPerfil.setImageResource(R.mipmap.mujercuatro);
-                sexo = "24";
-                break;
-            case "25":
-                model_patient.updateIcon(opc);
-                imageViewPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imageViewPerfil.setImageResource(R.mipmap.mujercinco);
-                sexo = "25";
-                break;
-            default:
-                Toast.makeText(this, "Elija una opcion valida", Toast.LENGTH_SHORT).show();
-                break;
+        HashMap<String, Pair<Integer, ImageView.ScaleType>> mapaOpciones = new HashMap<>();
+        mapaOpciones.put("12", new Pair<>(R.mipmap.hombredos, ImageView.ScaleType.CENTER_CROP));
+        mapaOpciones.put("13", new Pair<>(R.mipmap.hombretres, ImageView.ScaleType.CENTER_CROP));
+        mapaOpciones.put("14", new Pair<>(R.mipmap.hombrecuatro, ImageView.ScaleType.CENTER_CROP));
+        mapaOpciones.put("15", new Pair<>(R.mipmap.hombrecinco, ImageView.ScaleType.CENTER_CROP));
+        mapaOpciones.put("22", new Pair<>(R.mipmap.mujerdos, ImageView.ScaleType.FIT_CENTER));
+        mapaOpciones.put("23", new Pair<>(R.mipmap.mujertres, ImageView.ScaleType.FIT_CENTER));
+        mapaOpciones.put("24", new Pair<>(R.mipmap.mujercuatro, ImageView.ScaleType.FIT_CENTER));
+        mapaOpciones.put("25", new Pair<>(R.mipmap.mujercinco, ImageView.ScaleType.FIT_CENTER));
+
+        Pair<Integer, ImageView.ScaleType> opcion = mapaOpciones.get(opc);
+        if (opcion != null) {
+            model_patient.updateIcon(opc);
+            imageViewPerfil.setScaleType(opcion.second);
+            imageViewPerfil.setImageResource(opcion.first);
+            sexo = opc;
+        } else {
+            Toast.makeText(this, "Elija una opción válida", Toast.LENGTH_SHORT).show();
         }
+
     }
     public void backCuentaMenuBtn(View view){
         Intent intent = new Intent(this, controller_patient_AjustesDeCuentaMenu.class);
@@ -230,42 +199,23 @@ public class controller_patient_AjustesCuentaDatos extends AppCompatActivity imp
         finish();
     }
     public void inicioUI(){
-        switch (sexo){
-            case "12":
-                imageViewPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageViewPerfil.setImageResource(R.mipmap.hombredos);
-                break;
-            case "13":
-                imageViewPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageViewPerfil.setImageResource(R.mipmap.hombretres);
-                break;
-            case "14":
-                imageViewPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageViewPerfil.setImageResource(R.mipmap.hombrecuatro);
-                break;
-            case "15":
-                imageViewPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageViewPerfil.setImageResource(R.mipmap.hombrecinco);
-                break;
-            case "22":
-                imageViewPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imageViewPerfil.setImageResource(R.mipmap.mujerdos);
-                break;
-            case "23":
-                imageViewPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imageViewPerfil.setImageResource(R.mipmap.mujertres);
-                break;
-            case "24":
-                imageViewPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imageViewPerfil.setImageResource(R.mipmap.mujercuatro);
-                break;
-            case "25":
-                imageViewPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imageViewPerfil.setImageResource(R.mipmap.mujercinco);
-                break;
-            default:
-                Toast.makeText(this, "Elija una opcion valida", Toast.LENGTH_SHORT).show();
-                break;
+        HashMap<String, Pair<Integer, ImageView.ScaleType>> mapaSexo = new HashMap<>();
+        mapaSexo.put("12", new Pair<>(R.mipmap.hombredos, ImageView.ScaleType.CENTER_CROP));
+        mapaSexo.put("13", new Pair<>(R.mipmap.hombretres, ImageView.ScaleType.CENTER_CROP));
+        mapaSexo.put("14", new Pair<>(R.mipmap.hombrecuatro, ImageView.ScaleType.CENTER_CROP));
+        mapaSexo.put("15", new Pair<>(R.mipmap.hombrecinco, ImageView.ScaleType.CENTER_CROP));
+        mapaSexo.put("22", new Pair<>(R.mipmap.mujerdos, ImageView.ScaleType.FIT_CENTER));
+        mapaSexo.put("23", new Pair<>(R.mipmap.mujertres, ImageView.ScaleType.FIT_CENTER));
+        mapaSexo.put("24", new Pair<>(R.mipmap.mujercuatro, ImageView.ScaleType.FIT_CENTER));
+        mapaSexo.put("25", new Pair<>(R.mipmap.mujercinco, ImageView.ScaleType.FIT_CENTER));
+
+        Pair<Integer, ImageView.ScaleType> opcionSexo = mapaSexo.get(sexo);
+
+        if (opcionSexo == null) {
+            Toast.makeText(this, "Elija una opción válida", Toast.LENGTH_SHORT).show();
+        } else {
+            imageViewPerfil.setScaleType(opcionSexo.second);
+            imageViewPerfil.setImageResource(opcionSexo.first);
         }
         model_Patient model_patient= new model_Patient(Integer.parseInt(matricula),this,this);
         model_patient.buscarDatos();
