@@ -312,10 +312,13 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
 
     @Override
     public void onSuccessNumDoctor(String num) {
-        Random random = new Random();
-        int randomNumber = random.nextInt(Integer.parseInt(num)) + 1;
-        disponibilidadDoctor(String.valueOf(randomNumber));
-
+        if (num.equals("0")){
+            Toast.makeText(this, "No hay doctores disponibles", Toast.LENGTH_SHORT).show();
+            progressDialogMedico.dismiss();
+        }else{
+            int randomNumber = (new Random().nextInt(Integer.parseInt(num)) + 1);
+            disponibilidadDoctor(String.valueOf(randomNumber));
+        }
     }
 
     @Override

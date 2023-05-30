@@ -521,7 +521,6 @@ public class model_cita {
             @Override
             public void onResponse(String response) {
                 if (response.equalsIgnoreCase("Registro exitoso")) {
-                    Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
                     callback_patient_fechaHoraAgendarCita.onSuccessAgendarCita();
                 } else {
