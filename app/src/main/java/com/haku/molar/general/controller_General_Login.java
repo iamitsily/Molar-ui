@@ -226,7 +226,6 @@ public class controller_General_Login extends AppCompatActivity implements Callb
                         break;
                     //1 -> menuPaciente
                     case "1":
-                        Toast.makeText(this, "MenuPacienet", Toast.LENGTH_SHORT).show();
                         Intent intentPatient = new Intent(this, controller_patient_MenuPaciente.class);
                         intentPatient.putExtra("matricula",datos[0]);
                         intentPatient.putExtra("nombre", datos[1]);
