@@ -17,7 +17,7 @@ import com.haku.molar.model.cita.model_cita;
 
 public class controller_patient_CancelarCitaMotivo extends AppCompatActivity implements Callback_patient_cancelarCitas {
 
-    String matricula,nombre,rol,idCita,motivo,fecha,hora;
+    String matricula,nombre,rol,idCita,motivo,fecha,hora,sexo;
     ImageView imageView;
     EditText edtMotivo;
     @Override
@@ -29,12 +29,25 @@ public class controller_patient_CancelarCitaMotivo extends AppCompatActivity imp
         matricula = intent.getStringExtra("matricula");
         nombre = intent.getStringExtra("nombre");
         rol = intent.getStringExtra("rol");
+        sexo = intent.getStringExtra("sexo");
         idCita = intent.getStringExtra("idCita");
         motivo = intent.getStringExtra("motivo");
         fecha = intent.getStringExtra("fecha");
         hora = intent.getStringExtra("hora");
         imageView = findViewById(R.id.imageButton8);
         edtMotivo = findViewById(R.id.edtMotivoCancelarCita);
+    }
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(this,controller_patient_listarCitasActivas.class);
+        i.putExtra("matricula",matricula);
+        i.putExtra("nombre",nombre);
+        i.putExtra("rol",rol);
+        i.putExtra("sexo",sexo);
+        i.putExtra("opcion","1");
+        startActivity(i);
+        overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+        finish();
     }
     public void cancelarCita(View view){
         if (edtMotivo.getText().toString().trim().equals("")){
@@ -56,7 +69,9 @@ public class controller_patient_CancelarCitaMotivo extends AppCompatActivity imp
                     intent.putExtra("matricula",matricula);
                     intent.putExtra("nombre",nombre);
                     intent.putExtra("rol",rol);
+                    intent.putExtra("sexo",sexo);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
                 }
             }).setCancelable(false).show();
@@ -67,8 +82,10 @@ public class controller_patient_CancelarCitaMotivo extends AppCompatActivity imp
         i.putExtra("matricula",matricula);
         i.putExtra("nombre",nombre);
         i.putExtra("rol",rol);
+        i.putExtra("sexo",sexo);
         i.putExtra("opcion","1");
         startActivity(i);
+        overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
         finish();
     }
 
@@ -85,6 +102,7 @@ public class controller_patient_CancelarCitaMotivo extends AppCompatActivity imp
                 intentOpciones.putExtra("nombre",nombre);
                 intentOpciones.putExtra("rol",rol);
                 intentOpciones.putExtra("opcion","1");
+                intentOpciones.putExtra("sexo",sexo);
                 startActivity(intentOpciones);
                 finish();
             }

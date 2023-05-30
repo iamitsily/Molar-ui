@@ -8,6 +8,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
@@ -18,8 +20,8 @@ import com.haku.molar.model.cita.model_cita;
 import java.util.ArrayList;
 
 public class controller_patient_HistorialCitasLayout extends AppCompatActivity implements Callback_patient_historialCitas {
-    String matricula,nombre,rol;
-
+    String matricula,nombre,rol,sexo;
+    ImageView ivPerfil;
     BottomNavigationView menuNav;
     RecyclerView RVLista;
     private com.haku.molar.controller.patient.adapter.adaptadorRecyclerHistorialCitas adaptadorRecyclerHistorialCitas;
@@ -32,8 +34,9 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity i
         matricula = intent.getStringExtra("matricula");
         nombre = intent.getStringExtra("nombre");
         rol = intent.getStringExtra("rol");
+        sexo = intent.getStringExtra("sexo");
         RVLista = findViewById(R.id.HC_RV1);
-
+        ivPerfil = findViewById(R.id.patient_historialCitaPerfil);
         model_cita model_cita = new model_cita(matricula,this,this);
         model_cita.listarCitas();
 
@@ -48,6 +51,7 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity i
                     intentHome.putExtra("matricula",matricula);
                     intentHome.putExtra("nombre", nombre);
                     intentHome.putExtra("rol", rol);
+                    intentHome.putExtra("sexo", sexo);
                     startActivity(intentHome);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
@@ -57,6 +61,7 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity i
                     intentCita.putExtra("matricula",matricula);
                     intentCita.putExtra("nombre", nombre);
                     intentCita.putExtra("rol", rol);
+                    intentCita.putExtra("sexo", sexo);
                     startActivity(intentCita);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
@@ -66,6 +71,7 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity i
                     intentNotificacion.putExtra("matricula",matricula);
                     intentNotificacion.putExtra("nombre", nombre);
                     intentNotificacion.putExtra("rol", rol);
+                    intentNotificacion.putExtra("sexo", sexo);
                     startActivity(intentNotificacion);
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
@@ -73,6 +79,7 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity i
             }
             return false;
         });
+        iniciarUI();
     }
     @Override
     public void onBackPressed() {
@@ -90,16 +97,45 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity i
             }
         }).setCancelable(false).show();
     }
-    public void cargar(int position){
-        Intent i = new Intent(this,controller_patient_CancelarCitaMotivo.class);
-        i.putExtra("matricula",matricula);
-        i.putExtra("nombre",nombre);
-        i.putExtra("rol",rol);
-        startActivity(i);
-        finish();
+    public void iniciarUI(){
+        switch (sexo){
+            case "12":
+                ivPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                ivPerfil.setImageResource(R.mipmap.hombredos);
+                break;
+            case "13":
+                ivPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                ivPerfil.setImageResource(R.mipmap.hombretres);
+                break;
+            case "14":
+                ivPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                ivPerfil.setImageResource(R.mipmap.hombrecuatro);
+                break;
+            case "15":
+                ivPerfil.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                ivPerfil.setImageResource(R.mipmap.hombrecinco);
+                break;
+            case "22":
+                ivPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                ivPerfil.setImageResource(R.mipmap.mujerdos);
+                break;
+            case "23":
+                ivPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                ivPerfil.setImageResource(R.mipmap.mujertres);
+                break;
+            case "24":
+                ivPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                ivPerfil.setImageResource(R.mipmap.mujercuatro);
+                break;
+            case "25":
+                ivPerfil.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                ivPerfil.setImageResource(R.mipmap.mujercinco);
+                break;
+            default:
+                Toast.makeText(this, "Elija una opcion valida", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
-
-
     @Override
     public void onSuccessHistorial(ArrayList<model_cita> historial) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -112,6 +148,7 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity i
                 intent.putExtra("nombre",nombre);
                 intent.putExtra("rol",rol);
                 intent.putExtra("idCita",details.getId());
+                intent.putExtra("sexo", sexo);
                 startActivity(intent);
                 finish();
             }
@@ -121,7 +158,7 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity i
 
     @Override
     public void onErrorhoraHistorial(String mensaje) {
-
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
 
 }

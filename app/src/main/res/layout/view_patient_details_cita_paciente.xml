@@ -10,7 +10,6 @@
         android:id="@+id/relativeLayout5"
         android:layout_width="288dp"
         android:layout_height="102dp"
-        app:layout_constraintBottom_toTopOf="@+id/patient_detallesCitaBtnBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout5">
@@ -66,7 +65,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="84dp"
             android:layout_marginBottom="31dp"
-            android:text="Fecha"
+            android:text="--.--.----"
             android:textColor="#0E1012"
             android:textStyle="bold" />
 
@@ -195,28 +194,13 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="84dp"
             android:layout_marginBottom="31dp"
-            android:text="[Hora]"
+            android:text="--:--"
             android:textColor="#0E1012"
             android:textStyle="bold" />
 
 
     </RelativeLayout>
 
-
-    <Button
-        android:id="@+id/patient_detallesCitaBtnBack"
-        android:layout_width="273dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="4dp"
-        android:background="@drawable/drawable_roundedbutton_general"
-        android:backgroundTint="#1B6AA4"
-        android:text="Terminar"
-        android:textColor="#FFFFFF"
-        app:cornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.449"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/ivBackBtnDetallesCitaPatient"
@@ -263,7 +247,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="Fólio: [NO.ASIGNADO]"
+            android:text="Fólio:"
             android:textColor="#4A545E"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -273,7 +257,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="Médico: [Médico asignado]"
+            android:text="Médico:"
             android:textColor="#4A545E"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -283,7 +267,7 @@
             android:layout_width="match_parent"
             android:layout_height="33dp"
             android:layout_marginBottom="40dp"
-            android:text="Motivo de su cita: [Mótivo de la cita]"
+            android:text="Motivo de su cita:"
             android:textColor="#4A545E"
             android:textSize="18sp"
             android:textStyle="bold" />

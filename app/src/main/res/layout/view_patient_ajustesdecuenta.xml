@@ -74,7 +74,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/patient_ajustesCuentaPerfil"
         android:layout_width="100dp"
         android:layout_height="102dp"
         android:layout_marginTop="160dp"
@@ -85,7 +85,7 @@
         app:srcCompat="@mipmap/view_doctor_patient_ajustesdecuenta_profile" />
 
     <ImageButton
-        android:id="@+id/imageButton_redondo"
+        android:id="@+id/patient_ibAjusteDatosCambiarPerfil"
         android:layout_width="34dp"
         android:layout_height="32dp"
         android:layout_marginTop="72dp"
@@ -93,7 +93,7 @@
         android:background="@drawable/drawable_ajustesdecuenta_cambiarfoto"
         android:src="@mipmap/ajustesdecuenta_cambiar_foto"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+        app:layout_constraintTop_toTopOf="@+id/patient_ajustesCuentaPerfil" />
 
     <TextView
         android:id="@+id/textView2"
@@ -110,6 +110,7 @@
         app:layout_constraintTop_toBottomOf="@+id/rectangle_541" />
 
     <ScrollView
+        android:id="@+id/scrollView4"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
@@ -244,6 +245,141 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/patient_ajustesCuentaDatosCv"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:visibility="invisible"
+        app:cardCornerRadius="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/patient_ajustesCuenta_cerrarCV"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.951"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.051"
+                app:srcCompat="@mipmap/view_patient_avisosolicituderrorlayout" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/ivHombreDos"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@mipmap/hombredos" />
+
+                        <ImageView
+                            android:id="@+id/ivHombreTres"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@mipmap/hombretres" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/ivHombreCuatro"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@mipmap/hombrecuatro" />
+
+                        <ImageView
+                            android:id="@+id/ivHombreCinco"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@mipmap/hombrecinco" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/ivMujerDos"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@mipmap/mujerdos" />
+
+                        <ImageView
+                            android:id="@+id/ivMujerTres"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@mipmap/mujertres" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/ivMujerCuatro"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@mipmap/mujercuatro" />
+
+                        <ImageView
+                            android:id="@+id/ivMujerCinco"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@mipmap/mujercinco" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -77,7 +77,8 @@ public class model_General_Usuario {
                             String nombre = object.getString("nombre");
                             String password = object.getString("password");
                             String rol = object.getString("rol");
-                            String[] res = {matricula, nombre, password, rol};
+                            String sexo = object.getString("sexo");
+                            String[] res = {matricula, nombre, password, rol,sexo};
                             progressDialog.dismiss();
                             loginCallback.onSuccess(res);
                         }
