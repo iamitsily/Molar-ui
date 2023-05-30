@@ -200,6 +200,8 @@ public class controller_patient_AjustesCuentaDatos extends AppCompatActivity imp
     }
     public void inicioUI(){
         HashMap<String, Pair<Integer, ImageView.ScaleType>> mapaSexo = new HashMap<>();
+        mapaSexo.put("0", new Pair<>(R.mipmap.hombre, ImageView.ScaleType.CENTER_CROP));
+        mapaSexo.put("1", new Pair<>(R.mipmap.mujer, ImageView.ScaleType.CENTER_CROP));
         mapaSexo.put("12", new Pair<>(R.mipmap.hombredos, ImageView.ScaleType.CENTER_CROP));
         mapaSexo.put("13", new Pair<>(R.mipmap.hombretres, ImageView.ScaleType.CENTER_CROP));
         mapaSexo.put("14", new Pair<>(R.mipmap.hombrecuatro, ImageView.ScaleType.CENTER_CROP));
