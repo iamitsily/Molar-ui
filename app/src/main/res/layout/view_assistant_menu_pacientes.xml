@@ -65,7 +65,7 @@
             android:layout_height="75dp" />
 
         <Button
-            android:id="@+id/button21"
+            android:id="@+id/assistant_menu_btnSolisCancel"
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:background="@drawable/drawable_roundedbutton_general"

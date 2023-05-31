@@ -66,12 +66,12 @@
             android:layout_height="75dp" />
 
         <Button
-            android:id="@+id/button21"
+            android:id="@+id/assistant_menu_btnSolisCancel"
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:background="@drawable/drawable_roundedbutton_general"
             android:backgroundTint="#90CEFA"
-            android:text="Agendar Cita"
+            android:text="Solicitudes de cancelación"
             android:textColor="#FFFFFF"
             android:textSize="24sp" />
 

@@ -167,7 +167,7 @@ public class controller_patient_reagendar_citas_horaDia extends AppCompatActivit
         if (hora.equals("")){
             Toast.makeText(this, "Selecciona una hora disponible", Toast.LENGTH_SHORT).show();
         }else{
-            model_cita model_cita = new model_cita(idCita, fecha, hora, "3",this, this);
+            model_cita model_cita = new model_cita(idCita, fecha, hora, "3",motivo,this, this);
             model_cita.reagendarCita();
         }
     }

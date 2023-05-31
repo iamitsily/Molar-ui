@@ -117,18 +117,20 @@ public class model_cita {
         this.callback_patient_reagendarCitas = callback_patient_reagendarCitas;
     }
     //controller_patient_reagendar_citas_horaDia -> reagendarCita
-    public model_cita(String id, String dia, String hora, String estado, Context context, Callback_patient_reagendarCitas callback_patient_reagendarCitas) {
+    public model_cita(String id, String dia, String hora, String estado, String motivo, Context context, Callback_patient_reagendarCitas callback_patient_reagendarCitas) {
         this.id = id;
         this.dia = dia;
         this.hora = hora;
         this.estado = estado;
+        this.motivo = motivo;
         this.context = context;
         this.callback_patient_reagendarCitas = callback_patient_reagendarCitas;
     }
     //controller_patient_cancelarCitas -> idCita
 
-    public model_cita(String id, Context context, Callback_patient_cancelarCitas callback_patient_cancelarCitas) {
+    public model_cita(String id,String motivo, Context context, Callback_patient_cancelarCitas callback_patient_cancelarCitas) {
         this.id = id;
+        this.motivo = motivo;
         this.context = context;
         this.callback_patient_cancelarCitas = callback_patient_cancelarCitas;
     }
@@ -321,6 +323,7 @@ public class model_cita {
                 params.put("dia",dia);
                 params.put("hora",hora);
                 params.put("estado",estado);
+                params.put("motivo",motivo);
                 return params;
             }
         };
@@ -357,6 +360,7 @@ public class model_cita {
                 Map<String, String> params = new HashMap<>();
                 params.put("id",id);
                 params.put("estado","4");
+                params.put("motivo",motivo);
                 return params;
             }
         };

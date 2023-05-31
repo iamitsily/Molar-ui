@@ -59,7 +59,7 @@ public class controller_patient_CancelarCitaMotivo extends AppCompatActivity imp
                     "\nFecha: "+fecha+"\nHora: "+hora).setPositiveButton("Confirmar",new DialogInterface.OnClickListener(){
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    model_cita model_cita = new model_cita(idCita,controller_patient_CancelarCitaMotivo.this,controller_patient_CancelarCitaMotivo.this);
+                    model_cita model_cita = new model_cita(idCita,edtMotivo.getText().toString().trim(),controller_patient_CancelarCitaMotivo.this,controller_patient_CancelarCitaMotivo.this);
                     model_cita.pendienteCancelarCita();
                 }
             }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
