@@ -6,6 +6,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
@@ -13,6 +15,7 @@ import com.haku.molar.R;
 public class controller_assistant_menuCitas extends AppCompatActivity {
     String matricula, nombre, rol, sexo;
     BottomNavigationView menuNav;
+    Button btnSolisCancel, btnSolisReagen;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +28,21 @@ public class controller_assistant_menuCitas extends AppCompatActivity {
 
         menuNav = findViewById(R.id.menu_assistant_menu);
         menuNav.setSelectedItemId(R.id.menu_assistant_citas);
+        btnSolisCancel = findViewById(R.id.assistant_menu_btnSolisCancel);
 
-
+        btnSolisCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),controller_assistant_listarCitasPorCancelar.class);
+                intent.putExtra("matricula",matricula);
+                intent.putExtra("nombre", nombre);
+                intent.putExtra("rol", rol);
+                intent.putExtra("sexo", sexo);
+                startActivity(intent);
+                overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+                finish();
+            }
+        });
         //Listeners
         menuNav.setOnItemSelectedListener(item ->{
             switch (item.getItemId()){

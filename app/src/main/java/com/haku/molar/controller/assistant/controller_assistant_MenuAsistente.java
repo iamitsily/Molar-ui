@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
@@ -17,14 +18,16 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
+import com.haku.molar.controller.assistant.interfaces.Callback_assistant_menuAsistente;
 import com.haku.molar.controller.patient.controller_patient_HistorialCitasLayout;
 import com.haku.molar.controller.patient.controller_patient_NotificacionesPaciente;
 import com.haku.molar.controller.patient.controller_patient_OpcionesCitas;
+import com.haku.molar.model.patient.model_Patient;
 
 import java.util.HashMap;
 
-public class controller_assistant_MenuAsistente extends AppCompatActivity {
-    TextView tvNombre,tvMatricula;
+public class controller_assistant_MenuAsistente extends AppCompatActivity implements Callback_assistant_menuAsistente {
+    TextView tvNombre,tvMatricula,totalUser,totalMedicos;
     CardView cvRegistrarPaciente, cvGestionCitas;
     String matricula, nombre, rol,sexo;
     ImageButton ibPerfil;
@@ -47,6 +50,8 @@ public class controller_assistant_MenuAsistente extends AppCompatActivity {
         cvRegistrarPaciente = findViewById(R.id.assistant_menu_cvRegistrarPaciente);
         cvGestionCitas = findViewById(R.id.assistant_menu_cvGestionarCita);
         ibPerfil = findViewById(R.id.assistant_menu_ibIcon);
+        totalUser = findViewById(R.id.assistant_menu_tvUsersTotal);
+        totalMedicos = findViewById(R.id.assistant_menu_tvMedTotal);
         inicioUI();
 
         //Listeners
@@ -91,7 +96,14 @@ public class controller_assistant_MenuAsistente extends AppCompatActivity {
         cvGestionCitas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getApplicationContext(),controller_assistant_listarCitasPorCancelar.class);
+                intent.putExtra("matricula",matricula);
+                intent.putExtra("nombre", nombre);
+                intent.putExtra("rol", rol);
+                intent.putExtra("sexo", sexo);
+                startActivity(intent);
+                overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+                finish();
             }
         });
         ibPerfil.setOnClickListener(new View.OnClickListener() {
@@ -147,5 +159,24 @@ public class controller_assistant_MenuAsistente extends AppCompatActivity {
             ibPerfil.setScaleType(opcionSexo.second);
             ibPerfil.setImageResource(opcionSexo.first);
         }
+        model_Patient model_patient = new model_Patient(this,this);
+        model_patient.contarUserMed();
+    }
+
+    @Override
+    public void onSuccessContarMenu(String numPacientes, String numMedicos) {
+        totalUser.setText(numPacientes);
+        if (numMedicos.equals("0")){
+            totalMedicos.setText(numMedicos);
+            totalMedicos.setTextColor(Color.parseColor("#37A12B"));
+        }else{
+            totalMedicos.setText(numMedicos);
+        }
+
+    }
+
+    @Override
+    public void onErrorContrarMenu(String mensaje) {
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
 }

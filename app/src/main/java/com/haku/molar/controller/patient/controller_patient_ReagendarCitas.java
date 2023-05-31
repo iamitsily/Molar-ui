@@ -43,7 +43,7 @@ public class controller_patient_ReagendarCitas extends AppCompatActivity {
         EditText editText = findViewById(R.id.view_patient_agendarcitas_descripcion);
         motivo = editText.getText().toString().trim();
         if (motivo.equals("")){
-            Toast.makeText(this, "Escriba un motivo", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Por favor escriba el motivo de reagendar su cita", Toast.LENGTH_SHORT).show();
         }else{
             Intent intent = new Intent(this, controller_patient_reagendar_citas_horaDia.class);
             intent.putExtra("matricula",matricula);
