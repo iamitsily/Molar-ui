@@ -15,6 +15,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".controller.assistant.controller_assistant_ajustesMenuDatos"
+            android:exported="false" />
+        <activity
+            android:name=".controller.assistant.controller_assistant_TerminosCondiciones"
+            android:exported="false" />
+        <activity
+            android:name=".controller.assistant.controller_assistant_ajustesMenu"
+            android:exported="false" />
+        <activity
             android:name=".controller.patient.controller_patient_AvisoCitaReagendada"
             android:exported="false" />
         <activity

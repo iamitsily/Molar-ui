@@ -8,9 +8,12 @@
 
     <TextView
         android:id="@+id/textView75"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:text="Sección Paciente"
+        android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,9 +24,9 @@
 
     <ImageView
         android:id="@+id/imageView22"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:tint="#1C6BA4"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:tint="#CB17486C"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -34,11 +37,10 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/menu_assistant_menu"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +62,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="75dp" />
 
         <Button
             android:id="@+id/button21"
@@ -75,7 +77,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="75dp" />
 
         <Button
             android:id="@+id/button22"
@@ -87,6 +89,10 @@
             android:text="Buscar paciente"
             android:textColor="#FFFFFF"
             android:textSize="24sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="75dp" />
 
     </LinearLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
