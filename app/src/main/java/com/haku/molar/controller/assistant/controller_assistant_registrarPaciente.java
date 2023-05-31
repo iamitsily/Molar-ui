@@ -2,6 +2,9 @@ package com.haku.molar.controller.assistant;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -31,13 +34,18 @@ public class controller_assistant_registrarPaciente extends AppCompatActivity {
     private ImageView ibRegresar;
     private RadioButton rbtnHombre, rbtnMujer;
     private EditText etNombre, etAPaterno, etAMaterno, etCorreo, etNumero, etContraseña, etConfirmarContraseña;
-    private String nombre, apaterno, amaterno, correo, numero, contraseña, confirmarContraseña, matricula, contraseñaNoCrypt;
+    private String nombre, apaterno, amaterno, correo, numero, contraseña, confirmarContraseña, matricula, contraseñaNoCrypt, nombreString, matriculaString, rolString, sexoString;
     private int rol, sexo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_assistant_registrar_paciente);
+        Intent intent = getIntent();
+        matriculaString = intent.getStringExtra("matricula");
+        nombreString = intent.getStringExtra("nombre");
+        rolString = intent.getStringExtra("rol");
+        sexoString = intent.getStringExtra("sexo");
 
         ibRegresar = findViewById(R.id.view_assistant_registrarPaciente_btnback);
 
@@ -55,13 +63,28 @@ public class controller_assistant_registrarPaciente extends AppCompatActivity {
         ibRegresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),controller_assistant_MenuAsistente.class);
+                Intent intent = new Intent(getApplicationContext(),controller_assistant_menuPacientes.class);
+                intent.putExtra("matricula",matriculaString);
+                intent.putExtra("nombre", nombreString);
+                intent.putExtra("rol", rolString);
+                intent.putExtra("sexo", sexoString);
                 startActivity(intent);
+                overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                 finish();
             }
         });
     }
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this,controller_assistant_menuPacientes.class);
+        intent.putExtra("matricula",matriculaString);
+        intent.putExtra("nombre", nombreString);
+        intent.putExtra("rol", rolString);
+        intent.putExtra("sexo", sexoString);
+        startActivity(intent);
+        overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+        finish();
+    }
     public void Registrar(View v){
 
         obtenerDatos();
@@ -228,8 +251,13 @@ public class controller_assistant_registrarPaciente extends AppCompatActivity {
         etConfirmarContraseña.setText("");
     }
     public void regresar(View v){
-        Intent intent = new Intent(this,com.haku.molar.controller.patient.controller_patient_MenuPaciente.class);
+        Intent intent = new Intent(this,controller_assistant_menuPacientes.class);
+        intent.putExtra("matricula",matriculaString);
+        intent.putExtra("nombre", nombreString);
+        intent.putExtra("rol", rolString);
+        intent.putExtra("sexo", sexoString);
         startActivity(intent);
+        overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
         finish();
     }
 }

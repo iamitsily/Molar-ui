@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controller.patient.controller_patient_AjustesDeCuentaMenu"
+    android:background="#306BA5">
+
+    <ImageView
+        android:id="@+id/assistant_menu_ADC1_iv2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="116dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/view_doctor_patient_ajustesdecuenta_profile"
+        tools:src="@mipmap/view_patient_ajustes_de_cuenta_menu_foto_perfil" />
+
+    <TextView
+        android:id="@+id/assistant_menu_ajustesCuentaMenuNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="NombreUsuario"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/assistant_menu_ADC1_iv2" />
+
+    <ImageView
+        android:id="@+id/assistant_menu_ajustescuentamenu_imvw"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="regresar"
+        android:src="@mipmap/view_patient_ajustes_de_cuenta_menu_btn_atras"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/assistant_menu_ajustesCuentaMenuRol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="RolUsuario"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/assistant_menu_ajustesCuentaMenuNombre" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="344dp"
+        android:layout_height="221dp"
+        android:layout_marginTop="44dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/assistant_menu_ajustesCuentaMenuRol"
+        app:layout_constraintVertical_bias="0.01999998">
+
+        <Button
+            android:id="@+id/assistant_menu_ADC1_btn1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/drawable_roundedbutton_general"
+            android:backgroundTint="#FFFFFF"
+            android:gravity="left|center_vertical"
+            android:onClick="ajustdesCuenta"
+            android:text="Ajustes de cuenta"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            app:cornerRadius="15dp" />
+
+        <Button
+            android:id="@+id/assistant_menu_ADC1_btn2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/drawable_roundedbutton_general"
+            android:backgroundTint="#FFFFFF"
+            android:gravity="left|center_vertical"
+            android:onClick="terminosCondiciones"
+            android:text="Políticas de privacidad"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            app:cornerRadius="15dp" />
+
+        <Button
+            android:id="@+id/ADC1_btn3"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/drawable_roundedbutton_general"
+            android:backgroundTint="#FFFFFF"
+            android:gravity="left|center_vertical"
+            android:text="Manual de app"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:visibility="invisible"
+            app:cornerRadius="15dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/assistant_menu_cerrarSesion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="68dp"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@mipmap/view_patient_ajustes_de_cuenta_menu_cerrar_sesion_icono"
+        android:onClick="cerrarSesion"
+        android:text="Cerrar sesión"
+        android:textAlignment="center"
+        android:textColor="#C0CADA"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.7" />
+</androidx.constraintlayout.widget.ConstraintLayout>

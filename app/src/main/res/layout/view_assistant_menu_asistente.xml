@@ -60,8 +60,7 @@
             android:layout_height="100dp"
             android:layout_weight="0"
             android:background="@drawable/roundedbutton"
-            android:contentDescription="@string/pacienteLayout_imgBtn"
-            android:onClick="ajustesCuenta" />
+            android:contentDescription="@string/pacienteLayout_imgBtn" />
 
     </LinearLayout>
 
