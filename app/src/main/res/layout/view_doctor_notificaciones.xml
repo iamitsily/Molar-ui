@@ -8,8 +8,11 @@
 
     <TextView
         android:id="@+id/textView43"
-        android:layout_width="181dp"
-        android:layout_height="81dp"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
         android:text="Notificaciones Médico "
         android:textAlignment="center"
         android:textSize="20sp"
@@ -18,144 +21,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.098" />
+        app:layout_constraintVertical_bias="0.0" />
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout6"
-        android:layout_width="367dp"
-        android:layout_height="115dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.304">
-
-        <View
-            android:id="@+id/citasnew"
-            android:layout_width="316dp"
-            android:layout_height="101dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginEnd="21dp"
-            android:layout_marginBottom="7dp"
-            android:background="@drawable/drawable_login_border" />
-
-        <ImageView
-            android:id="@+id/imageView14"
-            android:layout_width="55dp"
-            android:layout_height="49dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="39dp"
-            android:layout_marginTop="33dp"
-            android:layout_marginEnd="273dp"
-            android:layout_marginBottom="32dp"
-            app:srcCompat="@mipmap/view_patient_agendar_citas_calendario_icono" />
-
-        <TextView
-            android:id="@+id/textView49"
-            android:layout_width="177dp"
-            android:layout_height="29dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="111dp"
-            android:layout_marginTop="37dp"
-            android:layout_marginEnd="79dp"
-            android:layout_marginBottom="49dp"
-            android:text="Null"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView50"
-            android:layout_width="138dp"
-            android:layout_height="33dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="111dp"
-            android:layout_marginTop="57dp"
-            android:layout_marginEnd="118dp"
-            android:layout_marginBottom="25dp"
-            android:text="Consulta los detalles" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="365dp"
-        android:layout_height="106dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:text="Hoy"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/menu_patient_menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.544">
-
-        <View
-            android:layout_width="316dp"
-            android:layout_height="101dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginEnd="21dp"
-            android:layout_marginBottom="7dp"
-            android:background="@drawable/drawable_login_border" />
-
-        <TextView
-            android:id="@+id/textView57"
-            android:layout_width="177dp"
-            android:layout_height="29dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="111dp"
-            android:layout_marginTop="37dp"
-            android:layout_marginEnd="79dp"
-            android:layout_marginBottom="49dp"
-            android:text="Null"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView59"
-            android:layout_width="138dp"
-            android:layout_height="33dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="111dp"
-            android:layout_marginTop="59dp"
-            android:layout_marginEnd="118dp"
-            android:layout_marginBottom="23dp"
-            android:text="Consulta los detalles" />
-
-        <ImageView
-            android:id="@+id/imageView15"
-            android:layout_width="74dp"
-            android:layout_height="50dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="255dp"
-            android:layout_marginBottom="28dp"
-            app:srcCompat="@mipmap/view_doctor_notificacion" />
-    </RelativeLayout>
+        app:layout_constraintTop_toBottomOf="@+id/textView43"
+        app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menu_patient_menu"
@@ -169,5 +51,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:menu="@menu/menu_patient" />
+        app:menu="@menu/menu_doctor" />
+
+    <SearchView
+        android:id="@+id/searchView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/menu_patient_menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView19"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/menu_patient_menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView3" />
 </androidx.constraintlayout.widget.ConstraintLayout>

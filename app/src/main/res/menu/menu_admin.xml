@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_admin_home"
+        android:icon="@drawable/vectorasset_menu_patient_home"
+        android:title="Home"/>
+    <item
+        android:id="@+id/menu_admin_empleados"
+        android:icon="@drawable/vectorasset_menu_patient_home"
+        android:title="Empleados"/>
+    <item
+        android:id="@+id/menu_admin_usuarios"
+        android:icon="@drawable/vectorasset_menu_patient_home"
+        android:title="Usuarios"/>
+    <item
+        android:id="@+id/menu_admin_citas"
+        android:icon="@drawable/vectorasset_menu_patient_home"
+        android:title="Citas"/>
+    <item
+        android:id="@+id/menu_admin_reportes"
+        android:icon="@drawable/vectorasset_menu_patient_home"
+        android:title="Reportes"/>
+
+</menu>

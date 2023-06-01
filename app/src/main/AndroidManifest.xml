@@ -15,6 +15,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".controller_admin_menuAdmin"
+            android:exported="false" />
+        <activity
             android:name=".controller.assistant.controller_assistant_listarCitasPorCancelar"
             android:exported="false" />
         <activity
@@ -51,7 +54,7 @@
             android:name=".controller.doctor.controller_doctor_notificaciones"
             android:exported="false" />
         <activity
-            android:name=".controller.doctor.controller_doctor_citas"
+            android:name=".controller.doctor.controller_doctor_listaPacientes"
             android:exported="false" />
         <activity
             android:name=".controller.doctor.controller_doctor_notificaciones_lista"
