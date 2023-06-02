@@ -33,6 +33,12 @@ public class MolarMail {
 
     public MolarMail() {
     }
+
+    public MolarMail(String receptor, Context context) {
+        this.Receptor = receptor;
+        this.context = context;
+    }
+
     //controller_assistant_registrarPaciente
     public MolarMail(String receptor, String passReceptor, String matriculaReceptor, String nombreReceptor, Context context) {
         Receptor = receptor;
@@ -47,6 +53,8 @@ public class MolarMail {
         this.codigoRecuperacion = codigoRecuperacion;
         this.context = context;
     }
+    //controller_general_assistant_listarCitasPorCancelar
+    //constructor general -> MolarMail -> remitente, context
     public void sendMailRegistro() {
         System.out.println("sendMailRegistro");
         Remitente = "molar.haku@gmail.com";
@@ -205,6 +213,84 @@ public class MolarMail {
                 params.put("destino",Receptor);
                 params.put("asunto","Código de autentificación - Molar");
                 params.put("mensaje","Haku Molar<br><br>Hola! Recibimos una solicitud para restablecer su contraseña de Molar,<br>Si no ha solicitado un restablecimiento de contraseña, puede ignorar este correo electronico.<br><br>Codigo de recuperación: <br><br>Codigo: "+ codigoRecuperacion +"<br><br>Ingrese el codigo en la aplicación, este codigo expira en cuanto cierrre la app o pantalla de recuperación<br><br>Con amor, Molar <3<br><br>Email generado automaticamente, no responder.");
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+    public void mailCancelarCita(String idCita, String Motivo, String dia) {
+        Remitente = "molar.haku@gmail.com";
+
+        String stringHost = "smtp.gmail.com";
+
+        Properties properties = System.getProperties();
+
+        properties.put("mail.smtp.host", stringHost);
+        properties.put("mail.smtp.port", "465");
+        properties.put("mail.smtp.ssl.enable", "true");
+        properties.put("mail.smtp.auth", "true");
+
+        Session session = Session.getInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(Remitente, RemitentePass);
+            }
+        });
+        MimeMessage mimeMessage = new MimeMessage(session);
+
+        try {
+            mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(Receptor));
+            mimeMessage.setSubject("Cancelacion de Cita | "+idCita + " | Aprobada");
+            mimeMessage.setText("Haku Molar\n\nHola! "+
+                    " Tu solicitud para cancelar la cita con motivo: "+Motivo+" el día: "+dia+" se autorizo por uno de nuestros asistentes." +
+                    "\n\nRecuerda que solo puedes cancelar o reagendar 3 veces, esta información la puedes consultar en Perfil -> Terminos y condiciones.\n\n" +
+                    "Si tiene alguna pregunta o necesita ayuda adicional, por favor contactenos al correo molar.haku@gmail.com\n" +
+                    "Con amor, Molar <3\n\n" +
+                    "Email generado automaticamente, no responder.");
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Transport.send(mimeMessage);
+                    } catch (MessagingException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            thread.start();
+        } catch (AddressException e) {
+            throw new RuntimeException(e);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void mailCancelarCitaRedMovil(String idCita, String Motivo, String dia){
+        System.out.println("sendMailRegistroRedMovil");
+        String url = molarConfig.getDomainAzure()+"/general/email.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.equalsIgnoreCase("Enviado correctamente")) {
+                    System.out.println("sendMailRegistro exitoso");
+                }else {
+                    System.out.println("sendMailRegistro fallido");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println("Error: "+error.getMessage());
+            }
+        }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("destino",Receptor);
+                params.put("asunto","Cancelacion de Cita | "+idCita + " | Aprobada");
+                params.put("mensaje","Haku Molar<br><br>Hola! Tu solicitud para cancelar la cita con motivo: "+ Motivo + " el día: "+ dia +" se autorizó por uno de nuestros asistentes.<br>Recuerda que solo puedes cancelar o reagendar 3 veces, esta información la puedes consultar en Perfil -> Términos y condiciones.<br><br>Si tiene alguna pregunta o necesita ayuda adicional, por favor contáctenos al correo molar.haku@gmail.com<br>Con amor, Molar <3<br><br>Email generado automáticamente, no responder.");
                 return params;
             }
         };

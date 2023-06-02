@@ -84,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:backgroundTint="#EBEBEB"
-                android:text="Status"
+                android:text="Detalles"
                 android:textColor="#306BA5"
                 android:textSize="16sp"
                 android:textStyle="bold" />
