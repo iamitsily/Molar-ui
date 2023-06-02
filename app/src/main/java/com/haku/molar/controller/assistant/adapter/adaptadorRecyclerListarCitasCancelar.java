@@ -36,8 +36,8 @@ public class adaptadorRecyclerListarCitasCancelar extends RecyclerView.Adapter<a
     @Override
     public void onBindViewHolder(@NonNull adaptadorRecyclerListarCitasCancelar.ViewHolder holder, int position) {
         holder.dia.setText(divdirDate(model_citas.get(position).getDia()));
-        holder.mes.setText(diaSemana(model_citas.get(position).getDia()));
-        holder.hora.setText(model_citas.get(position).getHora());
+        holder.mes.setText(diaSemana(model_citas.get(position).getDia())+"\n"+model_citas.get(position).getHora());
+        holder.hora.setText(model_citas.get(position).getNombrePaciente()+" "+model_citas.get(position).getApellidoPaciente());
         holder.asunto.setText(model_citas.get(position).getMotivo());
         holder.id.setText(model_citas.get(position).getId());
         holder.cita.setOnClickListener(view -> {

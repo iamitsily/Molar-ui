@@ -21,6 +21,8 @@ import com.haku.molar.controller.patient.interfaces.Callback_patient_historialCi
 import com.haku.molar.controller.patient.interfaces.Callback_patient_listarCitasActivas;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_reagendarCitas;
 import com.haku.molar.utils.MolarConfig;
+import com.haku.molar.utils.MolarMail;
+import com.haku.molar.utils.Network;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +33,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class model_cita {
-    String id, dia, hora, motivo, estado, status, idUusario, idMedico, descripcion,idPos,idDoctor, nombreDoctor, apellidoDoctor, motivoReagendar, motivoCancelar;
+    String id, dia, hora, motivo, estado, status, idUusario, idMedico, descripcion, motivoCancelar, motivoReagendar;
+    String idPos,idDoctor, nombreDoctor, apellidoDoctor, nombrePaciente, apellidoPaciente, emailPaciente;
     Context context;
     Callback_patient_listarCitasActivas callback_patient_listarCitasActivas;
     Callback_patient_fechaHoraAgendarCita callback_patient_fechaHoraAgendarCita;
@@ -149,16 +152,24 @@ public class model_cita {
         this.callback_assistant_listarCitasPorCancelar = callback_assistant_listarCitasPorCancelar;
     }
     //controller_assistant_listarCitasPorCancelar -> model_cita -> listarCitasPorCancelar
-    public model_cita(String id, String dia, String hora, String motivo, String estado, String status, String idUusario, String descripcion, String motivoCancelar) {
+    public model_cita(String id, String dia, String hora, String motivo, String estado, String descripcion, String motivoCancelar, String nombrePaciente, String apellidoPaciente, String emailPaciente) {
         this.id = id;
         this.dia = dia;
         this.hora = hora;
         this.motivo = motivo;
         this.estado = estado;
-        this.status = status;
-        this.idUusario = idUusario;
         this.descripcion = descripcion;
         this.motivoCancelar = motivoCancelar;
+        this.nombrePaciente = nombrePaciente;
+        this.apellidoPaciente = apellidoPaciente;
+        this.emailPaciente = emailPaciente;
+    }
+    //controller_assistant_listarCitasPorCancelar -> model_cita -> cancelarCita
+    public model_cita(String id, String emailPaciente, Context context, Callback_assistant_listarCitasPorCancelar callback_assistant_listarCitasPorCancelar) {
+        this.id = id;
+        this.emailPaciente = emailPaciente;
+        this.context = context;
+        this.callback_assistant_listarCitasPorCancelar = callback_assistant_listarCitasPorCancelar;
     }
 
     public void detallesCita(){
@@ -367,13 +378,12 @@ public class model_cita {
                     if(jsonArray.length() == 0){
                         System.out.println("model_cita -> historial -> datos vacío");
                         callback_assistant_listarCitasPorCancelar.onErrorListar("No hay solicitudes de cancelación");
-                        Toast.makeText(context, "No hay solicitudes", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                     } else if(exito.equals("1")){
                         ArrayList<model_cita> cita = new ArrayList<>();
                         for (int i = 0;i < jsonArray.length();i++){
                             JSONObject object = jsonArray.getJSONObject(i);
-                            cita.add(new model_cita(object.getString("id"),object.getString("dia"),object.getString("hora"),object.getString("motivo"),object.getString("estado"),"","",object.getString("descripcion"),object.getString("motivoCancelar")));
+                            cita.add(new model_cita(object.getString("id"),object.getString("dia"),object.getString("hora"),object.getString("motivo"),object.getString("estado"),object.getString("descripcion"),object.getString("motivoCancelar"), object.getString("nombre"), object.getString("apellidoPaterno"), object.getString("email")));
                         }
                         callback_assistant_listarCitasPorCancelar.onSuccessListar(cita);
                         progressDialog.dismiss();
@@ -431,7 +441,7 @@ public class model_cita {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
-    public void cancelarCita(){
+    public void cancelarCita(String idCitaString, String motivoString,String diaString){
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Cancelando cita");
         progressDialog.show();
@@ -441,11 +451,22 @@ public class model_cita {
             @Override
             public void onResponse(String response) {
                 if (response.equalsIgnoreCase("Modificacion exitosa")) {
+                    boolean isConnectedToWifi = Network.isConnectedToWifi(context);
+                    boolean isConnectedToMobileData = Network.isConnectedToMobileData(context);
+                    if (isConnectedToWifi){
+                        MolarMail molarMail = new MolarMail(emailPaciente,context);
+                        molarMail.mailCancelarCita(idCitaString, motivoString,diaString);
+                    }else if (isConnectedToMobileData){
+                        MolarMail molarMail = new MolarMail(emailPaciente,context);
+                        molarMail.mailCancelarCitaRedMovil(idCitaString, motivoString,diaString);
+                    }else{
+                        Toast.makeText(context, "No es posible enviar email, no hay conexión", Toast.LENGTH_SHORT).show();
+                    }
                     progressDialog.dismiss();
-                    callback_patient_cancelarCitas.onSuccessReagendarCita();
+                    callback_assistant_listarCitasPorCancelar.onSuccessCancelar();
                 } else {
                     progressDialog.dismiss();
-                    callback_patient_cancelarCitas.onErrorReagendarCita("No se pudo cancelar");
+                    callback_assistant_listarCitasPorCancelar.onErrorCancelar("No se pudo cancelar la cita");
                 }
             }
         }, new Response.ErrorListener() {
@@ -813,5 +834,37 @@ public class model_cita {
 
     public void setMotivoCancelar(String motivoCancelar) {
         this.motivoCancelar = motivoCancelar;
+    }
+
+    public String getMotivoReagendar() {
+        return motivoReagendar;
+    }
+
+    public void setMotivoReagendar(String motivoReagendar) {
+        this.motivoReagendar = motivoReagendar;
+    }
+
+    public String getNombrePaciente() {
+        return nombrePaciente;
+    }
+
+    public void setNombrePaciente(String nombrePaciente) {
+        this.nombrePaciente = nombrePaciente;
+    }
+
+    public String getApellidoPaciente() {
+        return apellidoPaciente;
+    }
+
+    public void setApellidoPaciente(String apellidoPaciente) {
+        this.apellidoPaciente = apellidoPaciente;
+    }
+
+    public String getEmailPaciente() {
+        return emailPaciente;
+    }
+
+    public void setEmailPaciente(String emailPaciente) {
+        this.emailPaciente = emailPaciente;
     }
 }

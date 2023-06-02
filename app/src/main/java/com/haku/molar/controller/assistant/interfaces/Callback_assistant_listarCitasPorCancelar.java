@@ -7,4 +7,6 @@ import java.util.ArrayList;
 public interface Callback_assistant_listarCitasPorCancelar {
     void onSuccessListar(ArrayList<model_cita> listaActivas);
     void onErrorListar(String mensaje);
+    void onSuccessCancelar();
+    void onErrorCancelar(String mensaje);
 }

@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,20 @@ public class controller_assistant_listarCitasPorCancelar extends AppCompatActivi
         fotoPerfil = findViewById(R.id.assistant_menu_FotoPerfil);
 
         inicioUI();
+
+        ivBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),controller_assistant_menuCitas.class);
+                intent.putExtra("matricula",matricula);
+                intent.putExtra("nombre", nombre);
+                intent.putExtra("rol", rol);
+                intent.putExtra("sexo", sexo);
+                startActivity(intent);
+                overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+                finish();
+            }
+        });
     }
     @Override
     public void onBackPressed() {
@@ -97,12 +112,12 @@ public class controller_assistant_listarCitasPorCancelar extends AppCompatActivi
             public void OnItemClick(model_cita details) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(controller_assistant_listarCitasPorCancelar.this);
                 builder.setTitle("¿Cancelar cita?");
-                builder.setMessage("Revise los datos de la cita a cancelar\n\nIdCita: "+details.getId()+"\n"+"\nDia: "+details.getDia()+"\n"+"\nHora: "+details.getHora()
-                        +"\n"+"\nEstado: "+details.getEstado()+"\n"+"\nDescripción: "+details.getDescripcion()+"\n"+"\nMotivo de cancelación: "+details.getMotivoCancelar()).setPositiveButton("Confirmar",new DialogInterface.OnClickListener(){
+                builder.setMessage("Revise los datos de la cita a cancelar\n\nPaciente: "+details.getNombrePaciente()+" "+details.getApellidoPaciente()+"\n\nId Cita: "+details.getId()+"\n"+"Dia: "+details.getDia()+"\n"+"Hora: "+details.getHora()
+                        +"\n"+"Estado: "+details.getEstado()+"\n"+"\nDescripción: "+details.getDescripcion()+"\n"+"\nMotivo de cancelación: "+details.getMotivoCancelar()).setPositiveButton("Confirmar",new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //model_cita model_cita = new model_cita(idCita,edtMotivo.getText().toString().trim(), controller_patient_CancelarCitaMotivo.this,controller_patient_CancelarCitaMotivo.this);
-                        //model_cita.pendienteCancelarCita();
+                        model_cita model_cita = new model_cita(details.getId(),details.getEmailPaciente(),controller_assistant_listarCitasPorCancelar.this,controller_assistant_listarCitasPorCancelar.this);
+                        model_cita.cancelarCita(details.getId(),details.getMotivo(),details.getDia());
                     }
                 }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     @Override
@@ -116,6 +131,29 @@ public class controller_assistant_listarCitasPorCancelar extends AppCompatActivi
     }
     @Override
     public void onErrorListar(String mensaje) {
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSuccessCancelar() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(controller_assistant_listarCitasPorCancelar.this);
+        builder.setTitle("Cancelación");
+        builder.setMessage("Cita cancelada, se enviara un email de confirmación al paciente").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(getApplicationContext(),controller_assistant_MenuAsistente.class);
+                intent.putExtra("matricula",matricula);
+                intent.putExtra("nombre", nombre);
+                intent.putExtra("rol", rol);
+                intent.putExtra("sexo", sexo);
+                startActivity(intent);
+                overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+                finish();
+            }
+        }).setCancelable(false).show();
+    }
+    @Override
+    public void onErrorCancelar(String mensaje) {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
 }
