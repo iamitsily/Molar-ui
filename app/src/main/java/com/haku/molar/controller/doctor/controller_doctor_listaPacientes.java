@@ -8,31 +8,31 @@ import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
 
-public class controller_doctor_citas extends AppCompatActivity {
+public class controller_doctor_listaPacientes extends AppCompatActivity {
     BottomNavigationView menuNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_doctor_citas);
+        setContentView(R.layout.view_doctor_listapacientes);
 
         menuNav = findViewById(R.id.menu_patient_menu);
-        menuNav.setSelectedItemId(R.id.menu_patient_cita);
+        menuNav.setSelectedItemId(R.id.menu_doctor_pacientes);
 
         //Listeners
         menuNav.setOnItemSelectedListener(item ->{
             switch (item.getItemId()){
-                case R.id.menu_patient_home:
+                case R.id.menu_doctor_home:
                     startActivity(new Intent(this, controller_doctor_menu_doctor.class));
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
                     break;
-                case R.id.menu_patient_historial:
+                case R.id.menu_doctor_historial:
                     startActivity(new Intent(this, controller_doctor_historial_citas.class));
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
                     break;
-                case R.id.menu_patient_notificacion:
+                case R.id.menu_doctor_notificaciones:
                     startActivity(new Intent(this, controller_doctor_notificaciones.class));
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();

@@ -29,22 +29,22 @@ public class controller_doctor_menu_doctor extends AppCompatActivity {
         inicioUI();
 
         menuNav = findViewById(R.id.menu_patient_menu);
-        menuNav.setSelectedItemId(R.id.menu_patient_home);
+        menuNav.setSelectedItemId(R.id.menu_doctor_home);
 
         //Listeners
         menuNav.setOnItemSelectedListener(item ->{
             switch (item.getItemId()){
-                case R.id.menu_patient_cita:
-                    startActivity(new Intent(this, controller_doctor_citas.class));
+                case R.id.menu_doctor_pacientes:
+                    startActivity(new Intent(this, controller_doctor_listaPacientes.class));
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
                     break;
-                case R.id.menu_patient_historial:
+                case R.id.menu_doctor_historial:
                     startActivity(new Intent(this, controller_doctor_historial_citas.class));
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
                     break;
-                case R.id.menu_patient_notificacion:
+                case R.id.menu_doctor_notificaciones:
                     startActivity(new Intent(this, controller_doctor_notificaciones.class));
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();

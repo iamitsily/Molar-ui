@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_doctor_home"
+        android:icon="@drawable/vectorasset_menu_patient_home"
+        android:title="Home"/>
+    <item
+        android:id="@+id/menu_doctor_pacientes"
+        android:icon="@drawable/vectorasset_doctor_person"
+        android:title="Pacientes"/>
+    <item
+        android:id="@+id/menu_doctor_historial"
+        android:icon="@drawable/vectorasset_menu_patient_historial"
+        android:title="Historial"/>
+    <item
+        android:id="@+id/menu_doctor_notificaciones"
+        android:icon="@drawable/vectorasset_menu_patient_notificacion"
+            android:title="Notificación"/>
+
+</menu>
