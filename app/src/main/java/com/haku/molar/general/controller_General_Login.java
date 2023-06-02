@@ -25,6 +25,7 @@ import com.haku.molar.controller.patient.controller_patient_MenuPaciente;
 import com.haku.molar.model.model_General_Usuario;
 import com.haku.molar.utils.MolarCrypt;
 import com.haku.molar.utils.MolarMail;
+import com.haku.molar.utils.Network;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -295,8 +296,17 @@ public class controller_General_Login extends AppCompatActivity implements Callb
         codeCV.setVisibility(View.VISIBLE);
         Codefp = genCode();
         System.out.println(String.valueOf(Codefp));
-        //MolarMail molarMail = new MolarMail(edtEmailfp.getText().toString().trim(), String.valueOf(Codefp),this);
-        //molarMail.codeMail();
+        boolean isConnectedToWifi = Network.isConnectedToWifi(this);
+        boolean isConnectedToMobileData = Network.isConnectedToMobileData(this);
+        if (isConnectedToWifi) {
+            MolarMail molarMail = new MolarMail(edtEmailfp.getText().toString().trim(), String.valueOf(Codefp),this);
+            molarMail.codeMailFP();
+        } else if (isConnectedToMobileData) {
+            MolarMail molarMail = new MolarMail(edtEmailfp.getText().toString().trim(), String.valueOf(Codefp),this);
+            molarMail.codeMailFPRedMovil();
+        } else {
+            Toast.makeText(this, "No es posible enviar email, no hay conexión", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

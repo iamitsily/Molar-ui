@@ -20,6 +20,7 @@ import com.haku.molar.controller.patient.interfaces.Callback_patient_menu;
 import com.haku.molar.model.cita.model_cita;
 import com.haku.molar.utils.MolarConfig;
 import com.haku.molar.utils.MolarMail;
+import com.haku.molar.utils.Network;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -517,9 +518,19 @@ public class model_Patient {
             public void onResponse(String response) {
                 if (response.equalsIgnoreCase("Registro exitoso")) {
                     Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show();
-                    MolarMail molarMail = new MolarMail(email,passwordNoCrypt,String.valueOf(matricula),nombre,context);
-                    molarMail.sendMail();
-                    progressDialog.dismiss();
+                    boolean isConnectedToWifi = Network.isConnectedToWifi(context);
+                    boolean isConnectedToMobileData = Network.isConnectedToMobileData(context);
+                    if (isConnectedToWifi) {
+                        MolarMail molarMail = new MolarMail(email,passwordNoCrypt,String.valueOf(matricula),nombre,context);
+                        molarMail.sendMailRegistro();
+                        progressDialog.dismiss();
+                    } else if (isConnectedToMobileData) {
+                        MolarMail molarMail = new MolarMail(email,passwordNoCrypt,String.valueOf(matricula),nombre,context);
+                        molarMail.sendMailRegistroRedMovil();
+                        progressDialog.dismiss();
+                    } else {
+                        Toast.makeText(context, "No es posible enviar email, no hay conexión", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(context, "No se puede registrar", Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();

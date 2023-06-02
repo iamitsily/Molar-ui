@@ -153,8 +153,7 @@ public class controller_assistant_registrarPaciente extends AppCompatActivity {
         String currentDateandTime = simpleDateFormat.format(new Date());
 
         matricula = currentDateandTime.substring(6,10) + currentDateandTime.substring(3,5) + numero.substring(6,10);
-        //System.out.println(currentDateandTime);
-        //System.out.println(numero);
+
     }
 
     private boolean validarDatos(){

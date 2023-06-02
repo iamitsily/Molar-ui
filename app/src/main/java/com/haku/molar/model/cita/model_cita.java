@@ -13,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.haku.molar.controller.assistant.interfaces.Callback_assistant_listarCitasPorCancelar;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_cancelarCitas;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_detallesCita;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_fechaHoraAgendarCita;
@@ -30,7 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class model_cita {
-    String id, dia, hora, motivo, estado, status, idUusario, idMedico, descripcion,idPos,idDoctor, nombreDoctor, apellidoDoctor;
+    String id, dia, hora, motivo, estado, status, idUusario, idMedico, descripcion,idPos,idDoctor, nombreDoctor, apellidoDoctor, motivoReagendar, motivoCancelar;
     Context context;
     Callback_patient_listarCitasActivas callback_patient_listarCitasActivas;
     Callback_patient_fechaHoraAgendarCita callback_patient_fechaHoraAgendarCita;
@@ -38,6 +39,7 @@ public class model_cita {
     Callback_patient_reagendarCitas callback_patient_reagendarCitas;
     Callback_patient_cancelarCitas callback_patient_cancelarCitas;
     Callback_patient_detallesCita callback_patient_detallesCita;
+    Callback_assistant_listarCitasPorCancelar callback_assistant_listarCitasPorCancelar;
     String[] res = new String[6];
     MolarConfig molarConfig = new MolarConfig();
     public model_cita() {
@@ -140,6 +142,23 @@ public class model_cita {
         this.id = id;
         this.context = context;
         this.callback_patient_detallesCita = callback_patient_detallesCita;
+    }
+    //controller_assistant_listarCitasPorCancelar
+    public model_cita(Context context, Callback_assistant_listarCitasPorCancelar callback_assistant_listarCitasPorCancelar) {
+        this.context = context;
+        this.callback_assistant_listarCitasPorCancelar = callback_assistant_listarCitasPorCancelar;
+    }
+    //controller_assistant_listarCitasPorCancelar -> model_cita -> listarCitasPorCancelar
+    public model_cita(String id, String dia, String hora, String motivo, String estado, String status, String idUusario, String descripcion, String motivoCancelar) {
+        this.id = id;
+        this.dia = dia;
+        this.hora = hora;
+        this.motivo = motivo;
+        this.estado = estado;
+        this.status = status;
+        this.idUusario = idUusario;
+        this.descripcion = descripcion;
+        this.motivoCancelar = motivoCancelar;
     }
 
     public void detallesCita(){
@@ -330,7 +349,52 @@ public class model_cita {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
+    public void listarCitasPorCancelar(){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Obteniendo solicitudes");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        String url = molarConfig.getDomainAzure()+"/citas/service_listarCitasPorCancelar.php";
 
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito =jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+
+                    if(jsonArray.length() == 0){
+                        System.out.println("model_cita -> historial -> datos vacío");
+                        callback_assistant_listarCitasPorCancelar.onErrorListar("No hay solicitudes de cancelación");
+                        Toast.makeText(context, "No hay solicitudes", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    } else if(exito.equals("1")){
+                        ArrayList<model_cita> cita = new ArrayList<>();
+                        for (int i = 0;i < jsonArray.length();i++){
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            cita.add(new model_cita(object.getString("id"),object.getString("dia"),object.getString("hora"),object.getString("motivo"),object.getString("estado"),"","",object.getString("descripcion"),object.getString("motivoCancelar")));
+                        }
+                        callback_assistant_listarCitasPorCancelar.onSuccessListar(cita);
+                        progressDialog.dismiss();
+                    }
+                } catch (JSONException e) {
+                    System.out.println("model_general_usuario -> listarCitasActivas -> JSONException: "+e);
+                    callback_assistant_listarCitasPorCancelar.onErrorListar(e.getMessage());
+                    System.out.println("Error");
+                    progressDialog.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println("Error: "+error.getMessage());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
     public void pendienteCancelarCita(){
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Cancelando cita");
@@ -741,5 +805,13 @@ public class model_cita {
 
     public void setApellidoDoctor(String apellidoDoctor) {
         this.apellidoDoctor = apellidoDoctor;
+    }
+
+    public String getMotivoCancelar() {
+        return motivoCancelar;
+    }
+
+    public void setMotivoCancelar(String motivoCancelar) {
+        this.motivoCancelar = motivoCancelar;
     }
 }
