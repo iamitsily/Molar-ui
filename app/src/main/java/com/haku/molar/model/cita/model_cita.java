@@ -492,7 +492,7 @@ public class model_cita {
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Cargando historial");
         progressDialog.show();
-        String url = molarConfig.getDomainAzure()+"/citas/service_listarCitasPaciente.php";
+        String url = molarConfig.getDomainAzure()+"/citas/service_listarCitasPacienteTodas.php";
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -543,7 +543,6 @@ public class model_cita {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
-
     public void listarCitasActivas(){
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Obteniendo citas activas");

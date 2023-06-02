@@ -241,7 +241,7 @@ public class MolarMail {
 
         try {
             mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(Receptor));
-            mimeMessage.setSubject("Cancelación de Cita | "+idCita + " | Aprobada");
+            mimeMessage.setSubject("Cancelacion de Cita | "+idCita + " | Aprobada");
             mimeMessage.setText("Haku Molar\n\nHola! "+
                     " Tu solicitud para cancelar la cita con motivo: "+Motivo+" el día: "+dia+" se autorizo por uno de nuestros asistentes." +
                     "\n\nRecuerda que solo puedes cancelar o reagendar 3 veces, esta información la puedes consultar en Perfil -> Terminos y condiciones.\n\n" +
