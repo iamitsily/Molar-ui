@@ -5,7 +5,9 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -199,67 +201,150 @@ public class controller_General_Login extends AppCompatActivity implements Callb
     }
     @Override
     public void onSuccess(String[] datos) {
-        if (checkBoxDatos.isChecked()){
-            SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = loginDatos.edit();
-            editor.putString("matricula",matricula.getText().toString().trim());
-            editor.putString("password",password.getText().toString().trim());
-            editor.putString("checkbox","1");
-            editor.apply();
-        }else{
-            SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = loginDatos.edit();
-            editor.putString("matricula","");
-            editor.putString("password","");
-            editor.putString("checkbox","0");
-            editor.apply();
-        }
-        try {
-            if (passwordString.equals(MolarCrypt.decrypt(datos[2]))){
-                System.out.println("controller_General_Login -> loginOnSuccess -> rol: "+datos[3]);
-                switch (datos[3]){
-                    //0 -> menuAdmin
-                    case "0":
-                        Toast.makeText(this, "MenuAdmin", Toast.LENGTH_SHORT).show();
-                        //startActivity(new Intent(this, controller_patient_MenuAdmin));
-                        finish();
-                        break;
-                    //1 -> menuPaciente
-                    case "1":
-                        Intent intentPatient = new Intent(this, controller_patient_MenuPaciente.class);
-                        intentPatient.putExtra("matricula",datos[0]);
-                        intentPatient.putExtra("nombre", datos[1]);
-                        intentPatient.putExtra("rol",datos[3]);
-                        intentPatient.putExtra("sexo",datos[4]);
-                        startActivity(intentPatient);
-                        finish();
-                        break;
-                    //2 -> menuDoctor
-                    case "2":
-                        Toast.makeText(this, "MenuDoctor", Toast.LENGTH_SHORT).show();
-                        Intent intentDoctor = new Intent(this, controller_doctor_menu_doctor.class);
-                        intentDoctor.putExtra("matricula",datos[0]);
-                        intentDoctor.putExtra("nombre", datos[1]);
-                        intentDoctor.putExtra("rol",datos[3]);
-                        startActivity(intentDoctor);
-                        finish();
-                        break;
-                    //3 -> menuAsistente
-                    case "3":
-                        Intent intentAssistant = new Intent(this, controller_assistant_MenuAsistente.class);
-                        intentAssistant.putExtra("matricula",datos[0]);
-                        intentAssistant.putExtra("nombre", datos[1]);
-                        intentAssistant.putExtra("rol",datos[3]);
-                        intentAssistant.putExtra("sexo",datos[4]);
-                        startActivity(intentAssistant);
-                        finish();
-                        break;
+        if(datos[5].equals("3")){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Aviso");
+            builder.setMessage("Su cuenta puede ser suspendida, ya que alcanzo la tolerancia para reagendar o cancelar citas.\n\n" +
+                    "En caso de que quiera reiniciar su tolerancia comuniquese con un asistente o a molar.haku@gmail.com").setPositiveButton("Aceptar",new DialogInterface.OnClickListener(){
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if (checkBoxDatos.isChecked()){
+                        SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = loginDatos.edit();
+                        editor.putString("matricula",matricula.getText().toString().trim());
+                        editor.putString("password",password.getText().toString().trim());
+                        editor.putString("checkbox","1");
+                        editor.apply();
+                    }else{
+                        SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = loginDatos.edit();
+                        editor.putString("matricula","");
+                        editor.putString("password","");
+                        editor.putString("checkbox","0");
+                        editor.apply();
+                    }
+                    try {
+                        if (passwordString.equals(MolarCrypt.decrypt(datos[2]))){
+                            System.out.println("controller_General_Login -> loginOnSuccess -> rol: "+datos[3]);
+                            switch (datos[3]){
+                                //0 -> menuAdmin
+                                case "0":
+                                    Toast.makeText(getApplicationContext(), "MenuAdmin", Toast.LENGTH_SHORT).show();
+                                    //startActivity(new Intent(this, controller_patient_MenuAdmin));
+                                    finish();
+                                    break;
+                                //1 -> menuPaciente
+                                case "1":
+                                    Intent intentPatient = new Intent(getApplicationContext(), controller_patient_MenuPaciente.class);
+                                    intentPatient.putExtra("matricula",datos[0]);
+                                    intentPatient.putExtra("nombre", datos[1]);
+                                    intentPatient.putExtra("rol",datos[3]);
+                                    intentPatient.putExtra("sexo",datos[4]);
+                                    startActivity(intentPatient);
+                                    finish();
+                                    break;
+                                //2 -> menuDoctor
+                                case "2":
+                                    Toast.makeText(getApplicationContext(), "MenuDoctor", Toast.LENGTH_SHORT).show();
+                                    Intent intentDoctor = new Intent(getApplicationContext(), controller_doctor_menu_doctor.class);
+                                    intentDoctor.putExtra("matricula",datos[0]);
+                                    intentDoctor.putExtra("nombre", datos[1]);
+                                    intentDoctor.putExtra("rol",datos[3]);
+                                    startActivity(intentDoctor);
+                                    finish();
+                                    break;
+                                //3 -> menuAsistente
+                                case "3":
+                                    Intent intentAssistant = new Intent(getApplicationContext(), controller_assistant_MenuAsistente.class);
+                                    intentAssistant.putExtra("matricula",datos[0]);
+                                    intentAssistant.putExtra("nombre", datos[1]);
+                                    intentAssistant.putExtra("rol",datos[3]);
+                                    intentAssistant.putExtra("sexo",datos[4]);
+                                    startActivity(intentAssistant);
+                                    finish();
+                                    break;
+                            }
+                        }else{
+                            Toast.makeText(getApplicationContext(), "Contraseña Incorrecta", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
+            }).setCancelable(false).show();
+        }else if (datos[5].equals("4")){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Aviso");
+            builder.setMessage("Su cuenta alcanzo la maxima tolerancia para cancelar o reagendar una cita y se inhabilitó.\n\n" +
+                    "Comunicate con un asistente o a molar.haku@gmail.com").setPositiveButton("Ok",new DialogInterface.OnClickListener(){
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    finish();
+                }
+            }).setCancelable(false).show();
+        }else{
+            if (checkBoxDatos.isChecked()){
+                SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = loginDatos.edit();
+                editor.putString("matricula",matricula.getText().toString().trim());
+                editor.putString("password",password.getText().toString().trim());
+                editor.putString("checkbox","1");
+                editor.apply();
             }else{
-                Toast.makeText(this, "Contraseña Incorrecta", Toast.LENGTH_SHORT).show();
+                SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = loginDatos.edit();
+                editor.putString("matricula","");
+                editor.putString("password","");
+                editor.putString("checkbox","0");
+                editor.apply();
             }
-        } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
-            throw new RuntimeException(e);
+            try {
+                if (passwordString.equals(MolarCrypt.decrypt(datos[2]))){
+                    System.out.println("controller_General_Login -> loginOnSuccess -> rol: "+datos[3]);
+                    switch (datos[3]){
+                        //0 -> menuAdmin
+                        case "0":
+                            Toast.makeText(this, "MenuAdmin", Toast.LENGTH_SHORT).show();
+                            //startActivity(new Intent(this, controller_patient_MenuAdmin));
+                            finish();
+                            break;
+                        //1 -> menuPaciente
+                        case "1":
+                            Intent intentPatient = new Intent(this, controller_patient_MenuPaciente.class);
+                            intentPatient.putExtra("matricula",datos[0]);
+                            intentPatient.putExtra("nombre", datos[1]);
+                            intentPatient.putExtra("rol",datos[3]);
+                            intentPatient.putExtra("sexo",datos[4]);
+                            startActivity(intentPatient);
+                            finish();
+                            break;
+                        //2 -> menuDoctor
+                        case "2":
+                            Toast.makeText(this, "MenuDoctor", Toast.LENGTH_SHORT).show();
+                            Intent intentDoctor = new Intent(this, controller_doctor_menu_doctor.class);
+                            intentDoctor.putExtra("matricula",datos[0]);
+                            intentDoctor.putExtra("nombre", datos[1]);
+                            intentDoctor.putExtra("rol",datos[3]);
+                            startActivity(intentDoctor);
+                            finish();
+                            break;
+                        //3 -> menuAsistente
+                        case "3":
+                            Intent intentAssistant = new Intent(this, controller_assistant_MenuAsistente.class);
+                            intentAssistant.putExtra("matricula",datos[0]);
+                            intentAssistant.putExtra("nombre", datos[1]);
+                            intentAssistant.putExtra("rol",datos[3]);
+                            intentAssistant.putExtra("sexo",datos[4]);
+                            startActivity(intentAssistant);
+                            finish();
+                            break;
+                    }
+                }else{
+                    Toast.makeText(this, "Contraseña Incorrecta", Toast.LENGTH_SHORT).show();
+                }
+            } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
     @Override

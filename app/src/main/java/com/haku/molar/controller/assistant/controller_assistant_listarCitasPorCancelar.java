@@ -117,7 +117,7 @@ public class controller_assistant_listarCitasPorCancelar extends AppCompatActivi
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         model_cita model_cita = new model_cita(details.getId(),details.getEmailPaciente(),controller_assistant_listarCitasPorCancelar.this,controller_assistant_listarCitasPorCancelar.this);
-                        model_cita.cancelarCita(details.getId(),details.getMotivo(),details.getDia());
+                        model_cita.cancelarCita(details.getId(),details.getMotivo(),details.getDia(),details.getIdUusario());
                     }
                 }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     @Override
