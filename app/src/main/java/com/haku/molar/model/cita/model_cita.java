@@ -152,7 +152,7 @@ public class model_cita {
         this.callback_assistant_listarCitasPorCancelar = callback_assistant_listarCitasPorCancelar;
     }
     //controller_assistant_listarCitasPorCancelar -> model_cita -> listarCitasPorCancelar
-    public model_cita(String id, String dia, String hora, String motivo, String estado, String descripcion, String motivoCancelar, String nombrePaciente, String apellidoPaciente, String emailPaciente) {
+    public model_cita(String id, String dia, String hora, String motivo, String estado, String descripcion, String motivoCancelar, String nombrePaciente, String apellidoPaciente, String emailPaciente, String matriculaPaciente) {
         this.id = id;
         this.dia = dia;
         this.hora = hora;
@@ -163,6 +163,7 @@ public class model_cita {
         this.nombrePaciente = nombrePaciente;
         this.apellidoPaciente = apellidoPaciente;
         this.emailPaciente = emailPaciente;
+        this.idUusario = matriculaPaciente;
     }
     //controller_assistant_listarCitasPorCancelar -> model_cita -> cancelarCita
     public model_cita(String id, String emailPaciente, Context context, Callback_assistant_listarCitasPorCancelar callback_assistant_listarCitasPorCancelar) {
@@ -322,7 +323,7 @@ public class model_cita {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
-    public void reagendarCita(){
+    public void reagendarCita(String matriculaString){
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Reagendando cita");
         progressDialog.show();
@@ -354,6 +355,7 @@ public class model_cita {
                 params.put("hora",hora);
                 params.put("estado",estado);
                 params.put("motivo",motivo);
+                params.put("matricula",matriculaString);
                 return params;
             }
         };
@@ -383,7 +385,7 @@ public class model_cita {
                         ArrayList<model_cita> cita = new ArrayList<>();
                         for (int i = 0;i < jsonArray.length();i++){
                             JSONObject object = jsonArray.getJSONObject(i);
-                            cita.add(new model_cita(object.getString("id"),object.getString("dia"),object.getString("hora"),object.getString("motivo"),object.getString("estado"),object.getString("descripcion"),object.getString("motivoCancelar"), object.getString("nombre"), object.getString("apellidoPaterno"), object.getString("email")));
+                            cita.add(new model_cita(object.getString("id"),object.getString("dia"),object.getString("hora"),object.getString("motivo"),object.getString("estado"),object.getString("descripcion"),object.getString("motivoCancelar"), object.getString("nombre"), object.getString("apellidoPaterno"), object.getString("email"), object.getString("matricula")));
                         }
                         callback_assistant_listarCitasPorCancelar.onSuccessListar(cita);
                         progressDialog.dismiss();
@@ -441,7 +443,7 @@ public class model_cita {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
-    public void cancelarCita(String idCitaString, String motivoString,String diaString){
+    public void cancelarCita(String idCitaString, String motivoString,String diaString, String matriculaString){
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Cancelando cita");
         progressDialog.show();
@@ -481,6 +483,7 @@ public class model_cita {
                 Map<String, String> params = new HashMap<>();
                 params.put("id",id);
                 params.put("estado","2");
+                params.put("matricula",matriculaString);
                 return params;
             }
         };

@@ -78,9 +78,10 @@ public class model_General_Usuario {
                             String password = object.getString("password");
                             String rol = object.getString("rol");
                             String sexo = object.getString("sexo");
-                            String[] res = {matricula, nombre, password, rol,sexo};
-                            progressDialog.dismiss();
+                            String tolerancia = object.getString("tolerancia");
+                            String[] res = {matricula, nombre, password, rol,sexo,tolerancia};
                             loginCallback.onSuccess(res);
+                            progressDialog.dismiss();
                         }
                     }
                 }catch (JSONException e){
