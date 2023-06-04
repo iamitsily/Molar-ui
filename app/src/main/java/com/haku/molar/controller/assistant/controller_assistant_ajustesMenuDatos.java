@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.haku.molar.R;
 import com.haku.molar.controller.assistant.interfaces.Callback_assistant_ajustesPaciente;
 import com.haku.molar.controller.patient.controller_patient_AjustesDeCuentaMenu;
+import com.haku.molar.model.assistant.model_Assistant;
 import com.haku.molar.model.patient.model_Patient;
 import com.haku.molar.utils.MolarCrypt;
 
@@ -166,7 +167,7 @@ public class controller_assistant_ajustesMenuDatos extends AppCompatActivity imp
         finish();
     }
     public void updateIcon(String opc){
-        model_Patient model_patient = new model_Patient(Integer.parseInt(matricula),this,this);
+        model_Assistant model_Assistant = new model_Assistant(Integer.parseInt(matricula),this,this);
         HashMap<String, Pair<Integer, ImageView.ScaleType>> mapaOpciones = new HashMap<>();
         mapaOpciones.put("12", new Pair<>(R.mipmap.hombredos, ImageView.ScaleType.CENTER_CROP));
         mapaOpciones.put("13", new Pair<>(R.mipmap.hombretres, ImageView.ScaleType.CENTER_CROP));
@@ -179,7 +180,7 @@ public class controller_assistant_ajustesMenuDatos extends AppCompatActivity imp
 
         Pair<Integer, ImageView.ScaleType> opcion = mapaOpciones.get(opc);
         if (opcion != null) {
-            model_patient.updateIconAssistant(opc);
+            model_Assistant.updateIconAssistant(opc);
             imageViewPerfil.setScaleType(opcion.second);
             imageViewPerfil.setImageResource(opcion.first);
             sexo = opc;
@@ -218,8 +219,8 @@ public class controller_assistant_ajustesMenuDatos extends AppCompatActivity imp
             imageViewPerfil.setScaleType(opcionSexo.second);
             imageViewPerfil.setImageResource(opcionSexo.first);
         }
-        model_Patient model_patient= new model_Patient(Integer.parseInt(matricula),this,this);
-        model_patient.buscarDatosAssistant();
+        model_Assistant model_Assistant= new model_Assistant(Integer.parseInt(matricula),this,this);
+        model_Assistant.buscarDatosAssistant();
     }
     public void actualizarDatos(){
         telefonno = edt_telefono.getText().toString().trim();
@@ -230,15 +231,15 @@ public class controller_assistant_ajustesMenuDatos extends AppCompatActivity imp
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Actualizando datos");
         progressDialog.show();
-        model_Patient model_patient = new model_Patient(Integer.parseInt(matricula),this,this);
-        model_patient.obtenerPassAssistant();
+        model_Assistant model_Assistant = new model_Assistant(Integer.parseInt(matricula),this,this);
+        model_Assistant.obtenerPassAssistant();
     }
     public void actualizarUsuario(){
         String passCrypt = "";
         try {
             passCrypt = MolarCrypt.encrypt(passNueva);
-            model_Patient model_patient = new model_Patient(Integer.parseInt(matricula),email,telefonno,passCrypt,this,this);
-            model_patient.udpatebyUserAssistant();
+            model_Assistant model_Assistant = new model_Assistant(Integer.parseInt(matricula),email,telefonno,passCrypt,this,this);
+            model_Assistant.udpatebyUserAssistant();
         } catch (NoSuchPaddingException | NoSuchAlgorithmException |
                  InvalidAlgorithmParameterException | InvalidKeyException |
                  IllegalBlockSizeException | BadPaddingException e) {

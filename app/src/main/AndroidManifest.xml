@@ -16,7 +16,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".controller_admin_menuAdmin"
+            android:name=".controller.assistant.controller_assistant_buscarPacienteLista"
+            android:exported="false" />
+        <activity
+            android:name=".controller.admin.controller_admin_menuAdmin"
             android:exported="false" />
         <activity
             android:name=".controller.assistant.controller_assistant_listarCitasPorCancelar"
