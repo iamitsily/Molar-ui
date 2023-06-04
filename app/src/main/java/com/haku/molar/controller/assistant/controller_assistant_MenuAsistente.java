@@ -22,6 +22,7 @@ import com.haku.molar.controller.assistant.interfaces.Callback_assistant_menuAsi
 import com.haku.molar.controller.patient.controller_patient_HistorialCitasLayout;
 import com.haku.molar.controller.patient.controller_patient_NotificacionesPaciente;
 import com.haku.molar.controller.patient.controller_patient_OpcionesCitas;
+import com.haku.molar.model.assistant.model_Assistant;
 import com.haku.molar.model.patient.model_Patient;
 
 import java.util.HashMap;
@@ -159,8 +160,8 @@ public class controller_assistant_MenuAsistente extends AppCompatActivity implem
             ibPerfil.setScaleType(opcionSexo.second);
             ibPerfil.setImageResource(opcionSexo.first);
         }
-        model_Patient model_patient = new model_Patient(this,this);
-        model_patient.contarUserMed();
+        model_Assistant model_Assistant = new model_Assistant(this,this);
+        model_Assistant.contarUserMed();
     }
 
     @Override

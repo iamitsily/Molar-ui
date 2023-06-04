@@ -82,7 +82,7 @@ public class controller_assistant_menuPacientes extends AppCompatActivity {
         finish();
     }
     public void buscarPaciente(View view){
-        Intent intent = new Intent(this, controller_assistant_menuCitas.class);
+        Intent intent = new Intent(this, controller_assistant_buscarPacienteLista.class);
         intent.putExtra("matricula",matricula);
         intent.putExtra("nombre", nombre);
         intent.putExtra("rol", rol);

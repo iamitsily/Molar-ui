@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.haku.molar.model.assistant.model_Assistant;
 import com.haku.molar.utils.MolarCrypt;
 import com.haku.molar.R;
 import com.haku.molar.model.patient.model_Patient;
@@ -104,8 +105,8 @@ public class controller_assistant_registrarPaciente extends AppCompatActivity {
             apaterno = palabraMayuscula(apaterno);
             amaterno = palabraMayuscula(amaterno);
             imprimirDatos();
-            model_Patient model_patient = new model_Patient(Integer.parseInt(matricula),1,sexo,nombre,apaterno,amaterno,correo,numero,contraseña,this, contraseñaNoCrypt);
-            model_patient.registrarPaciente();
+            model_Assistant model_Assistant = new model_Assistant(Integer.parseInt(matricula),1,sexo,nombre,apaterno,amaterno,correo,numero,contraseña,this, contraseñaNoCrypt);
+            model_Assistant.registrarPaciente();
             limpiarDatos();
         }
     }
