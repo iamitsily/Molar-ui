@@ -15,7 +15,7 @@ import com.haku.molar.R;
 public class controller_assistant_menuCitas extends AppCompatActivity {
     String matricula, nombre, rol, sexo;
     BottomNavigationView menuNav;
-    Button btnSolisCancel, btnSolisReagen;
+    Button btnSolisCancel, btnCitas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,11 +29,25 @@ public class controller_assistant_menuCitas extends AppCompatActivity {
         menuNav = findViewById(R.id.menu_assistant_menu);
         menuNav.setSelectedItemId(R.id.menu_assistant_citas);
         btnSolisCancel = findViewById(R.id.assistant_menu_btnSolisCancel);
+        btnCitas = findViewById(R.id.assistant_menu_btnListarCitas);
 
         btnSolisCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),controller_assistant_listarCitasPorCancelar.class);
+                intent.putExtra("matricula",matricula);
+                intent.putExtra("nombre", nombre);
+                intent.putExtra("rol", rol);
+                intent.putExtra("sexo", sexo);
+                startActivity(intent);
+                overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+                finish();
+            }
+        });
+        btnCitas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),controller_assistant_listarCitas.class);
                 intent.putExtra("matricula",matricula);
                 intent.putExtra("nombre", nombre);
                 intent.putExtra("rol", rol);
