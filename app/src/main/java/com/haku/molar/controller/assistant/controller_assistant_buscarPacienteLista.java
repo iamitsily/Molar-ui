@@ -1,6 +1,8 @@
 package com.haku.molar.controller.assistant;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,15 +13,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haku.molar.R;
+import com.haku.molar.controller.assistant.adapter.adaptadorBuscarPacienteLista;
+import com.haku.molar.controller.assistant.interfaces.Callback_assistant_buscarPacienteLista;
+import com.haku.molar.model.assistant.model_Assistant;
 import com.haku.molar.model.cita.model_cita;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class controller_assistant_buscarPacienteLista extends AppCompatActivity {
+public class controller_assistant_buscarPacienteLista extends AppCompatActivity implements Callback_assistant_buscarPacienteLista {
     String matricula, nombre, rol,sexo;
     ImageView ivBackBtn, fotoPerfil;
     TextView tvNombre, tvMatricula;
-
+    RecyclerView rvListaPacientes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +41,7 @@ public class controller_assistant_buscarPacienteLista extends AppCompatActivity 
         tvNombre = findViewById(R.id.assistant_buscarPacienteLista_detallesCitaNombre);
         tvMatricula = findViewById(R.id.assistant_buscarPacienteLista_detallesCitaMatricula);
         fotoPerfil = findViewById(R.id.assistant_buscarPacienteLista_FotoPerfil);
-
+        rvListaPacientes = findViewById(R.id.assistant_buscarPacienteLista_istarCitasActivasRV);
         inicioUI();
 
         ivBackBtn.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +93,39 @@ public class controller_assistant_buscarPacienteLista extends AppCompatActivity 
             fotoPerfil.setScaleType(opcionSexo.second);
             fotoPerfil.setImageResource(opcionSexo.first);
         }
-        //model_cita model_cita = new model_cita(this,this);
-        //model_cita.listarCitasPorCancelar();
+        model_Assistant model_assistant = new model_Assistant(this,this);
+        model_assistant.listaPacientes();
+    }
+
+    @Override
+    public void onSuccessLista(ArrayList<model_Assistant> model_assistants) {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rvListaPacientes.setLayoutManager(linearLayoutManager);
+        adaptadorBuscarPacienteLista adaptadorBuscarPacienteLista = new adaptadorBuscarPacienteLista(model_assistants, this, new adaptadorBuscarPacienteLista.ItemClickListener() {
+            @Override
+            public void OnItemClick(model_Assistant details) {
+                Intent intent = new Intent(getApplicationContext(),controller_assistant_detallesPaciente.class);
+                intent.putExtra("matricula",matricula);
+                intent.putExtra("nombre", nombre);
+                intent.putExtra("rol", rol);
+                intent.putExtra("sexo", sexo);
+                intent.putExtra("matriculaUser", String.valueOf(details.getMatricula()));
+                intent.putExtra("nombreUser", details.getNombre());
+                intent.putExtra("apellidoPUser", details.getApellidoPaterno());
+                intent.putExtra("apellidoMuser", details.getApellidoMaterno());
+                intent.putExtra("emailUser", details.getEmail());
+                intent.putExtra("telefonoUser", details.getTelefono());
+                intent.putExtra("sexoUser", String.valueOf(details.getSexo()));
+                startActivity(intent);
+                overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+                finish();
+            }
+        });
+        rvListaPacientes.setAdapter(adaptadorBuscarPacienteLista);
+    }
+
+    @Override
+    public void onErrorLista(String mensaje) {
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
 }
