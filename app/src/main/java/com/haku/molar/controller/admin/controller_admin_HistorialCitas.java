@@ -1,17 +1,23 @@
 package com.haku.molar.controller.admin;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
 
 public class controller_admin_HistorialCitas extends AppCompatActivity {
     String matricula, nombre, rol, sexo;
+    ImageView ivBackBtn, fotoPerfil;
+    TextView tvNombre, tvMatricula;
+    RecyclerView rvListaCitas;
     BottomNavigationView menuNav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +29,12 @@ public class controller_admin_HistorialCitas extends AppCompatActivity {
         nombre = intent.getStringExtra("nombre");
         rol = intent.getStringExtra("rol");
         sexo = intent.getStringExtra("sexo");
+
+        ivBackBtn = findViewById(R.id.assistant_listaCitas_ivBackbtn);
+        tvNombre = findViewById(R.id.assistant_listaCitas_detallesCitaNombre);
+        tvMatricula = findViewById(R.id.assistant_listaCitas_detallesCitaMatricula);
+        fotoPerfil = findViewById(R.id.assistant_listaCitas_FotoPerfil);
+        rvListaCitas = findViewById(R.id.assistant_listaCitas_istarCitasActivasRV);
 
         menuNav = findViewById(R.id.menu_admin_menu);
         menuNav.setSelectedItemId(R.id.menu_admin_citas);
@@ -73,6 +85,7 @@ public class controller_admin_HistorialCitas extends AppCompatActivity {
             }
             return false;
         });
+
     }
     @Override
     public void onBackPressed() {

@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -30,6 +31,20 @@ public class controller_admin_menuUsuario extends AppCompatActivity {
         menuNav.setSelectedItemId(R.id.menu_admin_usuarios);
         btnregistrarPaciente = findViewById(R.id.admin_menuEmpleado_registrarPaciente);
         btnListarPaciente = findViewById(R.id.admin_menuEmpleado_listarPaciente);
+
+        btnregistrarPaciente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(getApplicationContext(), controller_admin_RegistrarPaciente.class);
+                intent1.putExtra("matricula",matricula);
+                intent1.putExtra("nombre", nombre);
+                intent1.putExtra("rol", rol);
+                intent1.putExtra("sexo", sexo);
+                startActivity(intent1);
+                overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+                finish();
+            }
+        });
 
         menuNav.setOnItemSelectedListener(item ->{
             switch (item.getItemId()){

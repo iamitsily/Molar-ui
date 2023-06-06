@@ -116,7 +116,14 @@ public class controller_admin_menuAdmin extends AppCompatActivity implements Cal
         cvRegistroUsuarios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent1 = new Intent(getApplicationContext(), controller_admin_RegistrarPaciente.class);
+                intent1.putExtra("matricula",matricula);
+                intent1.putExtra("nombre", nombre);
+                intent1.putExtra("rol", rol);
+                intent1.putExtra("sexo", sexo);
+                startActivity(intent1);
+                overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+                finish();
             }
         });
         ibPerfil.setOnClickListener(new View.OnClickListener() {

@@ -16,7 +16,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023"
-        app:srcCompat="@drawable/vectorasset_general_back" />
+        app:srcCompat="@drawable/vectorasset_general_back"
+        app:tint="#327AFF"/>
 
     <ScrollView
         android:id="@+id/scrollView3"
@@ -64,7 +65,8 @@
                 android:fontFamily="sans-serif"
                 android:hint=" Nombre"
                 android:inputType="textPersonName"
-                android:paddingLeft="10dp" />
+                android:paddingLeft="10dp"
+                android:maxLength="15"/>
 
             <EditText
                 android:id="@+id/admin_registroEmpleado_apaterno"
@@ -76,7 +78,8 @@
                 android:fontFamily="sans-serif"
                 android:hint=" Apellido materno"
                 android:inputType="textPersonName"
-                android:paddingLeft="10dp" />
+                android:paddingLeft="10dp"
+                android:maxLength="15"/>
 
             <EditText
                 android:id="@+id/admin_registroEmpleado_amaterno"
@@ -87,7 +90,8 @@
                 android:ems="10"
                 android:hint="Apellido paterno"
                 android:inputType="textPersonName"
-                android:paddingLeft="10dp" />
+                android:paddingLeft="10dp"
+                android:maxLength="15"/>
 
             <EditText
                 android:id="@+id/admin_registroEmpleado_email"
@@ -97,7 +101,7 @@
                 android:background="@drawable/drawable_view_admin_y_patient_fondo"
                 android:ems="10"
                 android:hint=" Correo electrónico"
-                android:inputType="textPersonName"
+                android:inputType="textEmailAddress"
                 android:paddingLeft="10dp" />
 
             <EditText
@@ -109,7 +113,8 @@
                 android:ems="10"
                 android:hint=" +52"
                 android:inputType="phone"
-                android:paddingLeft="10dp" />
+                android:paddingLeft="10dp"
+                android:maxLength="10"/>
 
             <TextView
                 android:id="@+id/regEmp_tv"
@@ -192,7 +197,8 @@
                 android:ems="10"
                 android:hint=" Contraseña"
                 android:inputType="textPassword"
-                android:paddingLeft="10dp" />
+                android:paddingLeft="10dp"
+                android:maxLength="30"/>
 
             <EditText
                 android:id="@+id/admin_registroEmpleado_passwordConfirmed"
@@ -204,7 +210,8 @@
                 android:ems="10"
                 android:hint=" Confirmar contraseña"
                 android:inputType="textPersonName"
-                android:paddingLeft="10dp" />
+                android:paddingLeft="10dp"
+                android:maxLength="30"/>
 
             <Button
                 android:id="@+id/admin_registroEmpleado_registrar"

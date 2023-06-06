@@ -8,12 +8,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.haku.molar.R;
+import com.haku.molar.model.admin.model_Admin;
 import com.haku.molar.model.assistant.model_Assistant;
 import com.haku.molar.utils.MolarCrypt;
 
@@ -36,6 +38,7 @@ public class controller_admin_RegistrarEmpleado extends AppCompatActivity {
     private EditText etNombre, etAPaterno, etAMaterno, etCorreo, etNumero, etContraseña, etConfirmarContraseña;
     private String nombre, apaterno, amaterno, correo, numero, contraseña, confirmarContraseña, matricula, contraseñaNoCrypt, nombreString, matriculaString, rolString, sexoString;
     private int rol, sexo;
+    Button btnRegistrar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +64,7 @@ public class controller_admin_RegistrarEmpleado extends AppCompatActivity {
         etNumero = findViewById(R.id.admin_registroEmpleado_telefono);
         etContraseña = findViewById(R.id.admin_registroEmpleado_password);
         etConfirmarContraseña = findViewById(R.id.admin_registroEmpleado_passwordConfirmed);
+        btnRegistrar = findViewById(R.id.admin_registroEmpleado_registrar);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,6 +76,12 @@ public class controller_admin_RegistrarEmpleado extends AppCompatActivity {
                 startActivity(intent1);
                 overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                 finish();
+            }
+        });
+        btnRegistrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Registrar(view);
             }
         });
     }
@@ -104,12 +114,18 @@ public class controller_admin_RegistrarEmpleado extends AppCompatActivity {
             apaterno = palabraMayuscula(apaterno);
             amaterno = palabraMayuscula(amaterno);
             imprimirDatos();
-            model_Assistant model_Assistant = new model_Assistant(Integer.parseInt(matricula),1,sexo,nombre,apaterno,amaterno,correo,numero,contraseña,this, contraseñaNoCrypt);
-            model_Assistant.registrarPaciente();
+            if (rol==2){
+                model_Admin model_admin = new model_Admin(matricula,nombre,apaterno,amaterno,correo,numero,contraseña,confirmarContraseña,"2",String.valueOf(sexo),this);
+                model_admin.registrarMedico();
+            }else{
+                model_Admin model_admin = new model_Admin(matricula,nombre,apaterno,amaterno,correo,numero,contraseña,confirmarContraseña,"3",String.valueOf(sexo),this);
+                model_admin.registrarAsistente();
+            }
             limpiarDatos();
         }
     }
     private void imprimirDatos(){
+        System.out.println("Matricula: "+matricula);
         System.out.println("Nombre: "+nombre);
         System.out.println("Apaterno: "+apaterno);
         System.out.println("Amaterno: "+amaterno);
@@ -117,6 +133,7 @@ public class controller_admin_RegistrarEmpleado extends AppCompatActivity {
         System.out.println("Numero: "+numero);
         System.out.println("Contraseña: "+contraseña);
         System.out.println("ContraseñaConfirmed: "+confirmarContraseña);
+        System.out.println("Rol: "+rol);
         System.out.println("Hombre: "+rbtnHombre.isChecked());
         System.out.println("Mujer: "+rbtnMujer.isChecked());
         System.out.println("Doctor: "+rbtDoctor.isChecked());
@@ -142,6 +159,17 @@ public class controller_admin_RegistrarEmpleado extends AppCompatActivity {
                     sexo=1;
                 }
             }
+            //2 doctor 3 asistente
+            if ((!rbtDoctor.isChecked())&&(!rbtAsistente.isChecked())){
+                //Toast.makeText(this, "Seleccione sexo", Toast.LENGTH_SHORT).show();
+            }else{
+                if (rbtDoctor.isChecked()){
+                    rol=2;
+                }else{
+                    rol=3;
+                }
+            }
+
         } catch (Exception e){
             System.out.println(e);
         }
@@ -189,6 +217,7 @@ public class controller_admin_RegistrarEmpleado extends AppCompatActivity {
             Toast.makeText(this, "Amaterno mayor o igual a 3 caracteres", Toast.LENGTH_SHORT).show();
         }
         if (!validarEmail(correo)) {
+            error = true;
             etCorreo.setText("");
             etCorreo.setHint("Revisar correo "+correo);
             etCorreo.setHintTextColor(Color.RED);
@@ -244,6 +273,8 @@ public class controller_admin_RegistrarEmpleado extends AppCompatActivity {
         etNumero.setText("");
         rbtnHombre.setChecked(false);
         rbtnMujer.setChecked(false);
+        rbtDoctor.setChecked(false);
+        rbtAsistente.setChecked(false);
         etContraseña.setText("");
         etConfirmarContraseña.setText("");
     }
