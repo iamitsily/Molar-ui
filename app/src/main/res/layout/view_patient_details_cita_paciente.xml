@@ -110,7 +110,7 @@
             app:srcCompat="@mipmap/view_doctor_patient_ajustesdecuenta_profile" />
 
         <TextView
-            android:id="@+id/patient_detallesCitaNombre"
+            android:id="@+id/admin_detallesCitaNombre"
             android:layout_width="136dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -123,7 +123,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/patient_detallesCitaMatricula"
+            android:id="@+id/dotor_detallesCitaMatricula"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
