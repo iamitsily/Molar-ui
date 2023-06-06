@@ -1,6 +1,7 @@
 package com.haku.molar.controller.doctor;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -13,7 +14,7 @@ import com.haku.molar.R;
 public class controller_doctor_listaPacientes extends AppCompatActivity {
     String matricula, nombre, rol,sexo;
     BottomNavigationView menuNav;
-
+    RecyclerView rvListaPacientes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +27,7 @@ public class controller_doctor_listaPacientes extends AppCompatActivity {
 
         menuNav = findViewById(R.id.menu_patient_menu);
         menuNav.setSelectedItemId(R.id.menu_doctor_pacientes);
+
 
         //Listeners
         menuNav.setOnItemSelectedListener(item ->{

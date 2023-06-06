@@ -1,6 +1,8 @@
 package com.haku.molar.controller.doctor;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -13,15 +15,20 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
+import com.haku.molar.controller.doctor.adapter.adaptadorrMenuDoctor;
+import com.haku.molar.controller.doctor.interfaces.Callback_doctor_menuDoctor;
+import com.haku.molar.model.cita.model_cita;
+import com.haku.molar.model.patient.model_Patient;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class controller_doctor_menu_doctor extends AppCompatActivity {
+public class controller_doctor_menu_doctor extends AppCompatActivity implements Callback_doctor_menuDoctor {
     TextView tvNombre, tvMatricula;
     ImageView ibPerfil;
     String matricula, nombre, rol,sexo;
     BottomNavigationView menuNav;
-
+    RecyclerView rvLista;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +43,7 @@ public class controller_doctor_menu_doctor extends AppCompatActivity {
         tvNombre = findViewById(R.id.tvNombre_doctor_MenuDoctor);
         tvMatricula = findViewById(R.id.tvMatricula_doctor_MenuDoctor);
         ibPerfil = findViewById(R.id.doctor_menu_ibIcon);
+        rvLista = findViewById(R.id.rvDoctorMenuDoctor);
 
         inicioUI();
 
@@ -119,5 +127,25 @@ public class controller_doctor_menu_doctor extends AppCompatActivity {
             ibPerfil.setScaleType(opcionSexo.second);
             ibPerfil.setImageResource(opcionSexo.first);
         }
+        model_Patient model_patient = new model_Patient(this,this);
+        model_patient.listarCitasMenuDoctor(matricula);
+    }
+
+    @Override
+    public void onSuccesListar(ArrayList<model_cita> listaCitas) {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rvLista.setLayoutManager(linearLayoutManager);
+        adaptadorrMenuDoctor adaptadorrMenuDoctor = new adaptadorrMenuDoctor(listaCitas, this, new adaptadorrMenuDoctor.ItemClickListener() {
+            @Override
+            public void OnItemClick(model_cita details) {
+                Toast.makeText(controller_doctor_menu_doctor.this, details.getId(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        rvLista.setAdapter(adaptadorrMenuDoctor);
+    }
+
+    @Override
+    public void onErrorListar(String mensaje) {
+
     }
 }

@@ -275,7 +275,7 @@ public class controller_General_Login extends AppCompatActivity implements Callb
         }else if (datos[5].equals("4")){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Aviso");
-            builder.setMessage("Su cuenta alcanzo la maxima tolerancia para cancelar o reagendar una cita y se inhabilitó.\n\n" +
+            builder.setMessage("Su cuenta alcanzo la maxima tolerancia por cancelar o reagendar una cita de manera irresponsable y se inhabilitó su cuenta.\n\n" +
                     "Comunicate con un asistente o a molar.haku@gmail.com").setPositiveButton("Ok",new DialogInterface.OnClickListener(){
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
