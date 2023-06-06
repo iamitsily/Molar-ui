@@ -130,12 +130,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.308"
-        app:layout_constraintStart_toEndOf="@+id/doctor_menu_idBackBtnTerminosCondiciones"
+        app:layout_constraintStart_toEndOf="@+id/doctor_terminos_back"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.019" />
 
     <ImageButton
-        android:id="@+id/doctor_menu_idBackBtnTerminosCondiciones"
+        android:id="@+id/doctor_terminos_back"
         android:layout_width="45dp"
         android:layout_height="36dp"
         android:background="#03FFFFFF"

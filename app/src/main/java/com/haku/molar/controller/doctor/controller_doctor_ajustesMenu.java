@@ -40,8 +40,8 @@ public class controller_doctor_ajustesMenu extends AppCompatActivity {
         tvNombre = findViewById(R.id.doctor_ajustesMenu_nombreUsuario);
         tvRol = findViewById(R.id.doctor_ajustesMenu_rol);
         imageViewPerfil = findViewById(R.id.doctor_ajustesMenu_Perfil);
-        terminosCondiciones = findViewById(R.id.doctor_ajustesMenu_btnAjustesDatos);
         ajustesCuentaDatos = findViewById(R.id.doctor_ajustesMenu_btnAjustesDatos);
+        terminosCondiciones = findViewById(R.id.doctor_ajustesMenu_ajustesPoliticas);
         cerrarSesion = findViewById(R.id.doctor_ajustesMenu_cerrarSesion);
 
         inicioUI();
@@ -49,8 +49,7 @@ public class controller_doctor_ajustesMenu extends AppCompatActivity {
         terminosCondiciones.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                Intent intent1 = new Intent(getApplicationContext(), controller_assistant_TerminosCondiciones.class);
+                Intent intent1 = new Intent(getApplicationContext(), controller_doctor_TerminosCondiciones.class);
                 intent1.putExtra("matricula",matricula);
                 intent1.putExtra("nombre", nombre);
                 intent1.putExtra("rol", rol);
@@ -58,8 +57,6 @@ public class controller_doctor_ajustesMenu extends AppCompatActivity {
                 startActivity(intent1);
                 overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                 finish();
-                */
-
             }
         });
         ajustesCuentaDatos.setOnClickListener(new View.OnClickListener() {

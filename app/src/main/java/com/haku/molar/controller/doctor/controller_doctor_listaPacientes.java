@@ -133,7 +133,20 @@ public class controller_doctor_listaPacientes extends AppCompatActivity implemen
         adaptadorListaPacientes adaptadorListaPacientes = new adaptadorListaPacientes(listaPaciente, this, new adaptadorListaPacientes.ItemClickListener() {
             @Override
             public void OnItemClick(model_Doctor details) {
-                Toast.makeText(controller_doctor_listaPacientes.this, details.getMatricula(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), controller_doctor_detallesPaciente.class);
+                intent.putExtra("matricula",matricula);
+                intent.putExtra("nombre", nombre);
+                intent.putExtra("rol", rol);
+                intent.putExtra("sexo", sexo);
+                intent.putExtra("matriculaUser", details.getMatricula());
+                intent.putExtra("nombreUser", details.getNombre());
+                intent.putExtra("apellidoPUser", details.getApellidoPaterno());
+                intent.putExtra("apellidoMuser", details.getAppelidoMaterno());
+                intent.putExtra("emailUser", details.getEmail());
+                intent.putExtra("sexoUser", details.getSexo());
+                startActivity(intent);
+                overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+                finish();
             }
         });
         rvListaPacientes.setAdapter(adaptadorListaPacientes);
