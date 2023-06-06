@@ -320,11 +320,11 @@ public class controller_General_Login extends AppCompatActivity implements Callb
                             break;
                         //2 -> menuDoctor
                         case "2":
-                            Toast.makeText(this, "MenuDoctor", Toast.LENGTH_SHORT).show();
                             Intent intentDoctor = new Intent(this, controller_doctor_menu_doctor.class);
                             intentDoctor.putExtra("matricula",datos[0]);
                             intentDoctor.putExtra("nombre", datos[1]);
                             intentDoctor.putExtra("rol",datos[3]);
+                            intentDoctor.putExtra("sexo",datos[4]);
                             startActivity(intentDoctor);
                             finish();
                             break;

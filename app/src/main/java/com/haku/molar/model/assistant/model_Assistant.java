@@ -14,6 +14,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.haku.molar.controller.assistant.interfaces.Callback_assistant_ajustesPaciente;
+import com.haku.molar.controller.assistant.interfaces.Callback_assistant_buscarPacienteLista;
 import com.haku.molar.controller.assistant.interfaces.Callback_assistant_menuAsistente;
 import com.haku.molar.utils.MolarConfig;
 import com.haku.molar.utils.MolarMail;
@@ -23,15 +24,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class model_Assistant {
     int matricula, rol, sexo;
-    String nombre, apellidoPaterno, apellidoMaterno, email, telefono, password, passwordNoCrypt;
+    String nombre, apellidoPaterno, apellidoMaterno, email, telefono, password, passwordNoCrypt, status;
     Context context;
     private Callback_assistant_ajustesPaciente callback_assistant_ajustesPaciente;
     private Callback_assistant_menuAsistente callback_assistant_menuAsistente;
+    private Callback_assistant_buscarPacienteLista callback_assistant_buscarPacienteLista;
     MolarConfig molarConfig = new MolarConfig();
 
     //controller_assistant_ajustesMenuDatos
@@ -67,6 +70,24 @@ public class model_Assistant {
         this.password = password;
         this.context = context;
         this.passwordNoCrypt = ContraseñaNoCrypt;
+    }
+    //controller_assistant_buscarPacienteLista
+    public model_Assistant(Context context, Callback_assistant_buscarPacienteLista callback_assistant_buscarPacienteLista) {
+        this.context = context;
+        this.callback_assistant_buscarPacienteLista = callback_assistant_buscarPacienteLista;
+    }
+    //controller_assistant_buscarPacienteLista -> ArrayList -> modelAssistant
+    public model_Assistant(int matricula, int rol, int sexo, String nombre, String apellidoPaterno, String apellidoMaterno, String email, String telefono, String password, String status) {
+        this.matricula = matricula;
+        this.rol = rol;
+        this.sexo = sexo;
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.email = email;
+        this.telefono = telefono;
+        this.password = password;
+        this.status = status;
     }
 
     //controller_assistant_ajusteMenuDatos
@@ -354,7 +375,54 @@ public class model_Assistant {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
+    //controller_assistant_buscarPacienteLista
+    public void listaPacientes(){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Listando pacientes");
+        progressDialog.show();
 
+        String url = molarConfig.getDomainAzure()+"/patient/service_seleccionPacientes.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito =jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+                    if (jsonArray.length()==0){
+                        callback_assistant_buscarPacienteLista.onErrorLista("No hay pacientes registrados");
+                        progressDialog.dismiss();
+                    }else if (exito.equals("1")){
+                        ArrayList<model_Assistant> listaPacientes = new ArrayList<>();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            listaPacientes.add(new model_Assistant(Integer.parseInt(object.getString("matricula")),Integer.parseInt(object.getString("rol")),Integer.parseInt(object.getString("sexo")), object.getString("nombre"),object.getString("apellidoPaterno"),object.getString("apellidoMaterno"),object.getString("email"),object.getString("telefono"),object.getString("password"),object.getString("status")));
+                        }
+                        callback_assistant_buscarPacienteLista.onSuccessLista(listaPacientes);
+                        progressDialog.dismiss();
+                    }
+                }catch (JSONException e){
+                    System.out.println("model_assistant -> listaPacientes -> JSONException: "+e.getMessage());
+                    e.printStackTrace();
+                    progressDialog.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("model_assistant -> listaPacientes -> onErrorResponse: "+error.getMessage());
+                if (error==null){
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }
+                progressDialog.dismiss();
+                System.out.println("Error: "+error.getMessage());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
     public int getMatricula() {
         return matricula;
     }

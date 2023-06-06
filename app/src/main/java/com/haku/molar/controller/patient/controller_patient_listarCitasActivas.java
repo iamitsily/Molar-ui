@@ -38,8 +38,8 @@ public class controller_patient_listarCitasActivas extends AppCompatActivity imp
         sexo = intent.getStringExtra("sexo");
         RvListCitas = findViewById(R.id.patient_listarCitasActivasRV);
         ivBackBtn = findViewById(R.id.ivBackbtnListarCitasActivas);
-        tvNombre = findViewById(R.id.patient_detallesCitaNombre);
-        tvMatricula = findViewById(R.id.patient_detallesCitaMatricula);
+        tvNombre = findViewById(R.id.admin_detallesCitaNombre);
+        tvMatricula = findViewById(R.id.dotor_detallesCitaMatricula);
         tvNombre.setText(nombre);
         tvMatricula.setText(matricula);
         ivBackBtn.setOnClickListener(new View.OnClickListener() {

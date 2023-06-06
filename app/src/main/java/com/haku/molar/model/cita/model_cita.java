@@ -13,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.haku.molar.controller.assistant.interfaces.Callback_assistant_listarCitas;
 import com.haku.molar.controller.assistant.interfaces.Callback_assistant_listarCitasPorCancelar;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_cancelarCitas;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_detallesCita;
@@ -20,6 +21,7 @@ import com.haku.molar.controller.patient.interfaces.Callback_patient_fechaHoraAg
 import com.haku.molar.controller.patient.interfaces.Callback_patient_historialCitas;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_listarCitasActivas;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_reagendarCitas;
+import com.haku.molar.model.assistant.model_Assistant;
 import com.haku.molar.utils.MolarConfig;
 import com.haku.molar.utils.MolarMail;
 import com.haku.molar.utils.Network;
@@ -43,6 +45,7 @@ public class model_cita {
     Callback_patient_cancelarCitas callback_patient_cancelarCitas;
     Callback_patient_detallesCita callback_patient_detallesCita;
     Callback_assistant_listarCitasPorCancelar callback_assistant_listarCitasPorCancelar;
+    Callback_assistant_listarCitas callback_assistant_listarCitas;
     String[] res = new String[6];
     MolarConfig molarConfig = new MolarConfig();
     public model_cita() {
@@ -171,6 +174,17 @@ public class model_cita {
         this.emailPaciente = emailPaciente;
         this.context = context;
         this.callback_assistant_listarCitasPorCancelar = callback_assistant_listarCitasPorCancelar;
+    }
+    //controller_assistant_listarCitas
+    public model_cita(Context context, Callback_assistant_listarCitas callback_assistant_listarCitas) {
+        this.context = context;
+        this.callback_assistant_listarCitas = callback_assistant_listarCitas;
+    }
+    public model_cita(String id, String emailPaciente, Context context, Callback_assistant_listarCitas callback_assistant_listarCitas) {
+        this.id = id;
+        this.emailPaciente = emailPaciente;
+        this.context = context;
+        this.callback_assistant_listarCitas = callback_assistant_listarCitas;
     }
 
     public void detallesCita(){
@@ -726,6 +740,104 @@ public class model_cita {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
+    public void listarCitasCancelar(){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Listando citas");
+        progressDialog.show();
+
+        String url = molarConfig.getDomainAzure()+"/citas/service_listarCitasCancelarDirecto.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito =jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+
+                    if(jsonArray.length() == 0){
+                        System.out.println("model_cita -> historial -> datos vacío");
+                        callback_assistant_listarCitas.onErrorListar("No hay solicitudes de cancelación");
+                        progressDialog.dismiss();
+                    } else if(exito.equals("1")){
+                        ArrayList<model_cita> cita = new ArrayList<>();
+                        for (int i = 0;i < jsonArray.length();i++){
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            cita.add(new model_cita(object.getString("id"),object.getString("dia"),object.getString("hora"),object.getString("motivo"),object.getString("estado"),object.getString("descripcion"),object.getString("motivoCancelar"), object.getString("nombre"), object.getString("apellidoPaterno"), object.getString("email"), object.getString("matricula")));
+                        }
+                        callback_assistant_listarCitas.onSuccessListar(cita);
+                        progressDialog.dismiss();
+                    }
+                } catch (JSONException e) {
+                    System.out.println("model_general_usuario -> listarCitasActivas -> JSONException: "+e);
+                    callback_assistant_listarCitas.onErrorListar(e.getMessage());
+                    System.out.println("Error");
+                    progressDialog.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("modelcita -> listarCitasCancelar -> onErrorResponse: "+error.getMessage());
+                if (error==null){
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }
+                progressDialog.dismiss();
+                System.out.println("Error: "+error.getMessage());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+    public void cancelarCitaDirecto(String idCitaString, String motivoString,String diaString, String matriculaString){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Cancelando cita");
+        progressDialog.show();
+        String url = molarConfig.getDomainAzure()+"/citas/service_cancelarCita.php";
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.equalsIgnoreCase("Modificacion exitosa")) {
+                    boolean isConnectedToWifi = Network.isConnectedToWifi(context);
+                    boolean isConnectedToMobileData = Network.isConnectedToMobileData(context);
+                    if (isConnectedToWifi){
+                        MolarMail molarMail = new MolarMail(emailPaciente,context);
+                        molarMail.mailCancelarCita(idCitaString, motivoString,diaString);
+                    }else if (isConnectedToMobileData){
+                        MolarMail molarMail = new MolarMail(emailPaciente,context);
+                        molarMail.mailCancelarCitaRedMovil(idCitaString, motivoString,diaString);
+                    }else{
+                        Toast.makeText(context, "No es posible enviar email, no hay conexión", Toast.LENGTH_SHORT).show();
+                    }
+                    progressDialog.dismiss();
+                    callback_assistant_listarCitas.onSuccessCancelar();
+                } else {
+                    progressDialog.dismiss();
+                    callback_assistant_listarCitas.onErrorCancelar("No se pudo cancelar la cita");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println("Error: "+error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id",id);
+                params.put("estado","2");
+                params.put("matricula",matriculaString);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+
     public String getId() {
         return id;
     }
