@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -86,6 +87,19 @@ public class controller_doctor_menu_doctor extends AppCompatActivity implements 
 
             }
             return false;
+        });
+        ibPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentAjustes = new Intent(getApplicationContext(), controller_doctor_ajustesMenu.class);
+                intentAjustes.putExtra("matricula",matricula);
+                intentAjustes.putExtra("nombre", nombre);
+                intentAjustes.putExtra("rol", rol);
+                intentAjustes.putExtra("sexo", sexo);
+                startActivity(intentAjustes);
+                overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+                finish();
+            }
         });
     }
     public void onBackPressed() {

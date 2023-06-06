@@ -39,7 +39,7 @@
             android:background="@drawable/drawable_patient_details_cita_paciente_view" />
 
         <ImageView
-            android:id="@+id/assistant_buscarPacienteLista_FotoPerfil"
+            android:id="@+id/doctor_lisraPacientes_FotoPerfil"
             android:layout_width="68dp"
             android:layout_height="75dp"
             android:layout_marginStart="32dp"
@@ -47,7 +47,7 @@
             app:srcCompat="@mipmap/view_doctor_patient_ajustesdecuenta_profile" />
 
         <TextView
-            android:id="@+id/assistant_buscarPacienteLista_detallesCitaNombre"
+            android:id="@+id/doctor_lisraPacientes_detallesCitaNombre"
             android:layout_width="136dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -62,7 +62,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/assistant_buscarPacienteLista_detallesCitaMatricula"
+            android:id="@+id/doctor_lisraPacientes_detallesCitaMatricula"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -92,14 +92,14 @@
         app:layout_constraintVertical_bias="0.044" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/assistant_buscarPacienteLista_istarCitasActivasRV"
+        android:id="@+id/doctor_listaPacientesRV"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/menu_patient_menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout8" />

@@ -39,8 +39,6 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity i
         sexo = intent.getStringExtra("sexo");
         RVLista = findViewById(R.id.HC_RV1);
         ivPerfil = findViewById(R.id.patient_historialCitaPerfil);
-        model_cita model_cita = new model_cita(matricula,this,this);
-        model_cita.listarCitas();
 
         menuNav = findViewById(R.id.menu_patient_menu);
         menuNav.setSelectedItemId(R.id.menu_patient_historial);
@@ -120,6 +118,8 @@ public class controller_patient_HistorialCitasLayout extends AppCompatActivity i
             ivPerfil.setScaleType(opcionSexo.second);
             ivPerfil.setImageResource(opcionSexo.first);
         }
+        model_cita model_cita = new model_cita(matricula,this,this);
+        model_cita.listarCitas();
     }
     @Override
     public void onSuccessHistorial(ArrayList<model_cita> historial) {
