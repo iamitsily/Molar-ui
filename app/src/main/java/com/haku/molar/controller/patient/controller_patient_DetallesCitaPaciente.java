@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,8 +32,8 @@ public class controller_patient_DetallesCitaPaciente extends AppCompatActivity i
         idCita = intent.getStringExtra("idCita");
 
         ivBackBtn = findViewById(R.id.ivBackBtnDetallesCitaPatient);
-        tvNombre = findViewById(R.id.patient_detallesCitaNombre);
-        tvMatricula = findViewById(R.id.patient_detallesCitaMatricula);
+        tvNombre = findViewById(R.id.admin_detallesCitaNombre);
+        tvMatricula = findViewById(R.id.dotor_detallesCitaMatricula);
         tvFolio = findViewById(R.id.patient_detallesCita_folio);
         tvMedico = findViewById(R.id.patient_detallesCita_medico);
         tvMotivp = findViewById(R.id.patient_detallesCita_motivo);

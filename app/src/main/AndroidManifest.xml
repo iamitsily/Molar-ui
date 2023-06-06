@@ -20,6 +20,12 @@
             android:exported="false" />
         <activity
             android:name=".controller.doctor.controller_doctor_ajustesMenu"
+            android:exported="false" /> 
+        <activity
+            android:name=".controller.doctor.controller_doctor_TerminosCondiciones"
+            android:exported="false" />
+        <activity
+            android:name=".controller.admin.controller_admin_terminoscondiciones"
             android:exported="false" />
         <activity
             android:name=".controller.assistant.controller_assistant_listarCitas"
