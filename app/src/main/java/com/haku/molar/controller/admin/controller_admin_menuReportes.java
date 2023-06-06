@@ -10,13 +10,13 @@ import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
 
-public class controller_admin_HistorialCitas extends AppCompatActivity {
+public class controller_admin_menuReportes extends AppCompatActivity {
     String matricula, nombre, rol, sexo;
     BottomNavigationView menuNav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_admin_historial_citas);
+        setContentView(R.layout.view_admin_menu_reportes);
 
         Intent intent = getIntent();
         matricula = intent.getStringExtra("matricula");
@@ -25,7 +25,7 @@ public class controller_admin_HistorialCitas extends AppCompatActivity {
         sexo = intent.getStringExtra("sexo");
 
         menuNav = findViewById(R.id.menu_admin_menu);
-        menuNav.setSelectedItemId(R.id.menu_admin_citas);
+        menuNav.setSelectedItemId(R.id.menu_admin_reportes);
 
         menuNav.setOnItemSelectedListener(item ->{
             switch (item.getItemId()){
@@ -49,9 +49,8 @@ public class controller_admin_HistorialCitas extends AppCompatActivity {
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
                     break;
-                case R.id.menu_admin_home:
-
-                    Intent intent3 = new Intent(this, controller_admin_menuAdmin.class);
+                case R.id.menu_admin_citas:
+                    Intent intent3 = new Intent(this, controller_admin_HistorialCitas.class);
                     intent3.putExtra("matricula",matricula);
                     intent3.putExtra("nombre", nombre);
                     intent3.putExtra("rol", rol);
@@ -60,8 +59,8 @@ public class controller_admin_HistorialCitas extends AppCompatActivity {
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
                     break;
-                case R.id.menu_admin_reportes:
-                    Intent intent4 = new Intent(this, controller_admin_menuReportes.class);
+                case R.id.menu_admin_home:
+                    Intent intent4 = new Intent(this, controller_admin_menuAdmin.class);
                     intent4.putExtra("matricula",matricula);
                     intent4.putExtra("nombre", nombre);
                     intent4.putExtra("rol", rol);

@@ -6,18 +6,20 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
 
-public class controller_admin_HistorialCitas extends AppCompatActivity {
+public class controller_admin_menuUsuario extends AppCompatActivity {
     String matricula, nombre, rol, sexo;
     BottomNavigationView menuNav;
+    Button btnregistrarPaciente, btnListarPaciente;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_admin_historial_citas);
-
+        setContentView(R.layout.view_admin_menu_usuario);
         Intent intent = getIntent();
         matricula = intent.getStringExtra("matricula");
         nombre = intent.getStringExtra("nombre");
@@ -25,7 +27,9 @@ public class controller_admin_HistorialCitas extends AppCompatActivity {
         sexo = intent.getStringExtra("sexo");
 
         menuNav = findViewById(R.id.menu_admin_menu);
-        menuNav.setSelectedItemId(R.id.menu_admin_citas);
+        menuNav.setSelectedItemId(R.id.menu_admin_usuarios);
+        btnregistrarPaciente = findViewById(R.id.admin_menuEmpleado_registrarPaciente);
+        btnListarPaciente = findViewById(R.id.admin_menuEmpleado_listarPaciente);
 
         menuNav.setOnItemSelectedListener(item ->{
             switch (item.getItemId()){
@@ -39,8 +43,8 @@ public class controller_admin_HistorialCitas extends AppCompatActivity {
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
                     break;
-                case R.id.menu_admin_usuarios:
-                    Intent intent2 = new Intent(this, controller_admin_menuUsuario.class);
+                case R.id.menu_admin_home:
+                    Intent intent2 = new Intent(this, controller_admin_menuAdmin.class);
                     intent2.putExtra("matricula",matricula);
                     intent2.putExtra("nombre", nombre);
                     intent2.putExtra("rol", rol);
@@ -49,9 +53,9 @@ public class controller_admin_HistorialCitas extends AppCompatActivity {
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
                     break;
-                case R.id.menu_admin_home:
+                case R.id.menu_admin_citas:
 
-                    Intent intent3 = new Intent(this, controller_admin_menuAdmin.class);
+                    Intent intent3 = new Intent(this, controller_admin_HistorialCitas.class);
                     intent3.putExtra("matricula",matricula);
                     intent3.putExtra("nombre", nombre);
                     intent3.putExtra("rol", rol);

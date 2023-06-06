@@ -6,17 +6,20 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
 
-public class controller_admin_HistorialCitas extends AppCompatActivity {
+public class controller_admin_menuEmpleados extends AppCompatActivity {
     String matricula, nombre, rol, sexo;
     BottomNavigationView menuNav;
+    Button btnregistrarEmpleado, btnListarEmpleado;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_admin_historial_citas);
+        setContentView(R.layout.view_admin_menu_empleados);
 
         Intent intent = getIntent();
         matricula = intent.getStringExtra("matricula");
@@ -25,12 +28,28 @@ public class controller_admin_HistorialCitas extends AppCompatActivity {
         sexo = intent.getStringExtra("sexo");
 
         menuNav = findViewById(R.id.menu_admin_menu);
-        menuNav.setSelectedItemId(R.id.menu_admin_citas);
+        menuNav.setSelectedItemId(R.id.menu_admin_empleados);
+        btnregistrarEmpleado = findViewById(R.id.admin_menuEmpleado_registrarEmpleado);
+        btnListarEmpleado = findViewById(R.id.admin_menuEmpleado_listarEmpleado);
+
+        btnregistrarEmpleado.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(getApplicationContext(), controller_admin_RegistrarEmpleado.class);
+                intent1.putExtra("matricula",matricula);
+                intent1.putExtra("nombre", nombre);
+                intent1.putExtra("rol", rol);
+                intent1.putExtra("sexo", sexo);
+                startActivity(intent1);
+                overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+                finish();
+            }
+        });
 
         menuNav.setOnItemSelectedListener(item ->{
             switch (item.getItemId()){
-                case R.id.menu_admin_empleados:
-                    Intent intent1 = new Intent(this, controller_admin_menuEmpleados.class);
+                case R.id.menu_admin_home:
+                    Intent intent1 = new Intent(this, controller_admin_menuAdmin.class);
                     intent1.putExtra("matricula",matricula);
                     intent1.putExtra("nombre", nombre);
                     intent1.putExtra("rol", rol);
@@ -49,9 +68,9 @@ public class controller_admin_HistorialCitas extends AppCompatActivity {
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
                     break;
-                case R.id.menu_admin_home:
+                case R.id.menu_admin_citas:
 
-                    Intent intent3 = new Intent(this, controller_admin_menuAdmin.class);
+                    Intent intent3 = new Intent(this, controller_admin_HistorialCitas.class);
                     intent3.putExtra("matricula",matricula);
                     intent3.putExtra("nombre", nombre);
                     intent3.putExtra("rol", rol);
