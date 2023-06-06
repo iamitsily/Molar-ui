@@ -1,19 +1,28 @@
 package com.haku.molar.controller.doctor;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
+import com.haku.molar.controller.patient.adapter.adaptadorRecyclerNotificaciones;
+import com.haku.molar.model.notificaciones.Callback_notificaciones;
+import com.haku.molar.model.notificaciones.model_General_Notificaciones;
 
-public class controller_doctor_notificaciones extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class controller_doctor_notificaciones extends AppCompatActivity implements Callback_notificaciones {
     String matricula, nombre, rol,sexo;
     BottomNavigationView menuNav;
-
+    RecyclerView RV_notis;
+    private adaptadorRecyclerNotificaciones adaptadorRecyclerNotificaciones;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +35,9 @@ public class controller_doctor_notificaciones extends AppCompatActivity {
 
         menuNav = findViewById(R.id.menu_patient_menu);
         menuNav.setSelectedItemId(R.id.menu_doctor_notificaciones);
+
+        model_General_Notificaciones model_General_Notificaciones = new model_General_Notificaciones(matricula,this, this);
+        model_General_Notificaciones.listarNotificaciones();
 
         //Listeners
         menuNav.setOnItemSelectedListener(item ->{
@@ -78,5 +90,18 @@ public class controller_doctor_notificaciones extends AppCompatActivity {
 
             }
         }).setCancelable(false).show();
+    }
+
+    @Override
+    public void onSuccessNotificaciones(ArrayList<model_General_Notificaciones> notificaciones) {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        RV_notis.setLayoutManager(linearLayoutManager);
+        adaptadorRecyclerNotificaciones = new adaptadorRecyclerNotificaciones(notificaciones);
+        RV_notis.setAdapter(adaptadorRecyclerNotificaciones);
+    }
+
+    @Override
+    public void onErrorNotificaciones(String errorMessage) {
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
     }
 }
