@@ -8,7 +8,7 @@
     android:background="#306BA5">
 
     <ImageView
-        android:id="@+id/assistant_menu_ADC1_iv2"
+        android:id="@+id/doctor_ajustesMenu_Perfil"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="116dp"
@@ -20,7 +20,7 @@
         tools:src="@mipmap/view_patient_ajustes_de_cuenta_menu_foto_perfil" />
 
     <TextView
-        android:id="@+id/assistant_menu_ajustesCuentaMenuNombre"
+        android:id="@+id/doctor_ajustesMenu_nombreUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -31,10 +31,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/assistant_menu_ADC1_iv2" />
+        app:layout_constraintTop_toBottomOf="@+id/doctor_ajustesMenu_Perfil" />
 
     <ImageView
-        android:id="@+id/assistant_menu_ajustescuentamenu_imvw"
+        android:id="@+id/doctor_ajustesMenu_back"
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:layout_marginStart="16dp"
@@ -45,7 +45,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/assistant_menu_ajustesCuentaMenuRol"
+        android:id="@+id/doctor_ajustesMenu_rol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -54,7 +54,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/assistant_menu_ajustesCuentaMenuNombre" />
+        app:layout_constraintTop_toBottomOf="@+id/doctor_ajustesMenu_nombreUsuario" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -66,58 +66,42 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/assistant_menu_ajustesCuentaMenuRol"
+        app:layout_constraintTop_toBottomOf="@+id/doctor_ajustesMenu_rol"
         app:layout_constraintVertical_bias="0.01999998">
 
         <Button
-            android:id="@+id/assistant_menu_ADC1_btn1"
+            android:id="@+id/doctor_ajustesMenu_btnAjustesDatos"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@drawable/drawable_roundedbutton_general"
             android:backgroundTint="#FFFFFF"
-            android:gravity="left|center_vertical"
             android:onClick="ajustdesCuenta"
             android:text="Ajustes de cuenta"
-            android:textAlignment="center"
             android:textColor="#000000"
             app:cornerRadius="15dp" />
 
         <Button
-            android:id="@+id/assistant_menu_ADC1_btn2"
+            android:id="@+id/doctor_ajustesMenu_ajustesPoliticas"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/drawable_roundedbutton_general"
             android:backgroundTint="#FFFFFF"
-            android:gravity="left|center_vertical"
             android:onClick="terminosCondiciones"
             android:text="Políticas de privacidad"
-            android:textAlignment="center"
             android:textColor="#000000"
             app:cornerRadius="15dp" />
 
-        <Button
-            android:id="@+id/ADC1_btn3"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/drawable_roundedbutton_general"
-            android:backgroundTint="#FFFFFF"
-            android:gravity="left|center_vertical"
-            android:text="Manual de app"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:visibility="invisible"
-            app:cornerRadius="15dp" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/assistant_menu_cerrarSesion"
+        android:id="@+id/doctor_ajustesMenu_cerrarSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="68dp"
         android:background="@android:color/transparent"
         android:drawableLeft="@mipmap/view_patient_ajustes_de_cuenta_menu_cerrar_sesion_icono"
+        android:onClick="cerrarSesion"
         android:text="Cerrar sesión"
         android:textAlignment="center"
         android:textColor="#C0CADA"

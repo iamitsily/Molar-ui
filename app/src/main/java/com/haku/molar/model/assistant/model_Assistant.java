@@ -268,56 +268,6 @@ public class model_Assistant {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
-    public void contarUserMed(){
-        ProgressDialog progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Cargando Menu");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-        String url = molarConfig.getDomainAzure()+"/patient/service_contarPacientes.php";
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String exito = jsonObject.getString("exito");
-                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
-                    if (jsonArray.length() == 0){
-                        callback_assistant_menuAsistente.onErrorContrarMenu("");
-                        progressDialog.dismiss();
-                    }else{
-                        if (exito.equals("1")){
-                            JSONObject object = jsonArray.getJSONObject(0);
-                            String numUsuario = object.getString("NumUsuario");
-                            object = jsonArray.getJSONObject(1);
-                            String numMedico = object.getString("NumMedico");
-                            callback_assistant_menuAsistente.onSuccessContarMenu(numUsuario,numMedico);
-                            progressDialog.dismiss();
-                        }
-                    }
-                } catch (JSONException e) {
-                    System.out.println("model_Patient -> obtenerMedico -> JSONException: "+e);
-                    e.printStackTrace();
-                    callback_assistant_menuAsistente.onErrorContrarMenu(e.getMessage());
-                    progressDialog.dismiss();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                {
-                    System.out.println("model_general_usuario -> login -> onErrorResponse: "+error.getMessage());
-                    if (error==null){
-                        Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
-                    }
-                    progressDialog.dismiss();
-                }
-            }
-        });
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        requestQueue.add(request);
-    }
     //controller_assistant_registrarPaciente
     public void registrarPaciente(){
         ProgressDialog progressDialog = new ProgressDialog(context);
@@ -418,6 +368,56 @@ public class model_Assistant {
                 }
                 progressDialog.dismiss();
                 System.out.println("Error: "+error.getMessage());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+    public void contarUserMed(){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Cargando Menu");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        String url = molarConfig.getDomainAzure()+"/patient/service_contarPacientes.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito = jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+                    if (jsonArray.length() == 0){
+                        callback_assistant_menuAsistente.onErrorContrarMenu("");
+                        progressDialog.dismiss();
+                    }else{
+                        if (exito.equals("1")){
+                            JSONObject object = jsonArray.getJSONObject(0);
+                            String numUsuario = object.getString("NumUsuario");
+                            object = jsonArray.getJSONObject(1);
+                            String numMedico = object.getString("NumMedico");
+                            callback_assistant_menuAsistente.onSuccessContarMenu(numUsuario,numMedico);
+                            progressDialog.dismiss();
+                        }
+                    }
+                } catch (JSONException e) {
+                    System.out.println("model_Patient -> obtenerMedico -> JSONException: "+e);
+                    e.printStackTrace();
+                    callback_assistant_menuAsistente.onErrorContrarMenu(e.getMessage());
+                    progressDialog.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                {
+                    System.out.println("model_general_usuario -> login -> onErrorResponse: "+error.getMessage());
+                    if (error==null){
+                        Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                    }
+                    progressDialog.dismiss();
+                }
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(context);

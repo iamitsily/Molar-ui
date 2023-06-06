@@ -15,13 +15,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.haku.molar.controller.assistant.interfaces.Callback_assistant_listarCitas;
 import com.haku.molar.controller.assistant.interfaces.Callback_assistant_listarCitasPorCancelar;
+import com.haku.molar.controller.doctor.interfaces.Callback_doctor_detallesCitaPaciente;
+import com.haku.molar.controller.doctor.interfaces.Callback_doctor_historialCitas;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_cancelarCitas;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_detallesCita;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_fechaHoraAgendarCita;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_historialCitas;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_listarCitasActivas;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_reagendarCitas;
-import com.haku.molar.model.assistant.model_Assistant;
 import com.haku.molar.utils.MolarConfig;
 import com.haku.molar.utils.MolarMail;
 import com.haku.molar.utils.Network;
@@ -46,6 +47,8 @@ public class model_cita {
     Callback_patient_detallesCita callback_patient_detallesCita;
     Callback_assistant_listarCitasPorCancelar callback_assistant_listarCitasPorCancelar;
     Callback_assistant_listarCitas callback_assistant_listarCitas;
+    Callback_doctor_historialCitas callback_doctor_historialCitas;
+    Callback_doctor_detallesCitaPaciente callback_doctor_detallesCitaPaciente;
     String[] res = new String[6];
     MolarConfig molarConfig = new MolarConfig();
     public model_cita() {
@@ -186,9 +189,111 @@ public class model_cita {
         this.context = context;
         this.callback_assistant_listarCitas = callback_assistant_listarCitas;
     }
+//controller_doctor_historial_citas
+    public model_cita(String idUusario, Context context,Callback_doctor_historialCitas callback_doctor_historialCitas) {
+        this.idUusario = idUusario;
+        this.context = context;
+        this.callback_doctor_historialCitas = callback_doctor_historialCitas;
+    }
+    //controller_doctor_detalles_citaPaciente
+    public model_cita(String idCita, Context context, Callback_doctor_detallesCitaPaciente callback_doctor_detallesCitaPaciente) {
+        this.id = idCita;
+        this.context = context;
+        this.callback_doctor_detallesCitaPaciente = callback_doctor_detallesCitaPaciente;
+    }
+    //controller_doctor_detalles_citaPaciente
+    public void detallesCitaPaciente(){
+        System.out.println("modelCita: "+idUusario);
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Cargando detalles de cita");
+        progressDialog.show();
+        String url = molarConfig.getDomainAzure()+"/citas/service_detallesCitaDoctor.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito =jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
 
+                    if(jsonArray.length() == 0){
+                        System.out.println("model_cita -> detallesCita -> datos vacío");
+                        callback_doctor_detallesCitaPaciente.onErrorDetallesCita("No hay datos registrados de esta cita");
+                        progressDialog.dismiss();
+                    } else if(exito.equals("1")){
+                        String datos[] = new String[8];
+                        JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+                        datos[0]= jsonObject1.getString("id");
+                        datos[1]= jsonObject1.getString("dia");
+                        datos[2]= jsonObject1.getString("hora");
+                        datos[3]= jsonObject1.getString("motivo");
+                        datos[4]= jsonObject1.getString("nombre");
+                        datos[5]= jsonObject1.getString("apellidoPaterno");
+                        datos[6]= jsonObject1.getString("matricula");
+                        datos[7]= jsonObject1.getString("sexo");
+                        callback_doctor_detallesCitaPaciente.onSuccessDetallesCita(datos);
+                        progressDialog.dismiss();
+                    }
+                } catch (JSONException e) {
+                    System.out.println("model_general_usuario -> login -> JSONException: "+e);
+                    callback_doctor_detallesCitaPaciente.onErrorDetallesCita(e.getMessage());
+                    System.out.println("Error");
+                    progressDialog.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("Error: "+error.getMessage());
+                progressDialog.dismiss();
+                callback_doctor_detallesCitaPaciente.onErrorDetallesCita("No hay conexión con el servidor");
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("idCita",id);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+    public void terminarCita(){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Terminando cita");
+        progressDialog.show();
+        String url = molarConfig.getDomainAzure()+"/citas/service_terminarCita.php";
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.equalsIgnoreCase("Cita terminada")) {
+                    progressDialog.dismiss();
+                    callback_doctor_detallesCitaPaciente.onSuccesTerminarCita();
+                } else {
+                    progressDialog.dismiss();
+                    callback_doctor_detallesCitaPaciente.OnErrorTerminarCita("No se pudo terminar");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println("Error: "+error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id",id);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
     public void detallesCita(){
-
         System.out.println("modelCita: "+idUusario);
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Cargando detalles de cita");
@@ -831,6 +936,66 @@ public class model_cita {
                 params.put("id",id);
                 params.put("estado","2");
                 params.put("matricula",matriculaString);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+    public void historialCitas(){
+        System.out.println("modelCita: "+idUusario);
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Cargando historial");
+        progressDialog.show();
+        String url = molarConfig.getDomainAzure()+"/citas/service_listarCitasDoctorTodas.php";
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito =jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+
+                    if(jsonArray.length() == 0){
+                        System.out.println("model_cita -> historial -> datos vacío");
+                        callback_doctor_historialCitas.onErrorhoraHistorial("Historial vacio, no se han encontrado registros");
+                        progressDialog.dismiss();
+                    } else if(exito.equals("1")){
+                        ArrayList<model_cita> cita = new ArrayList<>();
+                        System.out.println(jsonArray.length());
+                        for (int i = 0;i < jsonArray.length();i++){
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            cita.add(new model_cita(object.getString("id"),
+                                    object.getString("dia"),
+                                    object.getString("hora"),
+                                    object.getString("motivo"),
+                                    object.getString("estado"),
+                                    object.getString("descripcion")));
+                        }
+
+                        callback_doctor_historialCitas.onSuccessHistorial(cita);
+                        progressDialog.dismiss();
+                    }
+                } catch (JSONException e) {
+                    System.out.println("model_general_usuario -> login -> JSONException: "+e);
+                    callback_doctor_historialCitas.onErrorhoraHistorial(e.getMessage());
+                    System.out.println("Error");
+                    progressDialog.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("Error: "+error.getMessage());
+                progressDialog.dismiss();
+                callback_patient_historialCitas.onErrorhoraHistorial("No hay conexión con el servidor");
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("matricula",idUusario);
                 return params;
             }
         };

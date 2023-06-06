@@ -15,6 +15,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.haku.molar.controller.assistant.interfaces.Callback_assistant_ajustesPaciente;
 import com.haku.molar.controller.assistant.interfaces.Callback_assistant_menuAsistente;
+import com.haku.molar.controller.doctor.interfaces.Callback_doctor_menuDoctor;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_ajustesPaciente;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_menu;
 import com.haku.molar.model.cita.model_cita;
@@ -37,8 +38,7 @@ public class model_Patient {
     Context context;
     private Callback_patient_menu callback_patient_menu;
     private Callback_patient_ajustesPaciente callback_patient_ajustesPaciente;
-    private Callback_assistant_ajustesPaciente callback_assistant_ajustesPaciente;
-    private Callback_assistant_menuAsistente callback_assistant_menuAsistente;
+    private Callback_doctor_menuDoctor callback_doctor_menuDoctor;
     MolarConfig molarConfig = new MolarConfig();
     //Constructores
     public model_Patient() {
@@ -62,6 +62,12 @@ public class model_Patient {
         this.password = password;
         this.context = context;
         this.callback_patient_ajustesPaciente = callback_patient_ajustesPaciente;
+    }
+    //controller_doctor_menuDoctor
+
+    public model_Patient(Context context, Callback_doctor_menuDoctor callback_doctor_menuDoctor) {
+        this.context = context;
+        this.callback_doctor_menuDoctor = callback_doctor_menuDoctor;
     }
 
     //Funciones
@@ -309,7 +315,72 @@ public class model_Patient {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
+    //controller_doctor_menuDoctor
+    public void listarCitasMenuDoctor(String matriculaString){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Cargando Menu");
+        progressDialog.show();
 
+        String url = molarConfig.getDomainAzure()+"/citas/service_listarCitasDoctor.php";
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito =jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+                    if (jsonArray.length()==0){
+                        callback_doctor_menuDoctor.onErrorListar("No hay citas agendadas para mostrar en el menu");
+                        progressDialog.dismiss();
+                    }else if (exito.equals("1")){
+                        ArrayList<model_cita> citasPaciente = new ArrayList<>();
+                        for (int i=0;i < jsonArray.length();i++){
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            citasPaciente.add(new model_cita(
+                                    object.getString("id"),
+                                    object.getString("dia"),
+                                    object.getString("hora"),
+                                    object.getString("motivo"),
+                                    "1",
+                                    object.getString("nombre"),
+                                    object.getString("apellidoPaterno")
+                            ));
+                        }
+                        callback_doctor_menuDoctor.onSuccesListar(citasPaciente);
+                        progressDialog.dismiss();
+                    }
+                } catch (JSONException e) {
+                    System.out.println("model_general_usuario -> listarCitas -> JSONException: "+e);
+                    e.printStackTrace();
+                    progressDialog.dismiss();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("model_general_usuario -> login -> onErrorResponse: "+error.getMessage());
+                if (error==null){
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }
+                progressDialog.dismiss();
+                System.out.println("Error: "+error.getMessage());
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("matricula",matriculaString);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
     //Getters y setters
     public int getMatricula() {
         return matricula;

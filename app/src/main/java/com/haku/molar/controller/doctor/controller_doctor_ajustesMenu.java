@@ -1,4 +1,4 @@
-package com.haku.molar.controller.assistant;
+package com.haku.molar.controller.doctor;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,12 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haku.molar.R;
+import com.haku.molar.controller.assistant.controller_assistant_ajustesMenuDatos;
 import com.haku.molar.general.controller_General_Login;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class controller_assistant_ajustesMenu extends AppCompatActivity {
+public class controller_doctor_ajustesMenu extends AppCompatActivity {
     String matricula, nombre, rol,sexo;
     ImageView imageView, imageViewPerfil;
     TextView tvNombre, tvRol;
@@ -25,16 +26,8 @@ public class controller_assistant_ajustesMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_assistant_ajustes_menu);
+        setContentView(R.layout.view_doctor_ajustes_menu);
 
-        //Cast
-        imageView = findViewById(R.id.assistant_menu_ajustescuentamenu_imvw);
-        tvNombre = findViewById(R.id.assistant_menu_ajustesCuentaMenuNombre);
-        tvRol = findViewById(R.id.assistant_menu_ajustesCuentaMenuRol);
-        imageViewPerfil = findViewById(R.id.assistant_menu_ADC1_iv2);
-        terminosCondiciones = findViewById(R.id.assistant_menu_ADC1_btn2);
-        ajustesCuentaDatos = findViewById(R.id.assistant_menu_ADC1_btn1);
-        cerrarSesion = findViewById(R.id.assistant_menu_cerrarSesion);
         //Intent
         Intent intent = getIntent();
         matricula = intent.getStringExtra("matricula");
@@ -42,11 +35,21 @@ public class controller_assistant_ajustesMenu extends AppCompatActivity {
         rol = intent.getStringExtra("rol");
         sexo = intent.getStringExtra("sexo");
 
+        //Cast
+        imageView = findViewById(R.id.doctor_ajustesMenu_back);
+        tvNombre = findViewById(R.id.doctor_ajustesMenu_nombreUsuario);
+        tvRol = findViewById(R.id.doctor_ajustesMenu_rol);
+        imageViewPerfil = findViewById(R.id.doctor_ajustesMenu_Perfil);
+        terminosCondiciones = findViewById(R.id.doctor_ajustesMenu_btnAjustesDatos);
+        ajustesCuentaDatos = findViewById(R.id.doctor_ajustesMenu_btnAjustesDatos);
+        cerrarSesion = findViewById(R.id.doctor_ajustesMenu_cerrarSesion);
+
         inicioUI();
 
         terminosCondiciones.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                /*
                 Intent intent1 = new Intent(getApplicationContext(), controller_assistant_TerminosCondiciones.class);
                 intent1.putExtra("matricula",matricula);
                 intent1.putExtra("nombre", nombre);
@@ -55,12 +58,14 @@ public class controller_assistant_ajustesMenu extends AppCompatActivity {
                 startActivity(intent1);
                 overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                 finish();
+                */
+
             }
         });
         ajustesCuentaDatos.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),controller_assistant_ajustesMenuDatos.class);
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), controller_doctor_ajustesDatos.class);
                 intent.putExtra("matricula",matricula);
                 intent.putExtra("nombre", nombre);
                 intent.putExtra("rol", rol);
@@ -72,8 +77,8 @@ public class controller_assistant_ajustesMenu extends AppCompatActivity {
         });
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),controller_assistant_MenuAsistente.class);
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),controller_doctor_menu_doctor.class);
                 intent.putExtra("matricula",matricula);
                 intent.putExtra("nombre", nombre);
                 intent.putExtra("rol", rol);
@@ -93,7 +98,7 @@ public class controller_assistant_ajustesMenu extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this,controller_assistant_MenuAsistente.class);
+        Intent intent = new Intent(this, controller_doctor_menu_doctor.class);
         intent.putExtra("matricula",matricula);
         intent.putExtra("nombre", nombre);
         intent.putExtra("rol", rol);
