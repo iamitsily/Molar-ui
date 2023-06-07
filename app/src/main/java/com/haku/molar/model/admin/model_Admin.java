@@ -11,7 +11,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.haku.molar.controller.admin.interfaces.Callback_admin_historialCitas;
 import com.haku.molar.controller.admin.interfaces.Callback_admin_menuAdmin;
+import com.haku.molar.model.cita.model_cita;
 import com.haku.molar.utils.MolarConfig;
 import com.haku.molar.utils.MolarMail;
 import com.haku.molar.utils.Network;
@@ -20,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +30,7 @@ public class model_Admin {
     String matricula, nombre, apellidoPaterno, apellidoMaterno, email, telefono, password, passwordNoCrypt, status, rol, sexo;
     Context context;
     private Callback_admin_menuAdmin callback_admin_menuAdmin;
+    private Callback_admin_historialCitas callback_admin_historialCitas;
     MolarConfig molarConfig = new MolarConfig();
 
     //controller_admin_menuAdmin
@@ -48,6 +52,12 @@ public class model_Admin {
         this.rol = rol;
         this.sexo = sexo;
         this.context = context;
+    }
+    //controller_admin_HistorialCitas
+
+    public model_Admin(Context context, Callback_admin_historialCitas callback_admin_historialCitas) {
+        this.context = context;
+        this.callback_admin_historialCitas = callback_admin_historialCitas;
     }
 
     //Funciones
@@ -265,6 +275,56 @@ public class model_Admin {
                 return params;
             }
         };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+    public void listarCitasTodas(){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Listando citas");
+        progressDialog.show();
+
+        String url = molarConfig.getDomainAzure()+"/citas/service_listarCitasCancelarDirecto.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito =jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+
+                    if(jsonArray.length() == 0){
+                        System.out.println("model_cita -> historial -> datos vacío");
+                        callback_admin_historialCitas.onErrorListar("No hay solicitudes de cancelación");
+                        progressDialog.dismiss();
+                    } else if(exito.equals("1")){
+                        ArrayList<model_cita> cita = new ArrayList<>();
+                        for (int i = 0;i < jsonArray.length();i++){
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            cita.add(new model_cita(object.getString("id"),object.getString("dia"),object.getString("hora"),object.getString("motivo"),object.getString("estado"),object.getString("descripcion"),object.getString("motivoCancelar"), object.getString("nombre"), object.getString("apellidoPaterno"), object.getString("email"), object.getString("matricula")));
+                        }
+                        callback_admin_historialCitas.onSuccessListar(cita);
+                        progressDialog.dismiss();
+                    }
+                } catch (JSONException e) {
+                    System.out.println("model_general_usuario -> listarCitasActivas -> JSONException: "+e);
+                    callback_admin_historialCitas.onErrorListar(e.getMessage());
+                    System.out.println("Error");
+                    progressDialog.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("modelcita -> listarCitasCancelar -> onErrorResponse: "+error.getMessage());
+                if (error==null){
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }
+                progressDialog.dismiss();
+                System.out.println("Error: "+error.getMessage());
+            }
+        });
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }

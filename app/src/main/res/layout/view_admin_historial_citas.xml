@@ -60,7 +60,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/assistant_listaCitas_detallesCitaMatricula"
+            android:id="@+id/admin_historialCitas_matricula"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -68,7 +68,6 @@
             android:layout_marginEnd="22dp"
             android:layout_marginBottom="39dp"
             android:text="Matricula" />
-
     </RelativeLayout>
 
 
@@ -90,7 +89,7 @@
         app:layout_constraintVertical_bias="0.04000002" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/assistant_listaCitas_istarCitasActivasRV"
+        android:id="@+id/admin_historialCitas_listaCitasRv"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="15dp"
@@ -101,19 +100,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout8" />
-
-    <ImageView
-        android:id="@+id/admin_historialCitas_back"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        app:layout_constraintBottom_toTopOf="@+id/relativeLayout8"
-        app:layout_constraintEnd_toStartOf="@+id/textView16"
-        app:layout_constraintHorizontal_bias="0.25"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.378"
-        app:srcCompat="@drawable/vectorasset_general_back"
-        app:tint="#FFFFFF" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menu_admin_menu"
