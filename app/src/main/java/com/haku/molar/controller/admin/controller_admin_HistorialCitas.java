@@ -101,7 +101,7 @@ public class controller_admin_HistorialCitas extends AppCompatActivity implement
 
     }
     public void inicioUI(){
-        tvNombre.setText(nombre + " | Asistente");
+        tvNombre.setText(nombre + " | Admin");
         tvMatricula.setText(matricula);
 
         HashMap<String, Pair<Integer, ImageView.ScaleType>> mapaSexo = new HashMap<>();
