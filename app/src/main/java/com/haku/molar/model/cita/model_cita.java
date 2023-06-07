@@ -152,6 +152,14 @@ public class model_cita {
         this.context = context;
         this.callback_patient_detallesCita = callback_patient_detallesCita;
     }
+
+    public model_cita(String id, String emailPaciente, Context context, Callback_doctor_detallesCitaPaciente callback_doctor_detallesCitaPaciente) {
+        this.id = id;
+        this.emailPaciente = emailPaciente;
+        this.context = context;
+        this.callback_doctor_detallesCitaPaciente = callback_doctor_detallesCitaPaciente;
+    }
+
     //controller_assistant_listarCitasPorCancelar
     public model_cita(Context context, Callback_assistant_listarCitasPorCancelar callback_assistant_listarCitasPorCancelar) {
         this.context = context;
@@ -222,7 +230,7 @@ public class model_cita {
                         callback_doctor_detallesCitaPaciente.onErrorDetallesCita("No hay datos registrados de esta cita");
                         progressDialog.dismiss();
                     } else if(exito.equals("1")){
-                        String datos[] = new String[8];
+                        String datos[] = new String[9];
                         JSONObject jsonObject1 = jsonArray.getJSONObject(0);
                         datos[0]= jsonObject1.getString("id");
                         datos[1]= jsonObject1.getString("dia");
@@ -232,6 +240,7 @@ public class model_cita {
                         datos[5]= jsonObject1.getString("apellidoPaterno");
                         datos[6]= jsonObject1.getString("matricula");
                         datos[7]= jsonObject1.getString("sexo");
+                        datos[8]= jsonObject1.getString("email");
                         callback_doctor_detallesCitaPaciente.onSuccessDetallesCita(datos);
                         progressDialog.dismiss();
                     }
@@ -610,6 +619,54 @@ public class model_cita {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
+    public void cancelarCitaDoctor(String idCitaString, String motivoString,String diaString, String matriculaString){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Cancelando cita");
+        progressDialog.show();
+        String url = molarConfig.getDomainAzure()+"/citas/service_cancelarCita.php";
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.equalsIgnoreCase("Modificacion exitosa")) {
+                    boolean isConnectedToWifi = Network.isConnectedToWifi(context);
+                    boolean isConnectedToMobileData = Network.isConnectedToMobileData(context);
+                    if (isConnectedToWifi){
+                        MolarMail molarMail = new MolarMail(emailPaciente,context);
+                        molarMail.mailCancelarCita(idCitaString, motivoString,diaString);
+                    }else if (isConnectedToMobileData){
+                        MolarMail molarMail = new MolarMail(emailPaciente,context);
+                        molarMail.mailCancelarCitaRedMovil(idCitaString, motivoString,diaString);
+                    }else{
+                        Toast.makeText(context, "No es posible enviar email, no hay conexión", Toast.LENGTH_SHORT).show();
+                    }
+                    progressDialog.dismiss();
+                    callback_doctor_detallesCitaPaciente.onSuccessCancelar();
+                } else {
+                    progressDialog.dismiss();
+                    callback_doctor_detallesCitaPaciente.onErrorCancelar("No se pudo cancelar la cita");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println("Error: "+error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id",id);
+                params.put("estado","2");
+                params.put("matricula",matriculaString);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+
     public void listarCitas(){
         System.out.println("modelCita: "+idUusario);
         ProgressDialog progressDialog = new ProgressDialog(context);

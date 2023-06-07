@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ public class controller_doctor_detallesPaciente extends AppCompatActivity {
     String matricula, nombre, rol,sexo, matriculaUser, nombreUser, apellidoPUser, apellidoMuser, emailUser, sexoUser;
     ImageView ivPerfil, ivBackbtn;
     TextView tvnombre, tvmatricula, tvnombreCompleto, tvsexo, tvemail;
+    Button btnHistorial;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +46,7 @@ public class controller_doctor_detallesPaciente extends AppCompatActivity {
         tvsexo = findViewById(R.id.doctor_detallesPaciente_sexo);
         tvemail = findViewById(R.id.doctor_detallesPaciente_email);
         ivBackbtn = findViewById(R.id.doctor_detallesPaciente_back);
+        btnHistorial = findViewById(R.id.assistant_menu_ajustesCuentaGuardarBtn2);
 
         inicioUI();
 
@@ -55,6 +58,23 @@ public class controller_doctor_detallesPaciente extends AppCompatActivity {
                 intent.putExtra("nombre", nombre);
                 intent.putExtra("rol", rol);
                 intent.putExtra("sexo", sexo);
+                startActivity(intent);
+                overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+                finish();
+            }
+        });
+        btnHistorial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),controller_doctor_citasDePaciente.class);
+                intent.putExtra("matricula",matricula);
+                intent.putExtra("nombre", nombre);
+                intent.putExtra("rol", rol);
+                intent.putExtra("sexo", sexo);
+                intent.putExtra("matriculaUser", matriculaUser);
+                intent.putExtra("nombreUser", nombreUser);
+                intent.putExtra("sexoUser", sexoUser);
+
                 startActivity(intent);
                 overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                 finish();

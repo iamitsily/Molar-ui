@@ -91,7 +91,15 @@ public class controller_admin_DetallesCitaPaciente extends AppCompatActivity imp
         btnReagendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getApplicationContext(), controller_admin_reagendarCita.class);
+                intent.putExtra("matricula",matriculaUser);
+                intent.putExtra("nombre", nombreUser);
+                intent.putExtra("rol", rolUser);
+                intent.putExtra("sexo", sexoUser);
+                intent.putExtra("idCita", id);
+                startActivity(intent);
+                overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+                finish();
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
