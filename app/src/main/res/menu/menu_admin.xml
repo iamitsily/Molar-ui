@@ -6,19 +6,19 @@
         android:title="Home"/>
     <item
         android:id="@+id/menu_admin_empleados"
-        android:icon="@drawable/vectorasset_menu_patient_home"
+        android:icon="@drawable/vectorasset_menu_assistant_patient"
         android:title="Empleados"/>
     <item
         android:id="@+id/menu_admin_usuarios"
-        android:icon="@drawable/vectorasset_menu_patient_home"
-        android:title="Usuarios"/>
+        android:icon="@drawable/vectorasset_doctor_person"
+        android:title="Pacientes"/>
     <item
         android:id="@+id/menu_admin_citas"
-        android:icon="@drawable/vectorasset_menu_patient_home"
+        android:icon="@drawable/vectorasset_doctor_citas"
         android:title="Citas"/>
     <item
         android:id="@+id/menu_admin_reportes"
-        android:icon="@drawable/vectorasset_menu_patient_home"
+        android:icon="@drawable/vectorasset_admin_reportes"
         android:title="Reportes"/>
 
 </menu>

@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     android:textAlignment="center">
 
+    <Button
+        android:id="@+id/assistant_menu_ajustesCuentaGuardarBtn2"
+        android:layout_width="262dp"
+        android:layout_height="51dp"
+        android:background="@drawable/drawable_roundedbutton_general"
+        android:backgroundTint="#1C6BA4"
+        android:gravity="center"
+        android:text="Ver historial"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        app:cornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView6" />
+
     <View
         android:id="@+id/view_pricipal"
         android:layout_width="413dp"
@@ -165,7 +181,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView4"
-        app:layout_constraintVertical_bias="0.17">
+        app:layout_constraintVertical_bias="0.07999998">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -206,6 +222,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView6"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginStart="20dp"
@@ -217,7 +234,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView5"
-        app:layout_constraintVertical_bias="0.441">
+        app:layout_constraintVertical_bias="0.13999999">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

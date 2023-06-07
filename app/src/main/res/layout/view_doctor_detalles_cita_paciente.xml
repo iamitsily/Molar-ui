@@ -7,23 +7,44 @@
     android:textAlignment="center">
 
     <Button
-        android:id="@+id/doctor_detallesCita_btnTerminar"
-        android:layout_width="279dp"
+        android:id="@+id/doctor_detallesCita_btnCancelar"
+        android:layout_width="150dp"
         android:layout_height="52dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/drawable_roundedbutton_general"
-        android:backgroundTint="#1C6BA4"
+        android:backgroundTint="#A50082"
         android:fontFamily="sans-serif"
-        android:text="Terminar Cita"
+        android:text="CANCELAR"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:visibility="invisible"
         app:cornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.107"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.97" />
+        app:layout_constraintVertical_bias="0.959" />
+
+    <Button
+        android:id="@+id/doctor_detallesCita_btnTerminar"
+        android:layout_width="150dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/drawable_roundedbutton_general"
+        android:backgroundTint="#1C6BA4"
+        android:fontFamily="sans-serif"
+        android:text="TERMINAR"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        app:cornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.457"
+        app:layout_constraintStart_toEndOf="@+id/doctor_detallesCita_btnCancelar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.959" />
 
     <RelativeLayout
         android:layout_width="288dp"
@@ -260,7 +281,7 @@
         app:layout_constraintVertical_bias="0.43">
 
         <TextView
-            android:id="@+id/doctor_detallesCita_folio"
+            android:id="@+id/admin_detallesCita_folio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -270,7 +291,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/doctor_detallesCita_medico"
+            android:id="@+id/admin_detallesCita_medico"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -280,7 +301,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/doctor_detallesCita_motivo"
+            android:id="@+id/admin_detallesCita_motivo"
             android:layout_width="match_parent"
             android:layout_height="33dp"
             android:layout_marginBottom="40dp"

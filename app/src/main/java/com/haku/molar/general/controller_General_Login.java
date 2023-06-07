@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.haku.molar.R;
+import com.haku.molar.controller.admin.controller_admin_menuAdmin;
 import com.haku.molar.controller.assistant.controller_assistant_MenuAsistente;
 import com.haku.molar.controller.doctor.controller_doctor_menu_doctor;
 import com.haku.molar.controller.patient.controller_patient_MenuPaciente;
@@ -229,8 +230,12 @@ public class controller_General_Login extends AppCompatActivity implements Callb
                             switch (datos[3]){
                                 //0 -> menuAdmin
                                 case "0":
-                                    Toast.makeText(getApplicationContext(), "MenuAdmin", Toast.LENGTH_SHORT).show();
-                                    //startActivity(new Intent(this, controller_patient_MenuAdmin));
+                                    Intent intentAdmin = new Intent(getApplicationContext(), controller_admin_menuAdmin.class);
+                                    intentAdmin.putExtra("matricula",datos[0]);
+                                    intentAdmin.putExtra("nombre", datos[1]);
+                                    intentAdmin.putExtra("rol",datos[3]);
+                                    intentAdmin.putExtra("sexo",datos[4]);
+                                    startActivity(intentAdmin);
                                     finish();
                                     break;
                                 //1 -> menuPaciente
@@ -304,8 +309,12 @@ public class controller_General_Login extends AppCompatActivity implements Callb
                     switch (datos[3]){
                         //0 -> menuAdmin
                         case "0":
-                            Toast.makeText(this, "MenuAdmin", Toast.LENGTH_SHORT).show();
-                            //startActivity(new Intent(this, controller_patient_MenuAdmin));
+                            Intent intentAdmin = new Intent(getApplicationContext(), controller_admin_menuAdmin.class);
+                            intentAdmin.putExtra("matricula",datos[0]);
+                            intentAdmin.putExtra("nombre", datos[1]);
+                            intentAdmin.putExtra("rol",datos[3]);
+                            intentAdmin.putExtra("sexo",datos[4]);
+                            startActivity(intentAdmin);
                             finish();
                             break;
                         //1 -> menuPaciente

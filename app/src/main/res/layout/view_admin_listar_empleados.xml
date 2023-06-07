@@ -31,13 +31,14 @@
 
 
         <view
+            android:id="@+id/view"
             class="androidx.appcompat.widget.ActionMenuView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/drawable_patient_details_cita_paciente_view" />
 
         <ImageView
-            android:id="@+id/admin_historialCitas_perfil"
+            android:id="@+id/admin_listaEmpleados_foto"
             android:layout_width="68dp"
             android:layout_height="75dp"
             android:layout_marginStart="32dp"
@@ -45,7 +46,7 @@
             app:srcCompat="@mipmap/view_doctor_patient_ajustesdecuenta_profile" />
 
         <TextView
-            android:id="@+id/admin_historialCitas_nombre"
+            android:id="@+id/admin_listaEmpleados_nombre"
             android:layout_width="136dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -60,7 +61,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/admin_historialCitas_matricula"
+            android:id="@+id/admin_listaEmpleados_matricula"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -68,15 +69,16 @@
             android:layout_marginEnd="22dp"
             android:layout_marginBottom="39dp"
             android:text="Matricula" />
+
     </RelativeLayout>
 
 
     <TextView
         android:id="@+id/textView16"
         android:layout_width="250dp"
-        android:layout_height="60dp"
+        android:layout_height="32dp"
         android:layout_marginBottom="72dp"
-        android:text="Citas"
+        android:text="Lista de empleados"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -89,29 +91,30 @@
         app:layout_constraintVertical_bias="0.04000002" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/admin_historialCitas_listaCitasRv"
+        android:id="@+id/admin_listaEmpleados_rvLista"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/menu_admin_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout8" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/menu_admin_menu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_menu_patient"
-        app:itemIconTint="@drawable/selector_menu_patient_text_icon"
-        app:itemTextColor="@drawable/selector_menu_patient_text_icon"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ImageView
+        android:id="@+id/admin_listaEmpleados_back"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout8"
+        app:layout_constraintEnd_toStartOf="@+id/textView16"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:menu="@menu/menu_admin" />
+        app:layout_constraintVertical_bias="0.378"
+        app:srcCompat="@drawable/vectorasset_general_back"
+        app:tint="#FFFFFF" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,10 +11,8 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,15 +24,16 @@
             android:paddingRight="20dp">
 
             <ImageView
-                android:id="@+id/regpac_iv1"
+                android:id="@+id/admin_registroPaciente_back"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                app:srcCompat="@mipmap/view_patient_registrar_paciente_btn_atras"
+                android:onClick="regresar"
+                app:srcCompat="@drawable/vectorasset_general_back"
                 app:tint="#327AFF" />
 
             <TextView
                 android:id="@+id/regpac_tv1"
-                android:layout_width="205dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="sans-serif"
@@ -43,7 +42,7 @@
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/regpac_et1"
+                android:id="@+id/admin_registroPaciente_nombre"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginTop="10dp"
@@ -51,10 +50,11 @@
                 android:ems="10"
                 android:fontFamily="sans-serif"
                 android:hint=" Nombre"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:maxLength="15" />
 
             <EditText
-                android:id="@+id/regpac_et2"
+                android:id="@+id/admin_registroPaciente_aPaterno"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginTop="10dp"
@@ -62,37 +62,41 @@
                 android:ems="10"
                 android:fontFamily="sans-serif"
                 android:hint=" Apellido paterno"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:maxLength="15" />
 
             <EditText
-                android:id="@+id/regpac_et3"
+                android:id="@+id/admin_registroPaciente_aMaterno"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginTop="10dp"
                 android:background="#EBEBEB"
                 android:ems="10"
                 android:hint="Apellido materno"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:maxLength="15" />
 
             <EditText
-                android:id="@+id/regpac_et4"
+                android:id="@+id/admin_registroPaciente_email"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginTop="10dp"
                 android:background="#EBEBEB"
                 android:ems="10"
                 android:hint=" Correo electrónico"
-                android:inputType="textPersonName" />
+                android:inputType="textEmailAddress"
+                android:maxLength="256" />
 
             <EditText
-                android:id="@+id/regpac_et5"
+                android:id="@+id/admin_registroPaciente_telefono"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginTop="10dp"
                 android:background="#EBEBEB"
                 android:ems="10"
                 android:hint=" +52"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:maxLength="10" />
 
             <TextView
                 android:id="@+id/regpac_tv2"
@@ -110,7 +114,7 @@
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/regpac_rb1"
+                    android:id="@+id/admin_registroPaciente_hombre"
                     android:layout_width="74dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -120,7 +124,7 @@
                     android:text=" Hombre" />
 
                 <RadioButton
-                    android:id="@+id/regpac_rb2"
+                    android:id="@+id/admin_registroPaciente_mujer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -130,60 +134,73 @@
                     android:text=" Mujer" />
             </RadioGroup>
 
-            <EditText
-                android:id="@+id/regpac_et6"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="46dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="10dp"
-                android:background="#EBEBEB"
                 android:ems="10"
-                android:hint=" Contraseña"
-                android:inputType="textPassword" />
+                android:background="#EBEBEB"
+                app:endIconMode="password_toggle">
 
-            <EditText
-                android:id="@+id/regpac_et7"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/admin_registroPaciente_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Contraseña"
+                    android:inputType="textPassword"
+                    android:maxLength="30"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="46dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="10dp"
-                android:background="#EBEBEB"
                 android:ems="10"
-                android:hint=" Confirmar contraseña"
-                android:inputType="textPersonName" />
+                android:background="#EBEBEB"
+                app:endIconMode="password_toggle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/admin_registroPaciente_passwordConfirmed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Confirmar contraseña"
+                    android:inputType="textPassword"
+                    android:maxLength="30"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
 
             <Button
-                android:id="@+id/regpac_btn1"
+                android:id="@+id/admin_registroPaciente_btnRegistrar"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="5dp"
+                android:background="@drawable/drawable_roundedbutton_general"
                 android:backgroundTint="#306BA5"
                 android:fontFamily="sans-serif"
+                android:onClick="Registrar"
                 android:text="Registrar cuenta"
-                app:cornerRadius="15dp" />
+                android:textColor="#FFFFFF" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/regpac_tv3"
-                    android:layout_width="198dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="sans-serif"
-                    android:gravity="right"
-                    android:text="¿Ya tienes cuenta?"
+                    android:gravity="center"
+                    android:text="Recuerde seguir los lineamientos de registro."
                     android:textColor="#7D7D7D" />
-
-                <TextView
-                    android:id="@+id/regpac_tv4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:fontFamily="sans-serif"
-                    android:text=" Iniciar sesión"
-                    android:textColor="#327AFF" />
 
             </LinearLayout>
 

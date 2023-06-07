@@ -5,4 +5,7 @@ public interface Callback_doctor_detallesCitaPaciente {
     void onErrorDetallesCita(String mensaje);
     void onSuccesTerminarCita();
     void OnErrorTerminarCita(String mensaje);
+    void onSuccessCancelar();
+    void onErrorCancelar(String mensaje);
+
 }

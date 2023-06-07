@@ -2,6 +2,8 @@ package com.haku.molar.controller.doctor;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
@@ -12,16 +14,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haku.molar.R;
+import com.haku.molar.controller.admin.controller_admin_DetallesCitaPaciente;
+import com.haku.molar.controller.admin.controller_admin_HistorialCitas;
 import com.haku.molar.controller.doctor.interfaces.Callback_doctor_detallesCitaPaciente;
 import com.haku.molar.model.cita.model_cita;
 
 import java.util.HashMap;
 
 public class controller_doctor_detalles_cita_paciente extends AppCompatActivity implements Callback_doctor_detallesCitaPaciente {
-    String matricula, nombre, rol,idCita, sexo,estado;
+    String matricula, nombre, rol,idCita, sexo,estado,email,dia;
     ImageView ivBackBtn,ivPerfil;
     TextView tvNombre, tvMatricula, tvFolio, tvMedico, tvMotivp, tvHora, tvFecha;
-    Button terminarCitabtn;
+    Button terminarCitabtn, cancelarCitabtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,13 +42,14 @@ public class controller_doctor_detalles_cita_paciente extends AppCompatActivity 
         ivBackBtn = findViewById(R.id.doctor_detallesCita_back);
         tvNombre = findViewById(R.id.doctor_detallesCita_detallesCitaNombre);
         tvMatricula = findViewById(R.id.doctor_detallesCita_statusCita);
-        tvFolio = findViewById(R.id.doctor_detallesCita_folio);
-        tvMedico = findViewById(R.id.doctor_detallesCita_medico);
-        tvMotivp = findViewById(R.id.doctor_detallesCita_motivo);
+        tvFolio = findViewById(R.id.admin_detallesCita_folio);
+        tvMedico = findViewById(R.id.admin_detallesCita_medico);
+        tvMotivp = findViewById(R.id.admin_detallesCita_motivo);
         tvHora = findViewById(R.id.doctor_detallesCita_horaCita);
         tvFecha = findViewById(R.id.doctor_detallesCita_fecha);
         ivPerfil = findViewById(R.id.doctor_detallesCita_fotoPerfil);
         terminarCitabtn = findViewById(R.id.doctor_detallesCita_btnTerminar);
+        cancelarCitabtn = findViewById(R.id.doctor_detallesCita_btnCancelar);
 
         inicioUI();
         ivBackBtn.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +63,25 @@ public class controller_doctor_detalles_cita_paciente extends AppCompatActivity 
             public void onClick(View v) {
                 model_cita model_cita = new model_cita(idCita, controller_doctor_detalles_cita_paciente.this, controller_doctor_detalles_cita_paciente.this);
                 model_cita.terminarCita();
+            }
+        });
+        cancelarCitabtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(controller_doctor_detalles_cita_paciente.this);
+                builder.setTitle("¿Cancelar cita?");
+                builder.setMessage("Esta acción cancelara la cita actual.").setPositiveButton("Confirmar",new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        model_cita model_cita = new model_cita(idCita,email,controller_doctor_detalles_cita_paciente.this,controller_doctor_detalles_cita_paciente.this);
+                        model_cita.cancelarCitaDoctor(idCita,"[Cita cancelada por Doctor]",dia,matricula);
+                    }
+                }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).setCancelable(false).show();
             }
         });
     }
@@ -74,6 +98,7 @@ public class controller_doctor_detalles_cita_paciente extends AppCompatActivity 
     public void inicioUI(){
         if (estado.equals("1") || estado.equals("3")){
          terminarCitabtn.setVisibility(View.VISIBLE);
+         cancelarCitabtn.setVisibility(View.VISIBLE);
         }
         model_cita model_cita = new model_cita(idCita,this,this);
         model_cita.detallesCitaPaciente();
@@ -97,7 +122,9 @@ public class controller_doctor_detalles_cita_paciente extends AppCompatActivity 
         tvFecha.setText(datos[1]);
         tvNombre.setText(datos[4]+" "+datos[5]);
         tvMatricula.setText(datos[6]);
-
+        idCita = datos[0];
+        email = datos[8];
+        dia = datos[1];
         HashMap<String, Pair<Integer, ImageView.ScaleType>> mapaSexo = new HashMap<>();
         mapaSexo.put("0", new Pair<>(R.mipmap.hombre, ImageView.ScaleType.CENTER_CROP));
         mapaSexo.put("1", new Pair<>(R.mipmap.mujer, ImageView.ScaleType.CENTER_CROP));
@@ -140,6 +167,30 @@ public class controller_doctor_detalles_cita_paciente extends AppCompatActivity 
 
     @Override
     public void OnErrorTerminarCita(String mensaje) {
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSuccessCancelar() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(controller_doctor_detalles_cita_paciente.this);
+        builder.setTitle("Cancelación");
+        builder.setMessage("Cita cancelada, se enviara un email de confirmación al paciente").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(getApplicationContext(), controller_doctor_historial_citas.class);
+                intent.putExtra("matricula",matricula);
+                intent.putExtra("nombre", nombre);
+                intent.putExtra("rol", rol);
+                intent.putExtra("sexo", sexo);
+                startActivity(intent);
+                overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+                finish();
+            }
+        }).setCancelable(false).show();
+    }
+
+    @Override
+    public void onErrorCancelar(String mensaje) {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
 }

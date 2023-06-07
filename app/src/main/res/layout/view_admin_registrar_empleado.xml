@@ -2,16 +2,32 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/admin_registroEmpleado_back"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/admin_registroEmpleado_backBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023"
+        app:srcCompat="@drawable/vectorasset_general_back"
+        app:tint="#327AFF"/>
+
     <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/admin_registroEmpleado_backBtn">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +56,7 @@
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/regEmp_et1"
+                android:id="@+id/admin_registroEmpleado_nombre"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginTop="10dp"
@@ -49,10 +65,11 @@
                 android:fontFamily="sans-serif"
                 android:hint=" Nombre"
                 android:inputType="textPersonName"
-                android:paddingLeft="10dp"/>
+                android:paddingLeft="10dp"
+                android:maxLength="15"/>
 
             <EditText
-                android:id="@+id/regEmp_et2"
+                android:id="@+id/admin_registroEmpleado_apaterno"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginTop="10dp"
@@ -61,10 +78,11 @@
                 android:fontFamily="sans-serif"
                 android:hint=" Apellido materno"
                 android:inputType="textPersonName"
-                android:paddingLeft="10dp"/>
+                android:paddingLeft="10dp"
+                android:maxLength="15"/>
 
             <EditText
-                android:id="@+id/regEmp_et3"
+                android:id="@+id/admin_registroEmpleado_amaterno"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginTop="10dp"
@@ -72,21 +90,22 @@
                 android:ems="10"
                 android:hint="Apellido paterno"
                 android:inputType="textPersonName"
-                android:paddingLeft="10dp"/>
+                android:paddingLeft="10dp"
+                android:maxLength="15"/>
 
             <EditText
-                android:id="@+id/regEmp_et4"
+                android:id="@+id/admin_registroEmpleado_email"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/drawable_view_admin_y_patient_fondo"
                 android:ems="10"
                 android:hint=" Correo electrónico"
-                android:inputType="textPersonName"
-                android:paddingLeft="10dp"/>
+                android:inputType="textEmailAddress"
+                android:paddingLeft="10dp" />
 
             <EditText
-                android:id="@+id/regEmp_et5"
+                android:id="@+id/admin_registroEmpleado_telefono"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginTop="10dp"
@@ -94,19 +113,44 @@
                 android:ems="10"
                 android:hint=" +52"
                 android:inputType="phone"
-                android:paddingLeft="10dp"/>
+                android:paddingLeft="10dp"
+                android:maxLength="10"/>
 
-            <EditText
-                android:id="@+id/regEmp_et8"
+            <TextView
+                android:id="@+id/regEmp_tv"
                 android:layout_width="match_parent"
-                android:layout_height="46dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/drawable_view_admin_y_patient_fondo"
-                android:drawableEnd="@android:drawable/arrow_down_float"
-                android:paddingEnd="10dp"
-                android:ems="10"
-                android:hint=" Rol"
-                android:paddingLeft="10dp"/>
+                android:fontFamily="sans-serif"
+                android:text="Rol"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/admin_registroEmpleado_doctorRol"
+                    android:layout_width="74dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/drawable_view_admin_y_patient_fondo"
+                    android:text="Doctor" />
+
+                <RadioButton
+                    android:id="@+id/admin_registroEmpleado_asistenteRol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/drawable_view_admin_y_patient_fondo"
+                    android:text="Asistente" />
+            </RadioGroup>
 
             <TextView
                 android:id="@+id/regEmp_tv2"
@@ -124,7 +168,7 @@
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/regEmp_rb1"
+                    android:id="@+id/admin_registroEmpleado_hombre"
                     android:layout_width="74dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -134,7 +178,7 @@
                     android:text=" Hombre" />
 
                 <RadioButton
-                    android:id="@+id/regEmp_rb2"
+                    android:id="@+id/admin_registroEmpleado_mujer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -145,7 +189,7 @@
             </RadioGroup>
 
             <EditText
-                android:id="@+id/regEmp_et6"
+                android:id="@+id/admin_registroEmpleado_password"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginTop="10dp"
@@ -153,31 +197,48 @@
                 android:ems="10"
                 android:hint=" Contraseña"
                 android:inputType="textPassword"
-                android:paddingLeft="10dp"/>
+                android:paddingLeft="10dp"
+                android:maxLength="30"/>
 
             <EditText
-                android:id="@+id/regEmp_et7"
+                android:id="@+id/admin_registroEmpleado_passwordConfirmed"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/drawable_view_admin_y_patient_fondo"
                 android:ems="10"
                 android:hint=" Confirmar contraseña"
                 android:inputType="textPersonName"
                 android:paddingLeft="10dp"
-                android:layout_marginBottom="10dp"/>
+                android:maxLength="30"/>
 
             <Button
-                android:id="@+id/regEmp_btn1"
+                android:id="@+id/admin_registroEmpleado_registrar"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="5dp"
-                android:backgroundTint="#306BA5"
+                android:background="@drawable/drawable_roundedbutton_general"
                 android:fontFamily="sans-serif"
                 android:text="Registrar Empleado"
+                android:textColor="#FFFFFF"
                 app:cornerRadius="15dp" />
 
         </LinearLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registro empleado"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.347"
+        app:layout_constraintStart_toEndOf="@+id/admin_registroEmpleado_backBtn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
