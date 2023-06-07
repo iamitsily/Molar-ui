@@ -66,12 +66,12 @@
             android:layout_height="75dp" />
 
         <Button
-            android:id="@+id/admin_menuEmpleado_registrarEmpleado"
+            android:id="@+id/admin_reporte_reporteGeneral"
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:background="@drawable/drawable_roundedbutton_general"
             android:backgroundTint="#90CEFA"
-            android:text="Generar Reporte por dia"
+            android:text="Generar Reporte general"
             android:textColor="#FFFFFF"
             android:textSize="24sp" />
 
@@ -80,7 +80,7 @@
             android:layout_height="75dp" />
 
         <Button
-            android:id="@+id/admin_menuEmpleado_listarEmpleado"
+            android:id="@+id/admin_reporte_reportePorMes"
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:background="@drawable/drawable_roundedbutton_general"

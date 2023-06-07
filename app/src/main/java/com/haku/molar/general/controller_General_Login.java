@@ -1,15 +1,21 @@
 package com.haku.molar.general;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
@@ -20,6 +26,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.haku.molar.R;
 import com.haku.molar.controller.admin.controller_admin_menuAdmin;
 import com.haku.molar.controller.assistant.controller_assistant_MenuAsistente;
@@ -47,6 +54,12 @@ public class controller_General_Login extends AppCompatActivity implements Callb
     Button forgetPassbtn, loginBtn;
     CheckBox checkBoxDatos;
     int Codefp = 0;
+    private final ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(), isAceptado ->{
+                if (isAceptado) Toast.makeText(this, "Permisos concedidos", Toast.LENGTH_SHORT).show();
+                else Toast.makeText(this, "Permisos denegados", Toast.LENGTH_SHORT).show();
+            }
+    );
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +108,18 @@ public class controller_General_Login extends AppCompatActivity implements Callb
                 return false;
             }
         });
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            }else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                Snackbar.make(new View(getApplicationContext()), "Este permiso es necesario para crear archivos", Snackbar.LENGTH_INDEFINITE).setAction("Ok", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        requestPermissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    }
+                });
+            }else{
+                requestPermissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            }
+
     }
     public void fpButton(View view){
         emailCV.setVisibility(View.VISIBLE);

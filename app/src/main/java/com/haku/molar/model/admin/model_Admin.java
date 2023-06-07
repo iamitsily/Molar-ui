@@ -15,6 +15,7 @@ import com.haku.molar.controller.admin.interfaces.Callback_admin_historialCitas;
 import com.haku.molar.controller.admin.interfaces.Callback_admin_listaEmpleados;
 import com.haku.molar.controller.admin.interfaces.Callback_admin_listaPacientes;
 import com.haku.molar.controller.admin.interfaces.Callback_admin_menuAdmin;
+import com.haku.molar.controller.admin.interfaces.Callback_admin_reporteGeneral;
 import com.haku.molar.model.assistant.model_Assistant;
 import com.haku.molar.model.cita.model_cita;
 import com.haku.molar.utils.MolarConfig;
@@ -36,6 +37,7 @@ public class model_Admin {
     private Callback_admin_historialCitas callback_admin_historialCitas;
     private Callback_admin_listaEmpleados callback_admin_listaEmpleados;
     private Callback_admin_listaPacientes callback_admin_listaPacientes;
+    private Callback_admin_reporteGeneral callback_admin_reporteGeneral;
     MolarConfig molarConfig = new MolarConfig();
 
     //controller_admin_menuAdmin
@@ -84,6 +86,12 @@ public class model_Admin {
     public model_Admin(Context context, Callback_admin_listaPacientes callback_admin_listaPacientes) {
         this.context = context;
         this.callback_admin_listaPacientes = callback_admin_listaPacientes;
+    }
+    //controller_admin_menuReportes
+
+    public model_Admin(Context context, Callback_admin_reporteGeneral callback_admin_reporteGeneral) {
+        this.context = context;
+        this.callback_admin_reporteGeneral = callback_admin_reporteGeneral;
     }
 
     //Funciones
@@ -457,6 +465,64 @@ public class model_Admin {
                 }
                 progressDialog.dismiss();
                 System.out.println("Error: "+error.getMessage());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+    //controller_admin_reporteGeneral
+    public void reporteGeneral(){
+        String url = molarConfig.getDomainAzure()+"/admin/service_reporteGeneral.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito = jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+                    if (jsonArray.length() == 0){
+                        callback_admin_menuAdmin.onErrorContrarMenu("");
+                    }else{
+                        if (exito.equals("1")){
+                            String[] datos = new String[8];
+                            JSONObject object = jsonArray.getJSONObject(0);
+                            datos[0] = object.getString("NumUsuario");
+                            JSONObject object1 = jsonArray.getJSONObject(1);
+                            datos[1] = object1.getString("NumMedico");
+                            JSONObject object2 = jsonArray.getJSONObject(2);
+                            datos[2] = object2.getString("NumAsistente");
+                            JSONObject object3 = jsonArray.getJSONObject(3);
+                            datos[3] = object3.getString("NumCitas");
+                            JSONObject object4 = jsonArray.getJSONObject(4);
+                            datos[4] = object4.getString("NumCitasAgendadas");
+                            JSONObject object5 = jsonArray.getJSONObject(5);
+                            datos[5] = object5.getString("NumCitasReagendadas");
+                            JSONObject object6 = jsonArray.getJSONObject(6);
+                            datos[6] = object6.getString("NumCitasCanceladas");
+                            JSONObject object7 = jsonArray.getJSONObject(7);
+                            datos[7] = object7.getString("NumCitasTerminadas");
+                            callback_admin_reporteGeneral.onSuccessReporte(datos);
+                        }else{
+                            callback_admin_reporteGeneral.onErrorReporte("No hay datos");
+                        }
+                    }
+                } catch (JSONException e) {
+                    System.out.println("model_Patient -> obtenerMedico -> JSONException: "+e);
+                    e.printStackTrace();
+                    callback_admin_reporteGeneral.onErrorReporte(e.getMessage());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                {
+                    System.out.println("model_general_usuario -> login -> onErrorResponse: "+error.getMessage());
+                    if (error==null){
+                        Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(context);
