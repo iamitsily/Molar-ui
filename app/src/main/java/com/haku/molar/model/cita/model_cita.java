@@ -37,7 +37,7 @@ import java.util.Map;
 
 public class model_cita {
     String id, dia, hora, motivo, estado, status, idUusario, idMedico, descripcion, motivoCancelar, motivoReagendar;
-    String idPos,idDoctor, nombreDoctor, apellidoDoctor, nombrePaciente, apellidoPaciente, emailPaciente;
+    String idPos,idDoctor, nombreDoctor, apellidoDoctor, nombrePaciente, apellidoPaciente, emailPaciente,sexoPaciente;
     Context context;
     Callback_patient_listarCitasActivas callback_patient_listarCitasActivas;
     Callback_patient_fechaHoraAgendarCita callback_patient_fechaHoraAgendarCita;
@@ -158,7 +158,7 @@ public class model_cita {
         this.callback_assistant_listarCitasPorCancelar = callback_assistant_listarCitasPorCancelar;
     }
     //controller_assistant_listarCitasPorCancelar -> model_cita -> listarCitasPorCancelar
-    public model_cita(String id, String dia, String hora, String motivo, String estado, String descripcion, String motivoCancelar, String nombrePaciente, String apellidoPaciente, String emailPaciente, String matriculaPaciente) {
+    public model_cita(String id, String dia, String hora, String motivo, String estado, String descripcion, String motivoCancelar, String nombrePaciente, String apellidoPaciente, String emailPaciente, String matriculaPaciente,String sexoPaciente) {
         this.id = id;
         this.dia = dia;
         this.hora = hora;
@@ -170,6 +170,7 @@ public class model_cita {
         this.apellidoPaciente = apellidoPaciente;
         this.emailPaciente = emailPaciente;
         this.idUusario = matriculaPaciente;
+        this.sexoPaciente = sexoPaciente;
     }
     //controller_assistant_listarCitasPorCancelar -> model_cita -> cancelarCita
     public model_cita(String id, String emailPaciente, Context context, Callback_assistant_listarCitasPorCancelar callback_assistant_listarCitasPorCancelar) {
@@ -504,7 +505,7 @@ public class model_cita {
                         ArrayList<model_cita> cita = new ArrayList<>();
                         for (int i = 0;i < jsonArray.length();i++){
                             JSONObject object = jsonArray.getJSONObject(i);
-                            cita.add(new model_cita(object.getString("id"),object.getString("dia"),object.getString("hora"),object.getString("motivo"),object.getString("estado"),object.getString("descripcion"),object.getString("motivoCancelar"), object.getString("nombre"), object.getString("apellidoPaterno"), object.getString("email"), object.getString("matricula")));
+                            cita.add(new model_cita(object.getString("id"),object.getString("dia"),object.getString("hora"),object.getString("motivo"),object.getString("estado"),object.getString("descripcion"),object.getString("motivoCancelar"), object.getString("nombre"), object.getString("apellidoPaterno"), object.getString("email"), object.getString("matricula"),""));
                         }
                         callback_assistant_listarCitasPorCancelar.onSuccessListar(cita);
                         progressDialog.dismiss();
@@ -867,7 +868,7 @@ public class model_cita {
                         ArrayList<model_cita> cita = new ArrayList<>();
                         for (int i = 0;i < jsonArray.length();i++){
                             JSONObject object = jsonArray.getJSONObject(i);
-                            cita.add(new model_cita(object.getString("id"),object.getString("dia"),object.getString("hora"),object.getString("motivo"),object.getString("estado"),object.getString("descripcion"),object.getString("motivoCancelar"), object.getString("nombre"), object.getString("apellidoPaterno"), object.getString("email"), object.getString("matricula")));
+                            cita.add(new model_cita(object.getString("id"),object.getString("dia"),object.getString("hora"),object.getString("motivo"),object.getString("estado"),object.getString("descripcion"),object.getString("motivoCancelar"), object.getString("nombre"), object.getString("apellidoPaterno"), object.getString("email"), object.getString("matricula"),""));
                         }
                         callback_assistant_listarCitas.onSuccessListar(cita);
                         progressDialog.dismiss();
@@ -1145,5 +1146,13 @@ public class model_cita {
 
     public void setEmailPaciente(String emailPaciente) {
         this.emailPaciente = emailPaciente;
+    }
+
+    public String getSexoPaciente() {
+        return sexoPaciente;
+    }
+
+    public void setSexoPaciente(String sexoPaciente) {
+        this.sexoPaciente = sexoPaciente;
     }
 }

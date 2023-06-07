@@ -38,9 +38,9 @@ public class controller_doctor_detalles_cita_paciente extends AppCompatActivity 
         ivBackBtn = findViewById(R.id.doctor_detallesCita_back);
         tvNombre = findViewById(R.id.doctor_detallesCita_detallesCitaNombre);
         tvMatricula = findViewById(R.id.doctor_detallesCita_statusCita);
-        tvFolio = findViewById(R.id.doctor_detallesCita_folio);
-        tvMedico = findViewById(R.id.doctor_detallesCita_medico);
-        tvMotivp = findViewById(R.id.doctor_detallesCita_motivo);
+        tvFolio = findViewById(R.id.admin_detallesCita_folio);
+        tvMedico = findViewById(R.id.admin_detallesCita_medico);
+        tvMotivp = findViewById(R.id.admin_detallesCita_motivo);
         tvHora = findViewById(R.id.doctor_detallesCita_horaCita);
         tvFecha = findViewById(R.id.doctor_detallesCita_fecha);
         ivPerfil = findViewById(R.id.doctor_detallesCita_fotoPerfil);

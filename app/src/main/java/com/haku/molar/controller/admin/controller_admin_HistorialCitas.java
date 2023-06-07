@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.haku.molar.R;
+import com.haku.molar.controller.admin.adapter.adaptador_admin_historialCita;
 import com.haku.molar.controller.admin.interfaces.Callback_admin_historialCitas;
 import com.haku.molar.controller.assistant.controller_assistant_menuCitas;
 import com.haku.molar.model.admin.model_Admin;
@@ -147,6 +148,33 @@ public class controller_admin_HistorialCitas extends AppCompatActivity implement
     public void onSuccessListar(ArrayList<model_cita> listaActivas) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvListaCitas.setLayoutManager(linearLayoutManager);
+        adaptador_admin_historialCita adaptador_admin_historialCita = new adaptador_admin_historialCita(listaActivas, this, new adaptador_admin_historialCita.ItemClickListenerHistorialCitas() {
+            @Override
+            public void OnItemClick(model_cita details) {
+                Intent intent4 = new Intent(getApplicationContext(), controller_admin_DetallesCitaPaciente.class);
+                intent4.putExtra("matriculaUser",matricula);
+                intent4.putExtra("nombreUser", nombre);
+                intent4.putExtra("rolUser", rol);
+                intent4.putExtra("sexoUser", sexo);
+
+                intent4.putExtra("id", details.getId());
+                intent4.putExtra("dia", details.getDia());
+                intent4.putExtra("hora", details.getHora());
+                intent4.putExtra("motivo", details.getMotivo());
+                intent4.putExtra("estado", details.getEstado());
+                intent4.putExtra("descripcion", details.getDescripcion());
+                intent4.putExtra("motivoCancelar", details.getMotivoCancelar());
+                intent4.putExtra("nombre", details.getNombrePaciente());
+                intent4.putExtra("apaterno", details.getApellidoPaciente());
+                intent4.putExtra("email", details.getEmailPaciente());
+                intent4.putExtra("matricula", details.getIdUusario());
+                intent4.putExtra("sexo", details.getSexoPaciente());
+                startActivity(intent4);
+                overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
+                finish();
+            }
+        });
+        rvListaCitas.setAdapter(adaptador_admin_historialCita);
     }
 
     @Override

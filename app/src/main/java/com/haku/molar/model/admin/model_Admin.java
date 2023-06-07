@@ -12,7 +12,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.haku.molar.controller.admin.interfaces.Callback_admin_historialCitas;
+import com.haku.molar.controller.admin.interfaces.Callback_admin_listaEmpleados;
+import com.haku.molar.controller.admin.interfaces.Callback_admin_listaPacientes;
 import com.haku.molar.controller.admin.interfaces.Callback_admin_menuAdmin;
+import com.haku.molar.model.assistant.model_Assistant;
 import com.haku.molar.model.cita.model_cita;
 import com.haku.molar.utils.MolarConfig;
 import com.haku.molar.utils.MolarMail;
@@ -31,6 +34,8 @@ public class model_Admin {
     Context context;
     private Callback_admin_menuAdmin callback_admin_menuAdmin;
     private Callback_admin_historialCitas callback_admin_historialCitas;
+    private Callback_admin_listaEmpleados callback_admin_listaEmpleados;
+    private Callback_admin_listaPacientes callback_admin_listaPacientes;
     MolarConfig molarConfig = new MolarConfig();
 
     //controller_admin_menuAdmin
@@ -58,6 +63,27 @@ public class model_Admin {
     public model_Admin(Context context, Callback_admin_historialCitas callback_admin_historialCitas) {
         this.context = context;
         this.callback_admin_historialCitas = callback_admin_historialCitas;
+    }
+    //controller_admin_listarEmpleados
+    public model_Admin(Context context, Callback_admin_listaEmpleados callback_admin_listaEmpleados) {
+        this.context = context;
+        this.callback_admin_listaEmpleados = callback_admin_listaEmpleados;
+    }
+    public model_Admin(String matricula, String nombre, String apellidoPaterno, String apellidoMaterno, String email, String telefono, String sexo, String rol) {
+        this.matricula = matricula;
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.email = email;
+        this.telefono = telefono;
+        this.rol = rol;
+        this.sexo = sexo;
+    }
+    //controller_admin_listarPacientes
+
+    public model_Admin(Context context, Callback_admin_listaPacientes callback_admin_listaPacientes) {
+        this.context = context;
+        this.callback_admin_listaPacientes = callback_admin_listaPacientes;
     }
 
     //Funciones
@@ -283,7 +309,7 @@ public class model_Admin {
         progressDialog.setMessage("Listando citas");
         progressDialog.show();
 
-        String url = molarConfig.getDomainAzure()+"/citas/service_listarCitasCancelarDirecto.php";
+        String url = molarConfig.getDomainAzure()+"/citas/service_listarCitasAdmin.php";
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -300,7 +326,7 @@ public class model_Admin {
                         ArrayList<model_cita> cita = new ArrayList<>();
                         for (int i = 0;i < jsonArray.length();i++){
                             JSONObject object = jsonArray.getJSONObject(i);
-                            cita.add(new model_cita(object.getString("id"),object.getString("dia"),object.getString("hora"),object.getString("motivo"),object.getString("estado"),object.getString("descripcion"),object.getString("motivoCancelar"), object.getString("nombre"), object.getString("apellidoPaterno"), object.getString("email"), object.getString("matricula")));
+                            cita.add(new model_cita(object.getString("id"),object.getString("dia"),object.getString("hora"),object.getString("motivo"),object.getString("estado"),object.getString("descripcion"),object.getString("motivoCancelar"), object.getString("nombre"), object.getString("apellidoPaterno"), object.getString("email"), object.getString("matricula"),object.getString("sexo")));
                         }
                         callback_admin_historialCitas.onSuccessListar(cita);
                         progressDialog.dismiss();
@@ -328,6 +354,200 @@ public class model_Admin {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
+    public void listarEmpleados(){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Listando pacientes");
+        progressDialog.show();
 
+        String url = molarConfig.getDomainAzure()+"/admin/service_listarEmpleados.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito =jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+                    if (jsonArray.length()==0){
+                        callback_admin_listaEmpleados.onErrorLista("No hay pacientes registrados");
+                        progressDialog.dismiss();
+                    }else if (exito.equals("1")){
+                        ArrayList<model_Admin> listaPacientes = new ArrayList<>();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            listaPacientes.add(new model_Admin(object.getString("matricula"),
+                                    object.getString("nombre"),
+                                    object.getString("apellidoPaterno"),
+                                    object.getString("apellidoMaterno"),
+                                    object.getString("email"),
+                                    object.getString("telefono"),
+                                    object.getString("sexo"),
+                                    object.getString("rol")));
+                        }
+                        callback_admin_listaEmpleados.onSuccessLista(listaPacientes);
+                        progressDialog.dismiss();
+                    }
+                }catch (JSONException e){
+                    System.out.println("model_assistant -> listaPacientes -> JSONException: "+e.getMessage());
+                    e.printStackTrace();
+                    progressDialog.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("model_assistant -> listaPacientes -> onErrorResponse: "+error.getMessage());
+                if (error==null){
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }
+                progressDialog.dismiss();
+                System.out.println("Error: "+error.getMessage());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+    public void listarPacientes(){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Listando pacientes");
+        progressDialog.show();
 
+        String url = molarConfig.getDomainAzure()+"/admin/service_listarPacientes.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito =jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+                    if (jsonArray.length()==0){
+                        callback_admin_listaPacientes.onErrorLista("No hay pacientes registrados");
+                        progressDialog.dismiss();
+                    }else if (exito.equals("1")){
+                        ArrayList<model_Admin> listaPacientes = new ArrayList<>();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            listaPacientes.add(new model_Admin(object.getString("matricula"),
+                                    object.getString("nombre"),
+                                    object.getString("apellidoPaterno"),
+                                    object.getString("apellidoMaterno"),
+                                    object.getString("email"),
+                                    object.getString("telefono"),
+                                    object.getString("sexo"),
+                                    object.getString("rol")));
+                        }
+                        callback_admin_listaPacientes.onSuccessLista(listaPacientes);
+                        progressDialog.dismiss();
+                    }
+                }catch (JSONException e){
+                    System.out.println("model_assistant -> listaPacientes -> JSONException: "+e.getMessage());
+                    e.printStackTrace();
+                    progressDialog.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("model_assistant -> listaPacientes -> onErrorResponse: "+error.getMessage());
+                if (error==null){
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }
+                progressDialog.dismiss();
+                System.out.println("Error: "+error.getMessage());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPasswordNoCrypt() {
+        return passwordNoCrypt;
+    }
+
+    public void setPasswordNoCrypt(String passwordNoCrypt) {
+        this.passwordNoCrypt = passwordNoCrypt;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
 }
