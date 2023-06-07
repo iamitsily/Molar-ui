@@ -123,7 +123,6 @@
         android:layout_width="45dp"
         android:layout_height="36dp"
         android:background="#03FFFFFF"
-        android:onClick="backBtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.043"

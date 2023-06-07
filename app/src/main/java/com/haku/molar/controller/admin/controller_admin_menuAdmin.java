@@ -129,7 +129,7 @@ public class controller_admin_menuAdmin extends AppCompatActivity implements Cal
         ibPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), controller_assistant_ajustesMenu.class);
+                Intent intent = new Intent(getApplicationContext(), controller_admin_asjtesMenu.class);
                 intent.putExtra("matricula",matricula);
                 intent.putExtra("nombre", nombre);
                 intent.putExtra("rol", rol);
