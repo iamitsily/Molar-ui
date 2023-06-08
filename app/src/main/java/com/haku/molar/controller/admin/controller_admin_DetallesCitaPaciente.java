@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +21,7 @@ import com.haku.molar.R;
 import com.haku.molar.controller.assistant.controller_assistant_MenuAsistente;
 import com.haku.molar.controller.assistant.controller_assistant_listarCitasPorCancelar;
 import com.haku.molar.controller.assistant.interfaces.Callback_assistant_listarCitasPorCancelar;
+import com.haku.molar.controller.doctor.controller_doctor_detalles_cita_paciente;
 import com.haku.molar.model.cita.model_cita;
 
 import java.util.ArrayList;
@@ -72,13 +75,20 @@ public class controller_admin_DetallesCitaPaciente extends AppCompatActivity imp
         btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final EditText input = new EditText(controller_admin_DetallesCitaPaciente.this);
+                input.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
                 AlertDialog.Builder builder = new AlertDialog.Builder(controller_admin_DetallesCitaPaciente.this);
                 builder.setTitle("¿Cancelar cita?");
-                builder.setMessage("Esta acción cancelara la cita actual.").setPositiveButton("Confirmar",new DialogInterface.OnClickListener(){
+                builder.setView(input);
+                builder.setMessage("Por favor escriba el motivo de cancelación.").setPositiveButton("Confirmar",new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        model_cita model_cita = new model_cita(id,email,controller_admin_DetallesCitaPaciente.this,controller_admin_DetallesCitaPaciente.this);
-                        model_cita.cancelarCita(id,"[Cita cancelada por Administrador]",dia,matricula);
+                        if (input.getText().toString().trim().equals("")){
+                            Toast.makeText(controller_admin_DetallesCitaPaciente.this, "Ingrese el motivo de cancelación", Toast.LENGTH_SHORT).show();
+                        }else{
+                            model_cita model_cita = new model_cita(id,email,controller_admin_DetallesCitaPaciente.this,controller_admin_DetallesCitaPaciente.this);
+                            model_cita.cancelarCita(id,"Cita cancelada por Administrador: ["+input.getText().toString().trim()+"]",dia,matricula);
+                        }
                     }
                 }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     @Override

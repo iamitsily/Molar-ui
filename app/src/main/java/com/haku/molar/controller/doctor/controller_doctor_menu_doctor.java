@@ -153,7 +153,6 @@ public class controller_doctor_menu_doctor extends AppCompatActivity implements 
         adaptadorrMenuDoctor adaptadorrMenuDoctor = new adaptadorrMenuDoctor(listaCitas, this, new adaptadorrMenuDoctor.ItemClickListener() {
             @Override
             public void OnItemClick(model_cita details) {
-                Toast.makeText(controller_doctor_menu_doctor.this, details.getId(), Toast.LENGTH_SHORT).show();
             }
         });
         rvLista.setAdapter(adaptadorrMenuDoctor);
@@ -161,6 +160,6 @@ public class controller_doctor_menu_doctor extends AppCompatActivity implements 
 
     @Override
     public void onErrorListar(String mensaje) {
-
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
 }

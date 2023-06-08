@@ -250,15 +250,15 @@ public class controller_assistant_ajustesMenuDatos extends AppCompatActivity imp
         boolean error = false;
 
         if (passwordActual.equals("") || passNueva.equals("") || passwordConfirmar.equals("") || telefonno.equals("") || email.equals("")) {
-            Toast.makeText(this, "Rellena todos los campos ", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Rellena todos los campos ", Toast.LENGTH_SHORT).show();
             error = true;
         }
         if (!pass.equals(passwordActual)) {
-            Toast.makeText(this, "Contraseña actual no coincide", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Contraseña actual no coincide", Toast.LENGTH_SHORT).show();
             error = true;
         }
         if (!passNueva.equals(passwordConfirmar)) {
-            Toast.makeText(this, "Coontraseñas no coindiden", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Coontraseñas no coindiden", Toast.LENGTH_SHORT).show();
             error = true;
         }
         if (!validarEmail(email)) {
@@ -310,6 +310,7 @@ public class controller_assistant_ajustesMenuDatos extends AppCompatActivity imp
             if(!validarDatos(MolarCrypt.decrypt(datos[2]))){
                 actualizarUsuario();
             }else{
+                Toast.makeText(this, "No es posible realizar las modificaciones, se incumplen criterios", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
         } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {

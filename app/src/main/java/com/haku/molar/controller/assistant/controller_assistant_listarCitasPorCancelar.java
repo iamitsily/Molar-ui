@@ -8,8 +8,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Pair;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -119,15 +121,38 @@ public class controller_assistant_listarCitasPorCancelar extends AppCompatActivi
                         model_cita model_cita = new model_cita(details.getId(),details.getEmailPaciente(),controller_assistant_listarCitasPorCancelar.this,controller_assistant_listarCitasPorCancelar.this);
                         model_cita.cancelarCita(details.getId(),details.getMotivo(),details.getDia(),details.getIdUusario());
                     }
-                }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                }).setNegativeButton("Rechazar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        rechazarCancelacion(details.getId(),details.getEmailPaciente(),details.getDia(),details.getMotivo());
                     }
-                }).setCancelable(false).show();
+                }).setCancelable(true).show();
             }
         });
         RvListCitas.setAdapter(adaptadorRecyclerCitasActivas);
+    }
+    public void rechazarCancelacion(String idCita, String email, String dia,String motivoCita){
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Ingrese un motivo");
+        builder.setView(input);
+
+        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String textoIngresado = input.getText().toString();
+                model_cita model_cita = new model_cita(idCita,email,controller_assistant_listarCitasPorCancelar.this,controller_assistant_listarCitasPorCancelar.this);
+                model_cita.rechazarCancelacion(textoIngresado, dia, motivoCita);
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
     }
     @Override
     public void onErrorListar(String mensaje) {

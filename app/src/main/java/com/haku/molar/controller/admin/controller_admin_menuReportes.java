@@ -383,12 +383,20 @@ public class controller_admin_menuReportes extends AppCompatActivity implements 
             startActivity(intent);
 
         }catch (FileNotFoundException e){
+            progressDialog.dismiss();
+            Toast.makeText(this, "Ocurrio un error inesperado, intente de nuevo", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }catch (DocumentException e){
+            progressDialog.dismiss();
+            Toast.makeText(this, "Ocurrio un error inesperado, intente de nuevo", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         } catch (MalformedURLException e) {
+            progressDialog.dismiss();
+            Toast.makeText(this, "Ocurrio un error inesperado, intente de nuevo", Toast.LENGTH_SHORT).show();
             throw new RuntimeException(e);
         } catch (IOException e) {
+            progressDialog.dismiss();
+            Toast.makeText(this, "Ocurrio un error inesperado, intente de nuevo", Toast.LENGTH_SHORT).show();
             throw new RuntimeException(e);
         }
     }

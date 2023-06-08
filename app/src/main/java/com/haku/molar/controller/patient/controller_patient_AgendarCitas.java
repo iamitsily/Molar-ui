@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.haku.molar.R;
 
@@ -58,15 +59,19 @@ public class controller_patient_AgendarCitas extends AppCompatActivity {
         backMenubtn();
     }
     public void fechaHorabtn(View view){
-        Intent intentFechaHora = new Intent(getApplicationContext(), controller_patient_FechaHoraAgendarCita.class);
-        intentFechaHora.putExtra("matricula",matricula);
-        intentFechaHora.putExtra("nombre", nombre);
-        intentFechaHora.putExtra("rol", rol);
-        intentFechaHora.putExtra("sexo", sexo);
-        intentFechaHora.putExtra("motivo", spinner.getSelectedItem().toString());
-        intentFechaHora.putExtra("descripcion", descripcion.getText().toString().trim());
-        startActivity(intentFechaHora);
-        finish();
+        if (descripcion.getText().toString().trim().length()<20 || !descripcion.getText().toString().trim().matches("^[a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\\s.,]*$")){
+            Toast.makeText(this, "Datos invalidos, ingresa tu motivo, por favor revisar los datos ingresados, Mayor a 20 caracteres", Toast.LENGTH_SHORT).show();
+        }else{
+            Intent intentFechaHora = new Intent(getApplicationContext(), controller_patient_FechaHoraAgendarCita.class);
+            intentFechaHora.putExtra("matricula",matricula);
+            intentFechaHora.putExtra("nombre", nombre);
+            intentFechaHora.putExtra("rol", rol);
+            intentFechaHora.putExtra("sexo", sexo);
+            intentFechaHora.putExtra("motivo", spinner.getSelectedItem().toString());
+            intentFechaHora.putExtra("descripcion", descripcion.getText().toString().trim());
+            startActivity(intentFechaHora);
+            finish();
+        }
     }
     public void backMenubtn(){
         Intent intent = new Intent(this, controller_patient_OpcionesCitas.class);

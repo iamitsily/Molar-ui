@@ -147,6 +147,6 @@ public class controller_doctor_citasDePaciente extends AppCompatActivity impleme
 
     @Override
     public void onErrorhoraHistorial(String mensaje) {
-
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
 }
