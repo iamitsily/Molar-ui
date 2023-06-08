@@ -58,7 +58,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class controller_admin_menuReportes extends AppCompatActivity implements Callback_admin_reporteGeneral {
-    String matricula, nombre, rol, sexo, totalPacientes, totalMedicos="", totalSecretarios="", totalCitas="40", totalCitasAgendadas="20", totalCitasReagendadas="10", totalCitasCanceladas="5", totalCitasTerminadas="5";
+    String matricula, nombre, rol, sexo, totalPacientes, totalMedicos="", totalSecretarios="", totalCitas="1", totalCitasAgendadas="1", totalCitasReagendadas="1", totalCitasCanceladas="1", totalCitasTerminadas="1";
     String año="",mes="", mesString="";
     Button btnReporteGeneral, btnReporteMes;
     BottomNavigationView menuNav;
