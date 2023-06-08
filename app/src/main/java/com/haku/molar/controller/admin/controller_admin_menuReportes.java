@@ -58,7 +58,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class controller_admin_menuReportes extends AppCompatActivity implements Callback_admin_reporteGeneral {
-    String matricula, nombre, rol, sexo, totalPacientes, totalMedicos="", totalSecretarios="", totalCitas="1", totalCitasAgendadas="1", totalCitasReagendadas="1", totalCitasCanceladas="1", totalCitasTerminadas="1";
+    String matricula, nombre, rol, sexo, totalPacientes="1", totalMedicos="1", totalSecretarios="1", totalCitas="1", totalCitasAgendadas="1", totalCitasReagendadas="1", totalCitasCanceladas="1", totalCitasTerminadas="1";
     String año="",mes="", mesString="";
     Button btnReporteGeneral, btnReporteMes;
     BottomNavigationView menuNav;
@@ -321,31 +321,53 @@ public class controller_admin_menuReportes extends AppCompatActivity implements 
             cuerpoProPro.setAlignment(Element.ALIGN_LEFT);
             document.add(cuerpoProPro);
 
-            PdfPTable table = new PdfPTable(5);
-            table.addCell("Total Citas");
-            table.addCell("Agendadas");
-            table.addCell("Reagendadas");
-            table.addCell("Canceladas");
-            table.addCell("Terminadas");
+            if (totalCitas.equals("0")){
+                PdfPTable table = new PdfPTable(5);
+                table.addCell("Total Citas");
+                table.addCell("Agendadas");
+                table.addCell("Reagendadas");
+                table.addCell("Canceladas");
+                table.addCell("Terminadas");
 
-            table.addCell(totalCitas);
-            table.addCell(totalCitasAgendadas);
-            table.addCell(totalCitasReagendadas);
-            table.addCell(totalCitasCanceladas);
-            table.addCell(totalCitasTerminadas);
-            document.add(table);
+                table.addCell("0");
+                table.addCell("0");
+                table.addCell("0");
+                table.addCell("0");
+                table.addCell("0");
+                document.add(table);
+            }else{
+                PdfPTable table = new PdfPTable(5);
+                table.addCell("Total Citas");
+                table.addCell("Agendadas");
+                table.addCell("Reagendadas");
+                table.addCell("Canceladas");
+                table.addCell("Terminadas");
 
+                table.addCell(totalCitas);
+                table.addCell(totalCitasAgendadas);
+                table.addCell(totalCitasReagendadas);
+                table.addCell(totalCitasCanceladas);
+                table.addCell(totalCitasTerminadas);
+                document.add(table);
+            }
             Paragraph estadisticasGenrales = new Paragraph("\nEstadisticas Generales\n\n", FontFactory.getFont("arial",20, Font.BOLD, BaseColor.BLACK));
             estadisticasGenrales.setAlignment(Element.ALIGN_LEFT);
             document.add(estadisticasGenrales);
-
-            Paragraph estadisticas = new Paragraph("Porcentaje de asistencia: "+(Integer.parseInt(totalCitasTerminadas)*100)/Integer.parseInt(totalCitas)+"%"+
-                    "\nPorcentaje de reagendar: "+(Integer.parseInt(totalCitasReagendadas)*100)/Integer.parseInt(totalCitas)+"%"+
-                    "\nPorcentaje de cancelación: "+(Integer.parseInt(totalCitasCanceladas)*100)/Integer.parseInt(totalCitas)+"%"+
-                    "\nPorcentaje de agendadas: "+(Integer.parseInt(totalCitasAgendadas)*100)/Integer.parseInt(totalCitas)+"%"+"\n\n", FontFactory.getFont("arial",16, Font.BOLD, BaseColor.BLACK));
-            estadisticas.setAlignment(Element.ALIGN_LEFT);
-            document.add(estadisticas);
-
+            if (totalCitas.equals("0")){
+                Paragraph estadisticas = new Paragraph("Porcentaje de asistencia: 0%"+
+                        "\nPorcentaje de reagendar: 0%"+
+                        "\nPorcentaje de cancelación: 0%"+
+                        "\nPorcentaje de agendadas: 0%"+"\n\n", FontFactory.getFont("arial",16, Font.BOLD, BaseColor.BLACK));
+                estadisticas.setAlignment(Element.ALIGN_LEFT);
+                document.add(estadisticas);
+            }else{
+                Paragraph estadisticas = new Paragraph("Porcentaje de asistencia: "+(Integer.parseInt(totalCitasTerminadas)*100)/Integer.parseInt(totalCitas)+"%"+
+                        "\nPorcentaje de reagendar: "+(Integer.parseInt(totalCitasReagendadas)*100)/Integer.parseInt(totalCitas)+"%"+
+                        "\nPorcentaje de cancelación: "+(Integer.parseInt(totalCitasCanceladas)*100)/Integer.parseInt(totalCitas)+"%"+
+                        "\nPorcentaje de agendadas: "+(Integer.parseInt(totalCitasAgendadas)*100)/Integer.parseInt(totalCitas)+"%"+"\n\n", FontFactory.getFont("arial",16, Font.BOLD, BaseColor.BLACK));
+                estadisticas.setAlignment(Element.ALIGN_LEFT);
+                document.add(estadisticas);
+            }
             Paragraph finalString = new Paragraph("Con amor Molar <3 | molar.haku@gmail.com", FontFactory.getFont("arial",10, Font.BOLD, BaseColor.BLACK));
             finalString.setAlignment(Element.ALIGN_CENTER);
 
