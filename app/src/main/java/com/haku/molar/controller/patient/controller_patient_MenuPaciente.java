@@ -75,6 +75,7 @@ public class controller_patient_MenuPaciente extends AppCompatActivity implement
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
                     break;
+                    /*
                 case R.id.menu_patient_notificacion:
                     Intent intentNotificacion = new Intent(this, controller_patient_NotificacionesPaciente.class);
                     intentNotificacion.putExtra("matricula", matricula);
@@ -85,6 +86,8 @@ public class controller_patient_MenuPaciente extends AppCompatActivity implement
                     overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
                     finish();
                     break;
+
+                     */
             }
             return false;
         });

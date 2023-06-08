@@ -34,7 +34,7 @@ public class controller_doctor_notificaciones extends AppCompatActivity implemen
         sexo = intent.getStringExtra("sexo");
 
         menuNav = findViewById(R.id.menu_patient_menu);
-        menuNav.setSelectedItemId(R.id.menu_doctor_notificaciones);
+       // menuNav.setSelectedItemId(R.id.menu_doctor_notificaciones);
 
         model_General_Notificaciones model_General_Notificaciones = new model_General_Notificaciones(matricula,this, this);
         model_General_Notificaciones.listarNotificaciones();

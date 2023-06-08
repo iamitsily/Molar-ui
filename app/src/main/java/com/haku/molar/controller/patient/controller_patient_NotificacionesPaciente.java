@@ -36,7 +36,7 @@ public class controller_patient_NotificacionesPaciente extends AppCompatActivity
         rol = intent.getStringExtra("rol");
         sexo = intent.getStringExtra("sexo");
         menuNav = findViewById(R.id.menu_patient_menu);
-        menuNav.setSelectedItemId(R.id.menu_patient_notificacion);
+        //menuNav.setSelectedItemId(R.id.menu_patient_notificacion);
         RV_notis = findViewById(R.id.RV_Notis);
 
         model_General_Notificaciones model_General_Notificaciones = new model_General_Notificaciones(matricula,this, this);
