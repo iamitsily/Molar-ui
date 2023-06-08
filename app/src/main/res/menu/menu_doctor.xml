@@ -12,9 +12,9 @@
         android:id="@+id/menu_doctor_historial"
         android:icon="@drawable/vectorasset_menu_patient_historial"
         android:title="Historial"/>
-    <item
+    <!-- <item
         android:id="@+id/menu_doctor_notificaciones"
         android:icon="@drawable/vectorasset_menu_patient_notificacion"
             android:title="Notificación"/>
-
+    -->
 </menu>

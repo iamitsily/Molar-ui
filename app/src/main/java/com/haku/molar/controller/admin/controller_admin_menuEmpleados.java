@@ -29,8 +29,8 @@ public class controller_admin_menuEmpleados extends AppCompatActivity {
 
         menuNav = findViewById(R.id.menu_admin_menu);
         menuNav.setSelectedItemId(R.id.menu_admin_empleados);
-        btnregistrarEmpleado = findViewById(R.id.admin_menuEmpleado_registrarEmpleado);
-        btnListarEmpleado = findViewById(R.id.admin_menuEmpleado_listarEmpleado);
+        btnregistrarEmpleado = findViewById(R.id.admin_reporte_reporteGeneral);
+        btnListarEmpleado = findViewById(R.id.admin_reporte_reportePorMes);
 
         btnregistrarEmpleado.setOnClickListener(new View.OnClickListener() {
             @Override
