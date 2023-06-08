@@ -50,8 +50,8 @@ public class controller_patient_CancelarCitaMotivo extends AppCompatActivity imp
         finish();
     }
     public void cancelarCita(View view){
-        if (edtMotivo.getText().toString().trim().equals("")){
-            Toast.makeText(this, "Por favor escriba el motivo de cancelación", Toast.LENGTH_SHORT).show();
+        if (edtMotivo.getText().toString().trim().equals("") || edtMotivo.getText().toString().trim().length()<20|| !edtMotivo.getText().toString().trim().matches("^[a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\\s.,]*$")){
+            Toast.makeText(this, "Datos invalidos, ingresa tu motivo, por favor revisar los datos ingresados, Mayor a 20 caracteres", Toast.LENGTH_SHORT).show();
         }else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("¿Cancelar cita?");

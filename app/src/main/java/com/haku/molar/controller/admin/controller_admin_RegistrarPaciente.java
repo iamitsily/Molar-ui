@@ -164,35 +164,35 @@ public class controller_admin_RegistrarPaciente extends AppCompatActivity {
         boolean error = false;
 
         //Revisar el plan de pruebas integrales
-        if(nombre.equals("") || !nombre.matches("^[a-zA-Z]*$")){
+        if(nombre.equals("") || !nombre.matches("^[a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\\s]*$")){
             error = true;
             etNombre.setText("");
             etNombre.setHint("Revisar nombre "+nombre);
             etNombre.setHintTextColor(Color.RED);
         }
-        if(apaterno.equals("") || !apaterno.matches("^[a-zA-Z]*$")){
+        if(apaterno.equals("") || !apaterno.matches("^[a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\\s]*$")){
             error = true;
             etAPaterno.setText("");
-            etAPaterno.setHint("Revisar apaterno "+apaterno);
+            etAPaterno.setHint("Revisar Apaterno "+apaterno);
             etAPaterno.setHintTextColor(Color.RED);
         }
-        if(amaterno.equals("") || !amaterno.matches("^[a-zA-Z]*$")){
+        if(amaterno.equals("") || !amaterno.matches("^[a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\\s]*$")){
             error = true;
             etAMaterno.setText("");
-            etAMaterno.setHint("Revisar amaterno "+amaterno);
+            etAMaterno.setHint("Revisar Amaterno "+amaterno);
             etAMaterno.setHintTextColor(Color.RED);
         }
         if(nombre.length() < 3){
             error = true;
-            Toast.makeText(this, "Nombre mayor o igual a 2 caracteres", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Nombre mayor o igual a 2 caracteres", Toast.LENGTH_SHORT).show();
         }
         if(apaterno.length() < 4){
             error = true;
-            Toast.makeText(this, "Apaterno mayor o igual a 3 caracteres", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Apaterno mayor o igual a 3 caracteres", Toast.LENGTH_SHORT).show();
         }
         if(amaterno.length() < 4) {
             error = true;
-            Toast.makeText(this, "Amaterno mayor o igual a 3 caracteres", Toast.LENGTH_SHORT).show();
+           //Toast.makeText(this, "Amaterno mayor o igual a 3 caracteres", Toast.LENGTH_SHORT).show();
         }
         if (!validarEmail(correo)) {
             error = true;
@@ -217,17 +217,20 @@ public class controller_admin_RegistrarPaciente extends AppCompatActivity {
         }
         if (contraseña.equals("")){
             error = true;
-            Toast.makeText(this, "Llene el campo contraseña", Toast.LENGTH_SHORT).show();
+            etContraseña.setHintTextColor(Color.RED);
+            //Toast.makeText(this, "Llene el campo contraseña", Toast.LENGTH_SHORT).show();
         }
         if (confirmarContraseña.equals("")){
-            Toast.makeText(this, "Llene el campo confirmar contraseña", Toast.LENGTH_SHORT).show();
+            error = true;
+            etConfirmarContraseña.setHintTextColor(Color.RED);
+            //Toast.makeText(this, "Llene el campo confirmar contraseña", Toast.LENGTH_SHORT).show();
         }
         if (!contraseña.equals(confirmarContraseña)){
             error=true;
             Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
         }
         if(error == true){
-            Toast.makeText(this, "Revisar registro", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Los datos ingresados no son validos, por favor revisar", Toast.LENGTH_SHORT).show();
         }
         System.out.println(error);
         return error;
@@ -245,13 +248,27 @@ public class controller_admin_RegistrarPaciente extends AppCompatActivity {
     }
     public void limpiarDatos(){
         etNombre.setText("");
+        etNombre.setHint("Nombre");
+        etNombre.setHintTextColor(Color.parseColor("#A9A9A9"));
         etAPaterno.setText("");
+        etAPaterno.setHint("Apellido paterno");
+        etAPaterno.setHintTextColor(Color.parseColor("#A9A9A9"));
         etAMaterno.setText("");
+        etAMaterno.setHint("Aplelido materno");
+        etAMaterno.setHintTextColor(Color.parseColor("#A9A9A9"));
         etCorreo.setText("");
+        etCorreo.setHint("Correo electrónico");
+        etCorreo.setHintTextColor(Color.parseColor("#A9A9A9"));
         etNumero.setText("");
+        etNumero.setHint("+52");
+        etNumero.setHintTextColor(Color.parseColor("#A9A9A9"));
         rbtnHombre.setChecked(false);
         rbtnMujer.setChecked(false);
         etContraseña.setText("");
+        etContraseña.setHint("Contraseña");
+        etContraseña.setHintTextColor(Color.parseColor("#A9A9A9"));
         etConfirmarContraseña.setText("");
+        etConfirmarContraseña.setHint("Contraseña");
+        etConfirmarContraseña.setHintTextColor(Color.parseColor("#A9A9A9"));
     }
 }

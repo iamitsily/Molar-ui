@@ -76,10 +76,10 @@
                 android:background="@drawable/drawable_view_admin_y_patient_fondo"
                 android:ems="10"
                 android:fontFamily="sans-serif"
-                android:hint=" Apellido materno"
+                android:hint=" Apellido paterno"
                 android:inputType="textPersonName"
-                android:paddingLeft="10dp"
-                android:maxLength="15"/>
+                android:maxLength="15"
+                android:paddingLeft="10dp" />
 
             <EditText
                 android:id="@+id/admin_registroEmpleado_amaterno"
@@ -88,10 +88,10 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/drawable_view_admin_y_patient_fondo"
                 android:ems="10"
-                android:hint="Apellido paterno"
+                android:hint="Apellido materno"
                 android:inputType="textPersonName"
-                android:paddingLeft="10dp"
-                android:maxLength="15"/>
+                android:maxLength="15"
+                android:paddingLeft="10dp" />
 
             <EditText
                 android:id="@+id/admin_registroEmpleado_email"

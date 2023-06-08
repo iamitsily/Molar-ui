@@ -342,7 +342,7 @@ public class model_Admin {
 
                     if(jsonArray.length() == 0){
                         System.out.println("model_cita -> historial -> datos vacío");
-                        callback_admin_historialCitas.onErrorListar("No hay solicitudes de cancelación");
+                        callback_admin_historialCitas.onErrorListar("No hay citas");
                         progressDialog.dismiss();
                     } else if(exito.equals("1")){
                         ArrayList<model_cita> cita = new ArrayList<>();

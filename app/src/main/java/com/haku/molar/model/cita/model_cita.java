@@ -550,7 +550,7 @@ public class model_cita {
                     callback_patient_cancelarCitas.onSuccessReagendarCita();
                 } else {
                     progressDialog.dismiss();
-                    callback_patient_cancelarCitas.onErrorReagendarCita("No se pudo cancelar");
+                    callback_patient_cancelarCitas.onErrorReagendarCita("Ocurrio un error, intente de nuevo la cancelación");
                 }
             }
         }, new Response.ErrorListener() {
@@ -619,6 +619,53 @@ public class model_cita {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
+    public void rechazarCancelacion(String motivoString,String diaString, String motivoCita){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Cancelando cita");
+        progressDialog.show();
+        String url = molarConfig.getDomainAzure()+"/citas/service_rechazarCancelacion.php";
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.equalsIgnoreCase("Modificacion exitosa")) {
+                    boolean isConnectedToWifi = Network.isConnectedToWifi(context);
+                    boolean isConnectedToMobileData = Network.isConnectedToMobileData(context);
+                    if (isConnectedToWifi){
+                        MolarMail molarMail = new MolarMail(emailPaciente,context);
+                        molarMail.mailRechazarCancelacion(id,motivoString, diaString,motivoCita);
+                    }else if (isConnectedToMobileData){
+                        MolarMail molarMail = new MolarMail(emailPaciente,context);
+                        molarMail.mailRechazarCancelacionRedMovil(id,motivoString, diaString,motivoCita);
+                    }else{
+                        Toast.makeText(context, "No es posible enviar email, no hay conexión", Toast.LENGTH_SHORT).show();
+                    }
+                    progressDialog.dismiss();
+                    callback_assistant_listarCitasPorCancelar.onSuccessCancelar();
+                } else {
+                    progressDialog.dismiss();
+                    callback_assistant_listarCitasPorCancelar.onErrorCancelar("No se pudo cancelar la cita");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println("Error: "+error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id",id);
+                params.put("estado","1");
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+
     public void cancelarCitaDoctor(String idCitaString, String motivoString,String diaString, String matriculaString){
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Cancelando cita");

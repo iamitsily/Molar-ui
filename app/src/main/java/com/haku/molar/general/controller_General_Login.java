@@ -105,6 +105,10 @@ public class controller_General_Login extends AppCompatActivity implements Callb
                 loginBtn.setVisibility(View.VISIBLE);
                 checkBoxDatos.setVisibility(View.VISIBLE);
                 password.setVisibility(View.VISIBLE);
+                edtCodefp.setText("");
+                edtEmailfp.setText("");
+                edtPassfp.setText("");
+                edtPassConfirmedfp.setText("");
                 return false;
             }
         });
@@ -180,49 +184,57 @@ public class controller_General_Login extends AppCompatActivity implements Callb
         loginBtn.setVisibility(View.VISIBLE);
         checkBoxDatos.setVisibility(View.VISIBLE);
         password.setVisibility(View.VISIBLE);
+        edtCodefp.setText("");
+        edtEmailfp.setText("");
+        edtPassfp.setText("");
+        edtPassConfirmedfp.setText("");
     }
     public void Login(View view){
-        int matriculaInt = Integer.parseInt(matricula.getText().toString().trim());
-        passwordString = password.getText().toString().trim();
-        if ((matriculaInt==1001) && (passwordString.equals("admin"))){
-            if (checkBoxDatos.isChecked()){
-                SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = loginDatos.edit();
-                editor.putString("matricula","1001");
-                editor.putString("password","admin");
-                editor.putString("checkbox","1");
-                editor.apply();
-            }else{
-                SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = loginDatos.edit();
-                editor.putString("matricula","");
-                editor.putString("password","");
-                editor.putString("checkbox","0");
-                editor.apply();
-            }
-            startActivity(new Intent(getApplicationContext(), controller_patient_MenuPaciente.class));
-            finish();
-        }if((matriculaInt==2002) && (passwordString.equals("asistant"))) {
-            if (checkBoxDatos.isChecked()){
-                SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = loginDatos.edit();
-                editor.putString("matricula","2002");
-                editor.putString("password","asistant");
-                editor.putString("checkbox","1");
-                editor.apply();
-            }else{
-                SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = loginDatos.edit();
-                editor.putString("matricula","");
-                editor.putString("password","");
-                editor.putString("checkbox","0");
-                editor.apply();
-            }
-            startActivity(new Intent(getApplicationContext(), controller_assistant_MenuAsistente.class));
-            finish();
+        if (password.getText().toString().trim().equals("") || matricula.getText().toString().trim().equals("")){
+            Toast.makeText(this, "Por favor llena todos los campos", Toast.LENGTH_SHORT).show();
         }else{
-            model_General_Usuario model_general_usuario = new model_General_Usuario(matriculaInt, passwordString,this,this);
-            model_general_usuario.login();
+            int matriculaInt = Integer.parseInt(matricula.getText().toString().trim());
+            passwordString = password.getText().toString().trim();
+            if ((matriculaInt==1001) && (passwordString.equals("admin"))){
+                if (checkBoxDatos.isChecked()){
+                    SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = loginDatos.edit();
+                    editor.putString("matricula","1001");
+                    editor.putString("password","admin");
+                    editor.putString("checkbox","1");
+                    editor.apply();
+                }else{
+                    SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = loginDatos.edit();
+                    editor.putString("matricula","");
+                    editor.putString("password","");
+                    editor.putString("checkbox","0");
+                    editor.apply();
+                }
+                startActivity(new Intent(getApplicationContext(), controller_patient_MenuPaciente.class));
+                finish();
+            }if((matriculaInt==2002) && (passwordString.equals("asistant"))) {
+                if (checkBoxDatos.isChecked()){
+                    SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = loginDatos.edit();
+                    editor.putString("matricula","2002");
+                    editor.putString("password","asistant");
+                    editor.putString("checkbox","1");
+                    editor.apply();
+                }else{
+                    SharedPreferences loginDatos=getSharedPreferences("loginDatos", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = loginDatos.edit();
+                    editor.putString("matricula","");
+                    editor.putString("password","");
+                    editor.putString("checkbox","0");
+                    editor.apply();
+                }
+                startActivity(new Intent(getApplicationContext(), controller_assistant_MenuAsistente.class));
+                finish();
+            }else{
+                model_General_Usuario model_general_usuario = new model_General_Usuario(matriculaInt, passwordString,this,this);
+                model_general_usuario.login();
+            }
         }
     }
     @Override

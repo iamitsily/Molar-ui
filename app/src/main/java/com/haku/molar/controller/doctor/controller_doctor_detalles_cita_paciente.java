@@ -6,9 +6,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,13 +70,20 @@ public class controller_doctor_detalles_cita_paciente extends AppCompatActivity 
         cancelarCitabtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final EditText input = new EditText(controller_doctor_detalles_cita_paciente.this);
+                input.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
                 AlertDialog.Builder builder = new AlertDialog.Builder(controller_doctor_detalles_cita_paciente.this);
                 builder.setTitle("¿Cancelar cita?");
-                builder.setMessage("Esta acción cancelara la cita actual.").setPositiveButton("Confirmar",new DialogInterface.OnClickListener(){
+                builder.setView(input);
+                builder.setMessage("Por favor escriba el motivo de cancelación").setPositiveButton("Confirmar",new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        model_cita model_cita = new model_cita(idCita,email,controller_doctor_detalles_cita_paciente.this,controller_doctor_detalles_cita_paciente.this);
-                        model_cita.cancelarCitaDoctor(idCita,"[Cita cancelada por Doctor]",dia,matricula);
+                        if (input.getText().toString().trim().equals("")){
+                            Toast.makeText(controller_doctor_detalles_cita_paciente.this, "Ingrese el motivo de cancelación", Toast.LENGTH_SHORT).show();
+                        }else{
+                            model_cita model_cita = new model_cita(idCita,email,controller_doctor_detalles_cita_paciente.this,controller_doctor_detalles_cita_paciente.this);
+                            model_cita.cancelarCitaDoctor(idCita,"Cancelado por Doctor: ["+input.getText().toString().trim()+"]",dia,matricula);
+                        }
                     }
                 }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     @Override
@@ -145,7 +154,6 @@ public class controller_doctor_detalles_cita_paciente extends AppCompatActivity 
             ivPerfil.setScaleType(opcionSexo.second);
             ivPerfil.setImageResource(opcionSexo.first);
         }
-
     }
     @Override
     public void onErrorDetallesCita(String mensaje) {
