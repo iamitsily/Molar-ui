@@ -17,6 +17,7 @@ import com.haku.molar.controller.admin.interfaces.Callback_admin_historialCitas;
 import com.haku.molar.controller.admin.interfaces.Callback_admin_listaEmpleados;
 import com.haku.molar.controller.admin.interfaces.Callback_admin_listaPacientes;
 import com.haku.molar.controller.admin.interfaces.Callback_admin_menuAdmin;
+import com.haku.molar.controller.admin.interfaces.Callback_admin_registrarEmpleados;
 import com.haku.molar.controller.admin.interfaces.Callback_admin_reporteGeneral;
 import com.haku.molar.model.assistant.model_Assistant;
 import com.haku.molar.model.cita.model_cita;
@@ -41,6 +42,7 @@ public class model_Admin {
     private Callback_admin_listaEmpleados callback_admin_listaEmpleados;
     private Callback_admin_listaPacientes callback_admin_listaPacientes;
     private Callback_admin_reporteGeneral callback_admin_reporteGeneral;
+    private Callback_admin_registrarEmpleados callback_admin_registrarEmpleados;
     MolarConfig molarConfig = new MolarConfig();
 
     //controller_admin_menuAdmin
@@ -107,6 +109,12 @@ public class model_Admin {
         this.reporteIdMedico = reporteIdMedico;
         this.context = context;
     }
+    //controller_admin_registrarEmpleados
+
+    public model_Admin(Context context, Callback_admin_registrarEmpleados callback_admin_registrarEmpleados) {
+        this.context = context;
+        this.callback_admin_registrarEmpleados = callback_admin_registrarEmpleados;
+    }
 
     //Funciones
     //controller_admin_menuAdmin
@@ -157,172 +165,6 @@ public class model_Admin {
                 }
             }
         });
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        requestQueue.add(request);
-    }
-    public void registrarAsistente(){
-        ProgressDialog progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Registrando");
-        progressDialog.show();
-        String url = molarConfig.getDomainAzure()+"/patient/service_registrarPaciente.php";
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if (response.equalsIgnoreCase("Registro exitoso")) {
-                    Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show();
-                    boolean isConnectedToWifi = Network.isConnectedToWifi(context);
-                    boolean isConnectedToMobileData = Network.isConnectedToMobileData(context);
-                    if (isConnectedToWifi) {
-                        MolarMail molarMail = new MolarMail(email,passwordNoCrypt,String.valueOf(matricula),nombre,context);
-                        molarMail.sendMailRegistro();
-                        progressDialog.dismiss();
-                    } else if (isConnectedToMobileData) {
-                        MolarMail molarMail = new MolarMail(email,passwordNoCrypt,String.valueOf(matricula),nombre,context);
-                        molarMail.sendMailRegistroRedMovil();
-                        progressDialog.dismiss();
-                    } else {
-                        Toast.makeText(context, "No es posible enviar email, no hay conexión", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(context, "No se puede registrar", Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
-                System.out.println("Error: "+error.getMessage());
-            }
-        }
-        ){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("matricula",matricula);
-                params.put("nombre",nombre);
-                params.put("apellido_paterno",apellidoPaterno);
-                params.put("apellido_materno",apellidoMaterno);
-                params.put("email",email);
-                params.put("telefono",telefono);
-                params.put("rol",rol);
-                params.put("sexo",sexo);
-                params.put("password",password);
-                params.put("status","1");
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        requestQueue.add(request);
-    }
-    public void registrarMedico(){
-        ProgressDialog progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Registrando");
-        progressDialog.show();
-        String url = molarConfig.getDomainAzure()+"/doctor/service_registrarDoctor.php";
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if (response.equalsIgnoreCase("Registro exitoso")) {
-                    Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show();
-                    boolean isConnectedToWifi = Network.isConnectedToWifi(context);
-                    boolean isConnectedToMobileData = Network.isConnectedToMobileData(context);
-                    if (isConnectedToWifi) {
-                        MolarMail molarMail = new MolarMail(email,passwordNoCrypt,String.valueOf(matricula),nombre,context);
-                        molarMail.sendMailRegistro();
-                        progressDialog.dismiss();
-                    } else if (isConnectedToMobileData) {
-                        MolarMail molarMail = new MolarMail(email,passwordNoCrypt,String.valueOf(matricula),nombre,context);
-                        molarMail.sendMailRegistroRedMovil();
-                        progressDialog.dismiss();
-                    } else {
-                        Toast.makeText(context, "No es posible enviar email, no hay conexión", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(context, "No se puede registrar", Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
-                System.out.println("Error: "+error.getMessage());
-            }
-        }
-        ){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("matricula",matricula);
-                params.put("nombre",nombre);
-                params.put("apellido_paterno",apellidoPaterno);
-                params.put("apellido_materno",apellidoMaterno);
-                params.put("email",email);
-                params.put("telefono",telefono);
-                params.put("rol",rol);
-                params.put("sexo",sexo);
-                params.put("password",password);
-                params.put("status","1");
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        requestQueue.add(request);
-    }
-    public void registrarPaciente(){
-        ProgressDialog progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Registrando");
-        progressDialog.show();
-        String url = molarConfig.getDomainAzure()+"/patient/service_registrarPaciente.php";
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if (response.equalsIgnoreCase("Registro exitoso")) {
-                    Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show();
-                    boolean isConnectedToWifi = Network.isConnectedToWifi(context);
-                    boolean isConnectedToMobileData = Network.isConnectedToMobileData(context);
-                    if (isConnectedToWifi) {
-                        MolarMail molarMail = new MolarMail(email,passwordNoCrypt,String.valueOf(matricula),nombre,context);
-                        molarMail.sendMailRegistro();
-                        progressDialog.dismiss();
-                    } else if (isConnectedToMobileData) {
-                        MolarMail molarMail = new MolarMail(email,passwordNoCrypt,String.valueOf(matricula),nombre,context);
-                        molarMail.sendMailRegistroRedMovil();
-                        progressDialog.dismiss();
-                    } else {
-                        Toast.makeText(context, "No es posible enviar email, no hay conexión", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(context, "No se puede registrar", Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
-                System.out.println("Error: "+error.getMessage());
-            }
-        }
-        ){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                System.out.println("model_Patient->registro->getparams: "+String.valueOf(matricula)+apellidoPaterno+apellidoMaterno+email+telefono+rol+sexo+password);
-                params.put("matricula",matricula);
-                params.put("nombre",nombre);
-                params.put("apellido_paterno",apellidoPaterno);
-                params.put("apellido_materno",apellidoMaterno);
-                params.put("email",email);
-                params.put("telefono",telefono);
-                params.put("rol",rol);
-                params.put("sexo",sexo);
-                params.put("password",password);
-                params.put("status","1");
-                return params;
-            }
-        };
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
@@ -604,8 +446,269 @@ public class model_Admin {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
+    //controller_admin_regustrarEmpleados
+    public void registrarAsistente(){
+        //ProgressDialog progressDialog = new ProgressDialog(context);
+        //progressDialog.setMessage("Registrando");
+        //progressDialog.show();
+        String url = molarConfig.getDomainAzure()+"/patient/service_registrarPaciente.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.equalsIgnoreCase("Registro exitoso")) {
+                    Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                    boolean isConnectedToWifi = Network.isConnectedToWifi(context);
+                    boolean isConnectedToMobileData = Network.isConnectedToMobileData(context);
+                    if (isConnectedToWifi) {
+                        MolarMail molarMail = new MolarMail(email,passwordNoCrypt,String.valueOf(matricula),nombre,context);
+                        molarMail.sendMailRegistro();
+                        //progressDialog.dismiss();
+                    } else if (isConnectedToMobileData) {
+                        MolarMail molarMail = new MolarMail(email,passwordNoCrypt,String.valueOf(matricula),nombre,context);
+                        molarMail.sendMailRegistroRedMovil();
+                        //progressDialog.dismiss();
+                    } else {
+                        Toast.makeText(context, "No es posible enviar email, no hay conexión", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(context, "No se puede registrar", Toast.LENGTH_SHORT).show();
+                    //progressDialog.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println("Error: "+error.getMessage());
+            }
+        }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("matricula",matricula);
+                params.put("nombre",nombre);
+                params.put("apellido_paterno",apellidoPaterno);
+                params.put("apellido_materno",apellidoMaterno);
+                params.put("email",email);
+                params.put("telefono",telefono);
+                params.put("rol",rol);
+                params.put("sexo",sexo);
+                params.put("password",password);
+                params.put("status","1");
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+    public void registrarMedico(){
+        //ProgressDialog progressDialog = new ProgressDialog(context);
+        //progressDialog.setMessage("Registrando");
+        //progressDialog.show();
+        String url = molarConfig.getDomainAzure()+"/doctor/service_registrarDoctor.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.equalsIgnoreCase("Registro exitoso")) {
+                    Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                    boolean isConnectedToWifi = Network.isConnectedToWifi(context);
+                    boolean isConnectedToMobileData = Network.isConnectedToMobileData(context);
+                    if (isConnectedToWifi) {
+                        MolarMail molarMail = new MolarMail(email,passwordNoCrypt,String.valueOf(matricula),nombre,context);
+                        molarMail.sendMailRegistro();
+                        //progressDialog.dismiss();
+                    } else if (isConnectedToMobileData) {
+                        MolarMail molarMail = new MolarMail(email,passwordNoCrypt,String.valueOf(matricula),nombre,context);
+                        molarMail.sendMailRegistroRedMovil();
+                        //progressDialog.dismiss();
+                    } else {
+                        Toast.makeText(context, "No es posible enviar email, no hay conexión", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(context, "No se puede registrar", Toast.LENGTH_SHORT).show();
+                    //progressDialog.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println("Error: "+error.getMessage());
+            }
+        }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("matricula",matricula);
+                params.put("nombre",nombre);
+                params.put("apellido_paterno",apellidoPaterno);
+                params.put("apellido_materno",apellidoMaterno);
+                params.put("email",email);
+                params.put("telefono",telefono);
+                params.put("rol",rol);
+                params.put("sexo",sexo);
+                params.put("password",password);
+                params.put("status","1");
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+    public void registrarPaciente(){
+        //ProgressDialog progressDialog = new ProgressDialog(context);
+        //progressDialog.setMessage("Registrando");
+        //progressDialog.show();
+        String url = molarConfig.getDomainAzure()+"/patient/service_registrarPaciente.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.equalsIgnoreCase("Registro exitoso")) {
+                    Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                    boolean isConnectedToWifi = Network.isConnectedToWifi(context);
+                    boolean isConnectedToMobileData = Network.isConnectedToMobileData(context);
+                    if (isConnectedToWifi) {
+                        MolarMail molarMail = new MolarMail(email,passwordNoCrypt,String.valueOf(matricula),nombre,context);
+                        molarMail.sendMailRegistro();
+                        //progressDialog.dismiss();
+                    } else if (isConnectedToMobileData) {
+                        MolarMail molarMail = new MolarMail(email,passwordNoCrypt,String.valueOf(matricula),nombre,context);
+                        molarMail.sendMailRegistroRedMovil();
+                        //progressDialog.dismiss();
+                    } else {
+                        Toast.makeText(context, "No es posible enviar email, no hay conexión", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(context, "No se puede registrar", Toast.LENGTH_SHORT).show();
+                    //progressDialog.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println("Error: "+error.getMessage());
+            }
+        }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                System.out.println("model_Patient->registro->getparams: "+String.valueOf(matricula)+apellidoPaterno+apellidoMaterno+email+telefono+rol+sexo+password);
+                params.put("matricula",matricula);
+                params.put("nombre",nombre);
+                params.put("apellido_paterno",apellidoPaterno);
+                params.put("apellido_materno",apellidoMaterno);
+                params.put("email",email);
+                params.put("telefono",telefono);
+                params.put("rol",rol);
+                params.put("sexo",sexo);
+                params.put("password",password);
+                params.put("status","1");
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+    public void comprobarEmail(String email){
+        String url = molarConfig.getDomainAzure()+"/admin/service_comprobarEmail.php";
+        StringRequest request = new StringRequest(Request.Method.POST,url , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito = jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+                    if (jsonArray.length() == 0){
+                        //No hay datos
+                        callback_admin_registrarEmpleados.onSuccessComprobarEmail();
+                        //callback_assistant_registrarPaciente.onErrorComprobarTelefono("Este email ya esta vinculado a una cuenta.");
+                    }else{
+                        if (exito.equals("1")){
+                            //Hay datos
+                            //callback_assistant_registrarPaciente.onSuccessComprobarTelefono();
+                            callback_admin_registrarEmpleados.onErrorComprobarEmail("Este email ya esta vinculado a una cuenta.");
 
-
+                        }
+                    }
+                }catch (JSONException e){
+                    System.out.println("model_general_usuario -> login -> JSONException: "+e);
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("model_general_usuario -> login -> onErrorResponse: "+error.getMessage());
+                if (error==null){
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }
+                System.out.println("Error: "+error.getMessage());
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("email",email);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }public void comprobarTelefono(String telefono){
+        String url = molarConfig.getDomainAzure()+"/admin/service_comprobarTelefono.php";
+        StringRequest request = new StringRequest(Request.Method.POST,url , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito = jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+                    if (jsonArray.length() == 0){
+                        //No hay datos
+                        callback_admin_registrarEmpleados.onSuccessComprobarTelefono();
+                        //callback_assistant_registrarPaciente.onErrorComprobarEmail("Este numero de telefono ya esta vinculado a una cuenta.");
+                    }else{
+                        if (exito.equals("1")){
+                            //Hay datos
+                            //callback_assistant_registrarPaciente.onSuccessComprobarEmail();
+                            callback_admin_registrarEmpleados.onErrorComprobarTelefono("Este numero de telefono ya esta vinculado a una cuenta.");
+                        }
+                    }
+                }catch (JSONException e){
+                    System.out.println("model_general_usuario -> login -> JSONException: "+e);
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("model_general_usuario -> login -> onErrorResponse: "+error.getMessage());
+                if (error==null){
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }
+                System.out.println("Error: "+error.getMessage());
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("telefono",telefono);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
     public String getMatricula() {
         return matricula;
     }

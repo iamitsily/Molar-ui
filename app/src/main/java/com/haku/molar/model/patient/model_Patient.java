@@ -15,6 +15,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.haku.molar.controller.assistant.interfaces.Callback_assistant_ajustesPaciente;
 import com.haku.molar.controller.assistant.interfaces.Callback_assistant_menuAsistente;
+import com.haku.molar.controller.assistant.interfaces.Callback_assistant_registrarPaciente;
 import com.haku.molar.controller.doctor.interfaces.Callback_doctor_menuDoctor;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_ajustesPaciente;
 import com.haku.molar.controller.patient.interfaces.Callback_patient_menu;
@@ -39,6 +40,7 @@ public class model_Patient {
     private Callback_patient_menu callback_patient_menu;
     private Callback_patient_ajustesPaciente callback_patient_ajustesPaciente;
     private Callback_doctor_menuDoctor callback_doctor_menuDoctor;
+    private Callback_assistant_registrarPaciente callback_assistant_registrarPaciente;
     MolarConfig molarConfig = new MolarConfig();
     //Constructores
     public model_Patient() {
@@ -68,6 +70,12 @@ public class model_Patient {
     public model_Patient(Context context, Callback_doctor_menuDoctor callback_doctor_menuDoctor) {
         this.context = context;
         this.callback_doctor_menuDoctor = callback_doctor_menuDoctor;
+    }
+    //Controller_assitant_registrarPaciente -> validacionesEmailTelefono
+
+    public model_Patient(Context context, Callback_assistant_registrarPaciente callback_assistant_registrarPaciente) {
+        this.context = context;
+        this.callback_assistant_registrarPaciente = callback_assistant_registrarPaciente;
     }
 
     //Funciones
@@ -375,6 +383,104 @@ public class model_Patient {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("matricula",matriculaString);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+    public void comprobarEmail(String email){
+        String url = molarConfig.getDomainAzure()+"/patient/service_comprobarEmail.php";
+        StringRequest request = new StringRequest(Request.Method.POST,url , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito = jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+                    if (jsonArray.length() == 0){
+                        //No hay datos
+                        callback_assistant_registrarPaciente.onSuccessComprobarEmail();
+                        //callback_assistant_registrarPaciente.onErrorComprobarTelefono("Este email ya esta vinculado a una cuenta.");
+                    }else{
+                        if (exito.equals("1")){
+                        //Hay datos
+                            //callback_assistant_registrarPaciente.onSuccessComprobarTelefono();
+                            callback_assistant_registrarPaciente.onErrorComprobarEmail("Este email ya esta vinculado a una cuenta.");
+
+                        }
+                    }
+                }catch (JSONException e){
+                    System.out.println("model_general_usuario -> login -> JSONException: "+e);
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("model_general_usuario -> login -> onErrorResponse: "+error.getMessage());
+                if (error==null){
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }
+                System.out.println("Error: "+error.getMessage());
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("email",email);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+
+    }
+    public void comprobarTelefono(String telefono){
+        String url = molarConfig.getDomainAzure()+"/patient/service_comprobarTelefono.php";
+        StringRequest request = new StringRequest(Request.Method.POST,url , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+                    String exito = jsonObject.getString("exito");
+                    JSONArray jsonArray = jsonObject.getJSONArray("datos");
+                    if (jsonArray.length() == 0){
+                        //No hay datos
+                        callback_assistant_registrarPaciente.onSuccessComprobarTelefono();
+                        //callback_assistant_registrarPaciente.onErrorComprobarEmail("Este numero de telefono ya esta vinculado a una cuenta.");
+                    }else{
+                        if (exito.equals("1")){
+                            //Hay datos
+                            //callback_assistant_registrarPaciente.onSuccessComprobarEmail();
+                            callback_assistant_registrarPaciente.onErrorComprobarTelefono("Este numero de telefono ya esta vinculado a una cuenta.");
+                        }
+                    }
+                }catch (JSONException e){
+                    System.out.println("model_general_usuario -> login -> JSONException: "+e);
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("model_general_usuario -> login -> onErrorResponse: "+error.getMessage());
+                if (error==null){
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "No hay conexión con el servidor, intente mas tarde", Toast.LENGTH_SHORT).show();
+                }
+                System.out.println("Error: "+error.getMessage());
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("telefono",telefono);
                 return params;
             }
         };

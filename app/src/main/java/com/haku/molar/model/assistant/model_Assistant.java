@@ -270,9 +270,9 @@ public class model_Assistant {
     }
     //controller_assistant_registrarPaciente
     public void registrarPaciente(){
-        ProgressDialog progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Registrando");
-        progressDialog.show();
+        //ProgressDialog progressDialog = new ProgressDialog(context);
+        //progressDialog.setMessage("Registrando");
+        //progressDialog.show();
         String url = molarConfig.getDomainAzure()+"/patient/service_registrarPaciente.php";
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -284,17 +284,17 @@ public class model_Assistant {
                     if (isConnectedToWifi) {
                         MolarMail molarMail = new MolarMail(email,passwordNoCrypt,String.valueOf(matricula),nombre,context);
                         molarMail.sendMailRegistro();
-                        progressDialog.dismiss();
+                        //progressDialog.dismiss();
                     } else if (isConnectedToMobileData) {
                         MolarMail molarMail = new MolarMail(email,passwordNoCrypt,String.valueOf(matricula),nombre,context);
                         molarMail.sendMailRegistroRedMovil();
-                        progressDialog.dismiss();
+                        //progressDialog.dismiss();
                     } else {
                         Toast.makeText(context, "No es posible enviar email, no hay conexión", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(context, "No se puede registrar", Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
+                    //progressDialog.dismiss();
                 }
             }
         }, new Response.ErrorListener() {
