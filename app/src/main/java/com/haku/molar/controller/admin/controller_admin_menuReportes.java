@@ -159,15 +159,12 @@ public class controller_admin_menuReportes extends AppCompatActivity implements 
     public void elegirAño(){
         builder = new AlertDialog.Builder(this);
         builder.setTitle("Seleccione Año").setIcon(R.mipmap.logoapp);
-        final CharSequence[]opciones = new CharSequence[8];
-        opciones[0]="2020";
-        opciones[1]="2021";
-        opciones[2]="2022";
-        opciones[3]="2023";
-        opciones[4]="2024";
-        opciones[5]="2025";
-        opciones[6]="2026";
-        opciones[7]="2027";
+        final CharSequence[]opciones = new CharSequence[5];
+        opciones[0]="2023";
+        opciones[1]="2024";
+        opciones[2]="2025";
+        opciones[3]="2026";
+        opciones[4]="2027";
         builder.setItems(opciones, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -217,7 +214,7 @@ public class controller_admin_menuReportes extends AppCompatActivity implements 
         if (mesesInt >= 0 && mesesInt <= 11) {
             mesString = mesesString[mesesInt];
         }
-        String[] años = {"2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027"};
+        String[] años = {"2023", "2024", "2025", "2026", "2027"};
         int añoInt = Integer.parseInt(año);
 
         if (añoInt >= 0 && añoInt < 8) {
@@ -272,9 +269,10 @@ public class controller_admin_menuReportes extends AppCompatActivity implements 
 
             String nombreBase = "ReporteGeneral.pdf";
             File archivoBase = new File(dir, nombreBase);
-            File nuevoArchivo = obtenerNuevoArchivo(archivoBase);
+            //File nuevoArchivo = obtenerNuevoArchivo(archivoBase);
 
-            FileOutputStream fos = new FileOutputStream(nuevoArchivo);
+            //FileOutputStream fos = new FileOutputStream(nuevoArchivo);
+            FileOutputStream fos = new FileOutputStream(archivoBase);
             Document document = new Document();
             PdfWriter.getInstance(document, fos);
 
@@ -376,7 +374,8 @@ public class controller_admin_menuReportes extends AppCompatActivity implements 
             document.close();
             progressDialog.dismiss();
             Toast.makeText(this, "Reporte generado con exito", Toast.LENGTH_SHORT).show();
-            Uri pdfUri = FileProvider.getUriForFile(this, "com.haku.molar.fileprovider", nuevoArchivo);
+            //Uri pdfUri = FileProvider.getUriForFile(this, "com.haku.molar.fileprovider", nuevoArchivo);
+            Uri pdfUri = FileProvider.getUriForFile(this, "com.haku.molar.fileprovider", archivoBase);
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setDataAndType(pdfUri, "application/pdf");
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -442,9 +441,9 @@ public class controller_admin_menuReportes extends AppCompatActivity implements 
 
             String nombreBase = "Reporte"+mes+año+".pdf";
             File archivoBase = new File(dir, nombreBase);
-            File nuevoArchivo = obtenerNuevoArchivoMes(archivoBase);
-
-            FileOutputStream fos = new FileOutputStream(nuevoArchivo);
+            //File nuevoArchivo = obtenerNuevoArchivoMes(archivoBase);
+            FileOutputStream fos = new FileOutputStream(archivoBase);
+            //FileOutputStream fos = new FileOutputStream(nuevoArchivo);
             Rectangle pagSieze = PageSize.A4.rotate();
             Document document = new Document(pagSieze);
             PdfWriter.getInstance(document, fos);
@@ -523,7 +522,7 @@ public class controller_admin_menuReportes extends AppCompatActivity implements 
             document.close();
             progressDialogMes.dismiss();
             Toast.makeText(this, "Reporte generado con exito", Toast.LENGTH_SHORT).show();
-            Uri pdfUri = FileProvider.getUriForFile(this, "com.haku.molar.fileprovider", nuevoArchivo);
+            Uri pdfUri = FileProvider.getUriForFile(this, "com.haku.molar.fileprovider", archivoBase);
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setDataAndType(pdfUri, "application/pdf");
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);

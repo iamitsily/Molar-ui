@@ -15,13 +15,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haku.molar.R;
-import com.haku.molar.controller.assistant.controller_assistant_ajustesMenu;
 import com.haku.molar.controller.assistant.interfaces.Callback_assistant_ajustesPaciente;
-import com.haku.molar.controller.doctor.controller_doctor_ajustesMenu;
 import com.haku.molar.model.assistant.model_Assistant;
 import com.haku.molar.utils.MolarCrypt;
 
@@ -158,7 +155,7 @@ public class controller_admin_ajustesDatos extends AppCompatActivity implements 
     }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, controller_admin_asjtesMenu.class);
+        Intent intent = new Intent(this, controller_admin_ajustesMenu.class);
         intent.putExtra("matricula",matricula);
         intent.putExtra("nombre",nombre);
         intent.putExtra("rol",rol);
@@ -190,7 +187,7 @@ public class controller_admin_ajustesDatos extends AppCompatActivity implements 
         }
     }
     public void backCuentaMenuBtn(View view){
-        Intent intent = new Intent(this, controller_admin_asjtesMenu.class);
+        Intent intent = new Intent(this, controller_admin_ajustesMenu.class);
         intent.putExtra("matricula",matricula);
         intent.putExtra("nombre",nombre);
         intent.putExtra("rol",rol);

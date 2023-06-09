@@ -63,6 +63,13 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
                 backAsuntoCitaBtn();
             }
         });
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, 1); // Agregar 1 día para seleccionar mañana
+        long tomorrowDate = calendar.getTimeInMillis();
+
+        calendarView.setMinDate(tomorrowDate); // Establecer mañana como la fecha mínima
+        calendarView.setDate(tomorrowDate); // Establecer automáticamente el día de mañana
+
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -208,7 +215,7 @@ public class controller_patient_FechaHoraAgendarCita extends AppCompatActivity i
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        date = dayOfMonth+"-"+(month+1)+"-"+year;
+        date = (dayOfMonth+1)+"-"+(month+1)+"-"+year;
         System.out.println("getDiaCalendar: "+date);
         fecha = date;
         return date;

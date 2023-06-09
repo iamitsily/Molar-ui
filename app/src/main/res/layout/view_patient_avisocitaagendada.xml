@@ -41,13 +41,13 @@
 
     <ImageView
         android:id="@+id/patient_historialCitaPerfil"
-        android:layout_width="109dp"
-        android:layout_height="96dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.311"
+        app:layout_constraintVertical_bias="0.32999998"
         app:srcCompat="@mipmap/aceptarsolicitudlayoud" />
 
     <TextView
@@ -67,7 +67,7 @@
         android:id="@+id/textView35"
         android:layout_width="357dp"
         android:layout_height="45dp"
-        android:text="Su cita se agendo correctamente. Será redirigido a la para ver sus detalles de cita."
+        android:text="Su cita se agendo correctamente. Será redirigido a la pantalla principal."
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"

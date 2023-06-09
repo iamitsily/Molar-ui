@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.haku.molar.controller.assistant.interfaces.Callback_assistant_registrarPaciente;
 import com.haku.molar.model.assistant.model_Assistant;
 import com.haku.molar.utils.MolarCrypt;
 import com.haku.molar.R;
@@ -31,13 +32,13 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-public class controller_assistant_registrarPaciente extends AppCompatActivity {
+public class controller_assistant_registrarPaciente extends AppCompatActivity implements Callback_assistant_registrarPaciente {
     private ImageView ibRegresar;
     private RadioButton rbtnHombre, rbtnMujer;
     private EditText etNombre, etAPaterno, etAMaterno, etCorreo, etNumero, etContraseña, etConfirmarContraseña;
     private String nombre, apaterno, amaterno, correo, numero, contraseña, confirmarContraseña, matricula, contraseñaNoCrypt, nombreString, matriculaString, rolString, sexoString;
     private int rol, sexo;
-
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +61,10 @@ public class controller_assistant_registrarPaciente extends AppCompatActivity {
         etNumero = findViewById(R.id.view_assistant_registrarPaciente_telefono);
         etContraseña = findViewById(R.id.view_assistant_registrarPaciente_password);
         etConfirmarContraseña = findViewById(R.id.view_assistant_registrarPaciente_confirmedPass);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Registrando");
+        progressDialog.setIcon(R.mipmap.logoapp);
 
         ibRegresar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +92,6 @@ public class controller_assistant_registrarPaciente extends AppCompatActivity {
         finish();
     }
     public void Registrar(View v){
-
         obtenerDatos();
         if(validarDatos()){
             System.out.println("Datos incorrectos");
@@ -106,10 +110,17 @@ public class controller_assistant_registrarPaciente extends AppCompatActivity {
             apaterno = palabraMayuscula(apaterno);
             amaterno = palabraMayuscula(amaterno);
             imprimirDatos();
-            model_Assistant model_Assistant = new model_Assistant(Integer.parseInt(matricula),1,sexo,nombre,apaterno,amaterno,correo,numero,contraseña,this, contraseñaNoCrypt);
-            model_Assistant.registrarPaciente();
-            limpiarDatos();
+            progressDialog.show();
+            comprobarEmail();
         }
+    }
+    public void comprobarEmail(){
+        model_Patient model_patient = new model_Patient(this,this);
+        model_patient.comprobarEmail(correo);
+    }
+    public void comprobarTelefono(){
+        model_Patient model_patient = new model_Patient(this, this);
+        model_patient.comprobarTelefono(numero);
     }
     private void imprimirDatos(){
         System.out.println("Nombre: "+nombre);
@@ -121,9 +132,7 @@ public class controller_assistant_registrarPaciente extends AppCompatActivity {
         System.out.println("ContraseñaConfirmed: "+confirmarContraseña);
         System.out.println("Hombre: "+rbtnHombre.isChecked());
         System.out.println("Mujer: "+rbtnMujer.isChecked());
-
     }
-
     private void obtenerDatos(){
         try {
             nombre = etNombre.getText().toString().trim();
@@ -148,7 +157,6 @@ public class controller_assistant_registrarPaciente extends AppCompatActivity {
             System.out.println(e);
         }
     }
-
     private void generarMatricula(){
         //año + mes + 4 ultimos digitos de telefono
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -157,7 +165,6 @@ public class controller_assistant_registrarPaciente extends AppCompatActivity {
         matricula = currentDateandTime.substring(6,10) + currentDateandTime.substring(3,5) + numero.substring(6,10);
 
     }
-
     private boolean validarDatos(){
         boolean error = false;
 
@@ -274,5 +281,34 @@ public class controller_assistant_registrarPaciente extends AppCompatActivity {
         startActivity(intent);
         overridePendingTransition(R.anim.menu_patient_slide_in_right, R.anim.menu_patient_slide_out_left);
         finish();
+    }
+
+    @Override
+    public void onSuccessComprobarEmail() {
+        System.out.println("onSuccessComprobarEmail");
+        comprobarTelefono();
+    }
+
+    @Override
+    public void onErrorComprobarEmail(String mensaje) {
+        System.out.println("onErrorComprobarEmail");
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+        progressDialog.dismiss();
+    }
+
+    @Override
+    public void onSuccessComprobarTelefono() {
+        System.out.println("onSuccessComprobarTelefono");
+        model_Assistant model_Assistant = new model_Assistant(Integer.parseInt(matricula),1,sexo,nombre,apaterno,amaterno,correo,numero,contraseña,this, contraseñaNoCrypt);
+        model_Assistant.registrarPaciente();
+        progressDialog.dismiss();
+        limpiarDatos();
+    }
+
+    @Override
+    public void onErrorComprobarTelefono(String mensaje) {
+        System.out.println("onErrorComprobarTelefono");
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+        progressDialog.dismiss();
     }
 }

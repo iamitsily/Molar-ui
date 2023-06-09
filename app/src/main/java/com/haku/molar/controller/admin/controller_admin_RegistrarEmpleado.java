@@ -3,6 +3,7 @@ package com.haku.molar.controller.admin;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.haku.molar.R;
+import com.haku.molar.controller.admin.interfaces.Callback_admin_registrarEmpleados;
 import com.haku.molar.model.admin.model_Admin;
 import com.haku.molar.model.assistant.model_Assistant;
 import com.haku.molar.utils.MolarCrypt;
@@ -31,7 +33,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-public class controller_admin_RegistrarEmpleado extends AppCompatActivity {
+public class controller_admin_RegistrarEmpleado extends AppCompatActivity implements Callback_admin_registrarEmpleados {
     String matriculaMain, nombreMain, rolMain, sexoMain;
     ImageView back;
     private RadioButton rbtnHombre, rbtnMujer, rbtDoctor, rbtAsistente;
@@ -39,6 +41,7 @@ public class controller_admin_RegistrarEmpleado extends AppCompatActivity {
     private String nombre, apaterno, amaterno, correo, numero, contraseña, confirmarContraseña, matricula, contraseñaNoCrypt, nombreString, matriculaString, rolString, sexoString;
     private int rol, sexo;
     Button btnRegistrar;
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +68,11 @@ public class controller_admin_RegistrarEmpleado extends AppCompatActivity {
         etContraseña = findViewById(R.id.admin_registroEmpleado_password);
         etConfirmarContraseña = findViewById(R.id.admin_registroEmpleado_passwordConfirmed);
         btnRegistrar = findViewById(R.id.admin_registroEmpleado_registrar);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Registrando");
+        progressDialog.setIcon(R.mipmap.logoapp);
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,15 +122,17 @@ public class controller_admin_RegistrarEmpleado extends AppCompatActivity {
             apaterno = palabraMayuscula(apaterno);
             amaterno = palabraMayuscula(amaterno);
             imprimirDatos();
-            if (rol==2){
-                model_Admin model_admin = new model_Admin(matricula,nombre,apaterno,amaterno,correo,numero,contraseña,confirmarContraseña,"2",String.valueOf(sexo),this);
-                model_admin.registrarMedico();
-            }else{
-                model_Admin model_admin = new model_Admin(matricula,nombre,apaterno,amaterno,correo,numero,contraseña,confirmarContraseña,"3",String.valueOf(sexo),this);
-                model_admin.registrarAsistente();
-            }
-            limpiarDatos();
+            progressDialog.show();
+            comprobarEmail();
         }
+    }
+    public void comprobarEmail(){
+        model_Admin model_admin = new model_Admin(this,this);
+        model_admin.comprobarEmail(correo);
+    }
+    public void comprobarTelefono(){
+        model_Admin model_admin = new model_Admin(this,this);
+        model_admin.comprobarTelefono(numero);
     }
     private void imprimirDatos(){
         System.out.println("Matricula: "+matricula);
@@ -294,5 +304,38 @@ public class controller_admin_RegistrarEmpleado extends AppCompatActivity {
         etConfirmarContraseña.setText("");
         etConfirmarContraseña.setHint("Contraseña");
         etConfirmarContraseña.setHintTextColor(Color.parseColor("#A9A9A9"));
+    }
+
+    @Override
+    public void onSuccessComprobarEmail() {
+        System.out.println("onSuccessComprobarEmail");
+        comprobarTelefono();
+    }
+
+    @Override
+    public void onErrorComprobarEmail(String mensaje) {
+        System.out.println("onErrorComprobarEmail");
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+        progressDialog.dismiss();
+    }
+
+    @Override
+    public void onSuccessComprobarTelefono() {
+        if (rol==2){
+            model_Admin model_admin = new model_Admin(matricula,nombre,apaterno,amaterno,correo,numero,contraseña,confirmarContraseña,"2",String.valueOf(sexo),this);
+            model_admin.registrarMedico();
+        }else{
+            model_Admin model_admin = new model_Admin(matricula,nombre,apaterno,amaterno,correo,numero,contraseña,confirmarContraseña,"3",String.valueOf(sexo),this);
+            model_admin.registrarAsistente();
+        }
+        progressDialog.dismiss();
+        limpiarDatos();
+    }
+
+    @Override
+    public void onErrorComprobarTelefono(String mensaje) {
+        System.out.println("onErrorComprobarTelefono");
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+        progressDialog.dismiss();
     }
 }

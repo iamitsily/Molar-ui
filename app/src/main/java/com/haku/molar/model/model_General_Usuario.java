@@ -13,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.haku.molar.R;
 import com.haku.molar.general.Callback_General_Login;
 import com.haku.molar.utils.MolarConfig;
 
@@ -58,6 +59,7 @@ public class model_General_Usuario {
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Iniciando Sesión");
         progressDialog.setCancelable(false);
+        progressDialog.setIcon(R.mipmap.logoapp);
         progressDialog.show();
         StringRequest request = new StringRequest(Request.Method.POST,url , new Response.Listener<String>() {
             @Override

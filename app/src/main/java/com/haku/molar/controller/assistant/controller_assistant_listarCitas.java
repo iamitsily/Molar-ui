@@ -129,7 +129,7 @@ public class controller_assistant_listarCitas extends AppCompatActivity implemen
 
     @Override
     public void onErrorListar(String mensaje) {
-        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "No hay citas por listar", Toast.LENGTH_SHORT).show();
     }
 
     @Override

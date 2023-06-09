@@ -12,15 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haku.molar.R;
-import com.haku.molar.controller.doctor.controller_doctor_TerminosCondiciones;
-import com.haku.molar.controller.doctor.controller_doctor_ajustesDatos;
-import com.haku.molar.controller.doctor.controller_doctor_menu_doctor;
 import com.haku.molar.general.controller_General_Login;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class controller_admin_asjtesMenu extends AppCompatActivity {
+public class controller_admin_ajustesMenu extends AppCompatActivity {
     String matricula, nombre, rol,sexo;
     ImageView imageView, imageViewPerfil;
     TextView tvNombre, tvRol;
