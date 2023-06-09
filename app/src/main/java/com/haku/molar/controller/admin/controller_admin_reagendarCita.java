@@ -62,6 +62,9 @@ public class controller_admin_reagendarCita extends AppCompatActivity  implement
                 backAsuntoCitaBtn();
             }
         });
+        Calendar calendar = Calendar.getInstance();
+        long currentDate = calendar.getTimeInMillis();
+        calendarView.setMinDate(currentDate);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {

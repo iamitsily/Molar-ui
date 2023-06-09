@@ -60,6 +60,9 @@ public class controller_patient_reagendar_citas_horaDia extends AppCompatActivit
                 backAsuntoCitaBtn();
             }
         });
+        Calendar calendar = Calendar.getInstance();
+        long currentDate = calendar.getTimeInMillis();
+        calendarView.setMinDate(currentDate);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {

@@ -20,7 +20,7 @@
             android:name=".controller.admin.controller_admin_ajustesDatos"
             android:exported="false" />
         <activity
-            android:name=".controller.admin.controller_admin_asjtesMenu"
+            android:name=".controller.admin.controller_admin_ajustesMenu"
             android:exported="false" />
         <activity
             android:name=".controller.doctor.controller_doctor_citasDePaciente"

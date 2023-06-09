@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.haku.molar.R;
 
@@ -29,7 +28,7 @@ public class controller_admin_terminoscondiciones extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(getApplicationContext(), controller_admin_asjtesMenu.class);
+                Intent intent1 = new Intent(getApplicationContext(), controller_admin_ajustesMenu.class);
                 intent1.putExtra("matricula",matricula);
                 intent1.putExtra("nombre", nombre);
                 intent1.putExtra("rol", rol);
@@ -42,7 +41,7 @@ public class controller_admin_terminoscondiciones extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, controller_admin_asjtesMenu.class);
+        Intent intent = new Intent(this, controller_admin_ajustesMenu.class);
         intent.putExtra("matricula",matricula);
         intent.putExtra("nombre", nombre);
         intent.putExtra("rol", rol);
