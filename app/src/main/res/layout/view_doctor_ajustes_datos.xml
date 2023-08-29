@@ -65,7 +65,7 @@
         android:layout_width="333dp"
         android:layout_height="40dp"
         android:layout_marginTop="12dp"
-        android:text="Actualice su perfil para conectar a su médico con mejor impresión. "
+        android:text="Puede cambiar su foto de perfil, número de teléfono, correo o contraseña."
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="15sp"
