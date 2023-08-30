@@ -53,7 +53,7 @@
         android:id="@+id/textView36"
         android:layout_width="359dp"
         android:layout_height="73dp"
-        android:text="Ocurrio un error, por favor intente mas tarde. "
+        android:text="Ocurrió un error, por favor, intente más tarde. "
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
