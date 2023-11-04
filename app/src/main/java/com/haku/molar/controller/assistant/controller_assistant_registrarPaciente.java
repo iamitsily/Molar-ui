@@ -200,6 +200,7 @@ public class controller_assistant_registrarPaciente extends AppCompatActivity im
             //Toast.makeText(this, "Amaterno mayor o igual a 3 caracteres", Toast.LENGTH_SHORT).show();
         }
         if (!validarEmail(correo)) {
+            error = true;
             etCorreo.setText("");
             etCorreo.setHint("Revisar correo "+correo);
             etCorreo.setHintTextColor(Color.RED);
