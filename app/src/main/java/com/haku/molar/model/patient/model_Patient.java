@@ -171,7 +171,7 @@ public class model_Patient {
         requestQueue.add(request);
     }
     public void obtenerPass(){
-        String url = "https://molarservices.azurewebsites.net/general/login.php";
+        String url = molarConfig.getDomainAzure()+"/general/login.php";
 
         String matricula = String.valueOf(getMatricula());
         StringRequest request = new StringRequest(Request.Method.POST,url , new Response.Listener<String>() {

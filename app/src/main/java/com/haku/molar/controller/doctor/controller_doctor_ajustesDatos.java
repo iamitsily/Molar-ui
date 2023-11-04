@@ -297,6 +297,9 @@ public class controller_doctor_ajustesDatos extends AppCompatActivity implements
     @Override
     public void onSuccessUpdatebyUser() {
         progressDialog.dismiss();
+        edt_passNueva.setText("");
+        edt_passActual.setText("");
+        edt_passconfirmed.setText("");
         Toast.makeText(this, "Datos actualizados", Toast.LENGTH_SHORT).show();
     }
 
@@ -311,7 +314,7 @@ public class controller_doctor_ajustesDatos extends AppCompatActivity implements
             if(!validarDatos(MolarCrypt.decrypt(datos[2]))){
                 actualizarUsuario();
             }else{
-                Toast.makeText(this, "No es posible realizar las modificaciones, se incumplen criterios", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Se incumplen criterios.", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
         } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
