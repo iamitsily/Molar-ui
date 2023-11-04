@@ -177,7 +177,7 @@ public class controller_admin_menuReportes extends AppCompatActivity implements 
     }
     public void elegirMes(){
         builder = new AlertDialog.Builder(this);
-        builder.setTitle("Seleccione mes").setIcon(R.mipmap.logo);
+        builder.setTitle("Seleccione mes").setIcon(R.mipmap.logoapp);
         final CharSequence[]opciones = new CharSequence[12];
         opciones[0]="Enero (01)";
         opciones[1]="Febrero (02)";

@@ -107,10 +107,12 @@ public class controller_assistant_listarCitas extends AppCompatActivity implemen
         adaptadorListarCitasCancelarDirecto adaptadorListarCitasCancelarDirecto = new adaptadorListarCitasCancelarDirecto(listaActivas, this, new adaptadorListarCitasCancelarDirecto.ItemClickListener() {
             @Override
             public void OnItemClick(model_cita details) {
+                String aux = details.getMotivoCancelar();
+                aux = aux.equals("null") ? "*Sin motivo*" : details.getMotivoCancelar();
                 AlertDialog.Builder builder = new AlertDialog.Builder(controller_assistant_listarCitas.this);
                 builder.setTitle("¿Cancelar cita?");
                 builder.setMessage("Revise los datos de la cita a cancelar\n\nPaciente: "+details.getNombrePaciente()+" "+details.getApellidoPaciente()+"\n\nId Cita: "+details.getId()+"\n"+"Dia: "+details.getDia()+"\n"+"Hora: "+details.getHora()
-                        +"\n"+"Estado: "+details.getEstado()+"\n"+"\nDescripción: "+details.getDescripcion()+"\n"+"\nMotivo de cancelación: "+details.getMotivoCancelar()).setPositiveButton("Confirmar",new DialogInterface.OnClickListener(){
+                        +"\n"+"Estado: "+details.getEstado()+"\n"+"\nDescripción: "+details.getDescripcion()+"\n"+"\nMotivo de cancelación: "+aux).setPositiveButton("Confirmar",new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         model_cita model_cita = new model_cita(details.getId(),details.getEmailPaciente(),controller_assistant_listarCitas.this,controller_assistant_listarCitas.this);

@@ -145,9 +145,9 @@ public class controller_patient_AjustesCuentaDatos extends AppCompatActivity imp
             }
         });
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Aviso");
-        builder.setMessage("Por favor antes de actualizar sus datos, asegurese " +
-                "de que el email y numero de telefono sean correctos").setPositiveButton("Ok",new DialogInterface.OnClickListener(){
+        builder.setTitle("Aviso").setIcon(R.mipmap.logoapp);
+        builder.setMessage("Por favor antes de actualizar sus datos, asegúrese " +
+                "de que el email y numero de teléfono sean correctos").setPositiveButton("Ok",new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 

@@ -146,9 +146,9 @@ public class controller_assistant_ajustesMenuDatos extends AppCompatActivity imp
             }
         });
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Aviso");
-        builder.setMessage("Por favor antes de actualizar sus datos, asegurese " +
-                "de que el email y número de telefono sean correctos.").setPositiveButton("Ok",new DialogInterface.OnClickListener(){
+        builder.setTitle("Aviso").setIcon(R.mipmap.logoapp);
+        builder.setMessage("Por favor antes de actualizar sus datos, asegúrese " +
+                "de que el email y número de teléfono sean correctos.").setPositiveButton("Ok",new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
