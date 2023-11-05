@@ -10,6 +10,8 @@ import androidx.core.content.FileProvider;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,8 +20,10 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -50,6 +54,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -66,6 +71,7 @@ public class controller_admin_menuReportes extends AppCompatActivity implements 
     ProgressDialog progressDialogMes;
     AlertDialog.Builder builder;
     ArrayList<model_Admin>listaCitas;
+    private Uri pdfUri;
     private final ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
             new ActivityResultContracts.RequestPermission(), isAceptado ->{
                 if (isAceptado) Toast.makeText(this, "Permisos concedidos", Toast.LENGTH_SHORT).show();
@@ -153,7 +159,7 @@ public class controller_admin_menuReportes extends AppCompatActivity implements 
             }
             return false;
         });
-        Toast.makeText(this, "Los reportes se guardan en\n/documents/reportesMolar", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Guardado en: "+Environment.DIRECTORY_DOWNLOADS+"/ReportesGeneralesMolar", Toast.LENGTH_LONG).show();
 
     }
     public void elegirAño(){
@@ -208,11 +214,11 @@ public class controller_admin_menuReportes extends AppCompatActivity implements 
         if (mesInt >= 0 && mesInt <= 11) {
             mes = meses[mesInt];
         }
-        String[] mesesString = {"Enero", "Febreo", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+        String[] mesesString = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
         int mesesInt = Integer.parseInt(mes);
 
         if (mesesInt >= 0 && mesesInt <= 11) {
-            mesString = mesesString[mesesInt];
+            mesString = mesesString[mesesInt-1];
         }
         String[] años = {"2023", "2024", "2025", "2026", "2027"};
         int añoInt = Integer.parseInt(año);
@@ -247,7 +253,7 @@ public class controller_admin_menuReportes extends AppCompatActivity implements 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
             crearPFDGeneral();
         }else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-            Snackbar.make(new View(getApplicationContext()), "Este permiso es necesario para crear el archivo", Snackbar.LENGTH_INDEFINITE).setAction("Ok", new View.OnClickListener() {
+            Snackbar.make(findViewById(android.R.id.content), "Este permiso es necesario para crear el archivo", Snackbar.LENGTH_INDEFINITE).setAction("Ok", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     requestPermissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -259,144 +265,283 @@ public class controller_admin_menuReportes extends AppCompatActivity implements 
     }
     private void crearPFDGeneral(){
         try {
-            String carpeta = "/reportesMolar";
-            String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath()+carpeta;
-
-            File dir = new File(path);
-            if (!dir.exists()){
-                dir.mkdirs();
-            }
-
-            String nombreBase = "ReporteGeneral.pdf";
-            File archivoBase = new File(dir, nombreBase);
-            //File nuevoArchivo = obtenerNuevoArchivo(archivoBase);
-
-            //FileOutputStream fos = new FileOutputStream(nuevoArchivo);
-            FileOutputStream fos = new FileOutputStream(archivoBase);
-            Document document = new Document();
-            PdfWriter.getInstance(document, fos);
-
-            document.open();
-            Paragraph tituloPro = new Paragraph("Reporte General\n", FontFactory.getFont("arial",22, Font.BOLD, BaseColor.BLACK));
-            tituloPro.setAlignment(Element.ALIGN_CENTER);
-            document.add(tituloPro);
-
             Calendar currentDate = Calendar.getInstance();
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd_MM_yyyy");
             String formattedDate = formatter.format(currentDate.getTime());
+            String nombreBase = "ReporteGeneral_" + formattedDate + ".pdf";
+            FileOutputStream fos;
 
-            Paragraph titulo = new Paragraph("Molar | Administrador | "+nombre+" | "+matricula+" | "+formattedDate+"\n", FontFactory.getFont("arial",18, Font.NORMAL, BaseColor.BLACK));
-            titulo.setAlignment(Element.ALIGN_CENTER);
-            document.add(titulo);
+            //Generacion de pdf para Android Igual o mayor a 10
+            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q){
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.DISPLAY_NAME, nombreBase);
+                values.put(MediaStore.Images.Media.MIME_TYPE, "application/pdf");
+                values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS+"/ReportesGeneralesMolar");
 
-            Drawable d = getDrawable(R.drawable.logo);
-            Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
-            byte[] bitmapdata = stream.toByteArray();
-            Image image = Image.getInstance(bitmapdata);
-            image.scaleToFit(100, 100);
-            image.setAlignment(Element.ALIGN_CENTER);
-            document.add(image);
+                Uri externalContentUri = MediaStore.Downloads.EXTERNAL_CONTENT_URI;
+                pdfUri = getContentResolver().insert(externalContentUri, values);
 
-            Paragraph postTitulo = new Paragraph("El presente informe general tiene como objetivo " +
-                    "proporcionar una visión completa y detallada de la gestión del consultorio dental" +
-                    " a través de la aplicación Molar.", FontFactory.getFont("arial",12, Font.NORMAL, BaseColor.BLACK));
-            titulo.setAlignment(Element.ALIGN_CENTER);
-            document.add(postTitulo);
+                if (pdfUri != null) {
+                    OutputStream outputStream = getContentResolver().openOutputStream(pdfUri);
+                    if (outputStream != null) {
 
-            Paragraph cuerpoPro = new Paragraph("\nEstadisticas Usuarios\n", FontFactory.getFont("arial",20, Font.BOLD, BaseColor.BLACK));
-            cuerpoPro.setAlignment(Element.ALIGN_LEFT);
-            document.add(cuerpoPro);
+                        Document document = new Document();
+                        PdfWriter.getInstance(document, outputStream);
 
-            Paragraph cuerpo = new Paragraph("Total de pacientes: "+totalPacientes+
-                    "\nTotal Doctores: "+totalMedicos+
-                    "\nTotal Secreatarios: "+totalSecretarios+"\n\n", FontFactory.getFont("arial",16, Font.BOLD, BaseColor.BLACK));
-            cuerpo.setAlignment(Element.ALIGN_LEFT);
-            document.add(cuerpo);
+                        document.open();
+                        Paragraph tituloPro = new Paragraph("Reporte General\n", FontFactory.getFont("arial",22, Font.BOLD, BaseColor.BLACK));
+                        tituloPro.setAlignment(Element.ALIGN_CENTER);
+                        document.add(tituloPro);
 
-            Paragraph cuerpoProPro = new Paragraph("Estadisticas Citas\n\n", FontFactory.getFont("arial",20, Font.BOLD, BaseColor.BLACK));
-            cuerpoProPro.setAlignment(Element.ALIGN_LEFT);
-            document.add(cuerpoProPro);
 
-            if (totalCitas.equals("0")){
-                PdfPTable table = new PdfPTable(5);
-                table.addCell("Total Citas");
-                table.addCell("Agendadas");
-                table.addCell("Reagendadas");
-                table.addCell("Canceladas");
-                table.addCell("Terminadas");
+                        Paragraph titulo = new Paragraph("Molar | Administrador | "+nombre+" | "+matricula+" | "+formattedDate+"\n", FontFactory.getFont("arial",18, Font.NORMAL, BaseColor.BLACK));
+                        titulo.setAlignment(Element.ALIGN_CENTER);
+                        document.add(titulo);
 
-                table.addCell("0");
-                table.addCell("0");
-                table.addCell("0");
-                table.addCell("0");
-                table.addCell("0");
-                document.add(table);
-            }else{
-                PdfPTable table = new PdfPTable(5);
-                table.addCell("Total Citas");
-                table.addCell("Agendadas");
-                table.addCell("Reagendadas");
-                table.addCell("Canceladas");
-                table.addCell("Terminadas");
+                        Drawable d = getDrawable(R.drawable.logo);
+                        Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
+                        byte[] bitmapdata = stream.toByteArray();
+                        Image image = Image.getInstance(bitmapdata);
+                        image.scaleToFit(100, 100);
+                        image.setAlignment(Element.ALIGN_CENTER);
+                        document.add(image);
 
-                table.addCell(totalCitas);
-                table.addCell(totalCitasAgendadas);
-                table.addCell(totalCitasReagendadas);
-                table.addCell(totalCitasCanceladas);
-                table.addCell(totalCitasTerminadas);
-                document.add(table);
+                        Paragraph postTitulo = new Paragraph("El presente informe general tiene como objetivo " +
+                                "proporcionar una visión completa y detallada de la gestión del consultorio dental" +
+                                " a través de la aplicación Molar.", FontFactory.getFont("arial",12, Font.NORMAL, BaseColor.BLACK));
+                        titulo.setAlignment(Element.ALIGN_CENTER);
+                        document.add(postTitulo);
+
+                        Paragraph cuerpoPro = new Paragraph("\nEstadísticas Usuarios\n", FontFactory.getFont("arial",20, Font.BOLD, BaseColor.BLACK));
+                        cuerpoPro.setAlignment(Element.ALIGN_LEFT);
+                        document.add(cuerpoPro);
+
+                        Paragraph cuerpo = new Paragraph("Total de pacientes: "+totalPacientes+
+                                "\nTotal Doctores: "+totalMedicos+
+                                "\nTotal Secreatarios: "+totalSecretarios+"\n\n", FontFactory.getFont("arial",16, Font.BOLD, BaseColor.BLACK));
+                        cuerpo.setAlignment(Element.ALIGN_LEFT);
+                        document.add(cuerpo);
+
+                        Paragraph cuerpoProPro = new Paragraph("Estadísticas Citas\n\n", FontFactory.getFont("arial",20, Font.BOLD, BaseColor.BLACK));
+                        cuerpoProPro.setAlignment(Element.ALIGN_LEFT);
+                        document.add(cuerpoProPro);
+
+                        if (totalCitas.equals("0")){
+                            PdfPTable table = new PdfPTable(5);
+                            table.addCell("Total Citas");
+                            table.addCell("Agendadas");
+                            table.addCell("Reagendadas");
+                            table.addCell("Canceladas");
+                            table.addCell("Terminadas");
+
+                            table.addCell("0");
+                            table.addCell("0");
+                            table.addCell("0");
+                            table.addCell("0");
+                            table.addCell("0");
+                            document.add(table);
+                        }else{
+                            PdfPTable table = new PdfPTable(5);
+                            table.addCell("Total Citas");
+                            table.addCell("Agendadas");
+                            table.addCell("Reagendadas");
+                            table.addCell("Canceladas");
+                            table.addCell("Terminadas");
+
+                            table.addCell(totalCitas);
+                            table.addCell(totalCitasAgendadas);
+                            table.addCell(totalCitasReagendadas);
+                            table.addCell(totalCitasCanceladas);
+                            table.addCell(totalCitasTerminadas);
+                            document.add(table);
+                        }
+                        Paragraph estadisticasGenrales = new Paragraph("\nEstadísticas Generales\n\n", FontFactory.getFont("arial",20, Font.BOLD, BaseColor.BLACK));
+                        estadisticasGenrales.setAlignment(Element.ALIGN_LEFT);
+                        document.add(estadisticasGenrales);
+                        if (totalCitas.equals("0")){
+                            Paragraph estadisticas = new Paragraph("Porcentaje de asistencia: 0%"+
+                                    "\nPorcentaje de reagendar: 0%"+
+                                    "\nPorcentaje de cancelación: 0%"+
+                                    "\nPorcentaje de agendadas: 0%"+"\n\n", FontFactory.getFont("arial",16, Font.BOLD, BaseColor.BLACK));
+                            estadisticas.setAlignment(Element.ALIGN_LEFT);
+                            document.add(estadisticas);
+                        }else{
+                            Paragraph estadisticas = new Paragraph("Porcentaje de asistencia: "+(Integer.parseInt(totalCitasTerminadas)*100)/Integer.parseInt(totalCitas)+"%"+
+                                    "\nPorcentaje de reagendar: "+(Integer.parseInt(totalCitasReagendadas)*100)/Integer.parseInt(totalCitas)+"%"+
+                                    "\nPorcentaje de cancelación: "+(Integer.parseInt(totalCitasCanceladas)*100)/Integer.parseInt(totalCitas)+"%"+
+                                    "\nPorcentaje de agendadas: "+(Integer.parseInt(totalCitasAgendadas)*100)/Integer.parseInt(totalCitas)+"%"+"\n\n", FontFactory.getFont("arial",16, Font.BOLD, BaseColor.BLACK));
+                            estadisticas.setAlignment(Element.ALIGN_LEFT);
+                            document.add(estadisticas);
+                        }
+                        Paragraph finalString = new Paragraph("Con amor Molar <3 | molar.haku@gmail.com", FontFactory.getFont("arial",10, Font.BOLD, BaseColor.BLACK));
+                        finalString.setAlignment(Element.ALIGN_CENTER);
+
+                        document.add(finalString);
+
+                        document.close();
+                        progressDialog.dismiss();
+
+                        outputStream.close();
+
+                        // Notifica al sistema que se ha agregado un nuevo archivo
+                        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                        mediaScanIntent.setData(pdfUri);
+                        sendBroadcast(mediaScanIntent);
+
+                        Toast.makeText(this, "Archivo creado con éxito", Toast.LENGTH_SHORT).show();
+
+                        // Abrir el archivo PDF creado
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setDataAndType(pdfUri, "application/pdf");
+                        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        startActivity(intent);
+                    }
+                }
+            }else {
+                //Generacion de pdf para Android Menor a 10
+                String carpeta = "/reportesGeneralesMolar";
+                String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + carpeta;
+
+                File dir = new File(path);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+
+                File archivoBase = new File(dir, nombreBase);
+                //File nuevoArchivo = obtenerNuevoArchivo(archivoBase);
+
+                //FileOutputStream fos = new FileOutputStream(nuevoArchivo);
+                fos = new FileOutputStream(archivoBase);
+                Document document = new Document();
+                PdfWriter.getInstance(document, fos);
+
+                document.open();
+                Paragraph tituloPro = new Paragraph("Reporte General\n", FontFactory.getFont("arial", 22, Font.BOLD, BaseColor.BLACK));
+                tituloPro.setAlignment(Element.ALIGN_CENTER);
+                document.add(tituloPro);
+
+
+                Paragraph titulo = new Paragraph("Molar | Administrador | " + nombre + " | " + matricula + " | " + formattedDate + "\n", FontFactory.getFont("arial", 18, Font.NORMAL, BaseColor.BLACK));
+                titulo.setAlignment(Element.ALIGN_CENTER);
+                document.add(titulo);
+
+                Drawable d = getDrawable(R.drawable.logo);
+                Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] bitmapdata = stream.toByteArray();
+                Image image = Image.getInstance(bitmapdata);
+                image.scaleToFit(100, 100);
+                image.setAlignment(Element.ALIGN_CENTER);
+                document.add(image);
+
+                Paragraph postTitulo = new Paragraph("El presente informe general tiene como objetivo " +
+                        "proporcionar una visión completa y detallada de la gestión del consultorio dental" +
+                        " a través de la aplicación Molar.", FontFactory.getFont("arial", 12, Font.NORMAL, BaseColor.BLACK));
+                titulo.setAlignment(Element.ALIGN_CENTER);
+                document.add(postTitulo);
+
+                Paragraph cuerpoPro = new Paragraph("\nEstadisticas Usuarios\n", FontFactory.getFont("arial", 20, Font.BOLD, BaseColor.BLACK));
+                cuerpoPro.setAlignment(Element.ALIGN_LEFT);
+                document.add(cuerpoPro);
+
+                Paragraph cuerpo = new Paragraph("Total de pacientes: " + totalPacientes +
+                        "\nTotal Doctores: " + totalMedicos +
+                        "\nTotal Secreatarios: " + totalSecretarios + "\n\n", FontFactory.getFont("arial", 16, Font.BOLD, BaseColor.BLACK));
+                cuerpo.setAlignment(Element.ALIGN_LEFT);
+                document.add(cuerpo);
+
+                Paragraph cuerpoProPro = new Paragraph("Estadisticas Citas\n\n", FontFactory.getFont("arial", 20, Font.BOLD, BaseColor.BLACK));
+                cuerpoProPro.setAlignment(Element.ALIGN_LEFT);
+                document.add(cuerpoProPro);
+
+                if (totalCitas.equals("0")) {
+                    PdfPTable table = new PdfPTable(5);
+                    table.addCell("Total Citas");
+                    table.addCell("Agendadas");
+                    table.addCell("Reagendadas");
+                    table.addCell("Canceladas");
+                    table.addCell("Terminadas");
+
+                    table.addCell("0");
+                    table.addCell("0");
+                    table.addCell("0");
+                    table.addCell("0");
+                    table.addCell("0");
+                    document.add(table);
+                } else {
+                    PdfPTable table = new PdfPTable(5);
+                    table.addCell("Total Citas");
+                    table.addCell("Agendadas");
+                    table.addCell("Reagendadas");
+                    table.addCell("Canceladas");
+                    table.addCell("Terminadas");
+
+                    table.addCell(totalCitas);
+                    table.addCell(totalCitasAgendadas);
+                    table.addCell(totalCitasReagendadas);
+                    table.addCell(totalCitasCanceladas);
+                    table.addCell(totalCitasTerminadas);
+                    document.add(table);
+                }
+                Paragraph estadisticasGenrales = new Paragraph("\nEstadisticas Generales\n\n", FontFactory.getFont("arial", 20, Font.BOLD, BaseColor.BLACK));
+                estadisticasGenrales.setAlignment(Element.ALIGN_LEFT);
+                document.add(estadisticasGenrales);
+                if (totalCitas.equals("0")) {
+                    Paragraph estadisticas = new Paragraph("Porcentaje de asistencia: 0%" +
+                            "\nPorcentaje de reagendar: 0%" +
+                            "\nPorcentaje de cancelación: 0%" +
+                            "\nPorcentaje de agendadas: 0%" + "\n\n", FontFactory.getFont("arial", 16, Font.BOLD, BaseColor.BLACK));
+                    estadisticas.setAlignment(Element.ALIGN_LEFT);
+                    document.add(estadisticas);
+                } else {
+                    Paragraph estadisticas = new Paragraph("Porcentaje de asistencia: " + (Integer.parseInt(totalCitasTerminadas) * 100) / Integer.parseInt(totalCitas) + "%" +
+                            "\nPorcentaje de reagendar: " + (Integer.parseInt(totalCitasReagendadas) * 100) / Integer.parseInt(totalCitas) + "%" +
+                            "\nPorcentaje de cancelación: " + (Integer.parseInt(totalCitasCanceladas) * 100) / Integer.parseInt(totalCitas) + "%" +
+                            "\nPorcentaje de agendadas: " + (Integer.parseInt(totalCitasAgendadas) * 100) / Integer.parseInt(totalCitas) + "%" + "\n\n", FontFactory.getFont("arial", 16, Font.BOLD, BaseColor.BLACK));
+                    estadisticas.setAlignment(Element.ALIGN_LEFT);
+                    document.add(estadisticas);
+                }
+                Paragraph finalString = new Paragraph("Con amor Molar <3 | molar.haku@gmail.com", FontFactory.getFont("arial", 10, Font.BOLD, BaseColor.BLACK));
+                finalString.setAlignment(Element.ALIGN_CENTER);
+
+                document.add(finalString);
+
+                document.close();
+                progressDialog.dismiss();
+
+                Toast.makeText(this, "Reporte generado con exito", Toast.LENGTH_SHORT).show();
+                //Uri pdfUri = FileProvider.getUriForFile(this, "com.haku.molar.fileprovider", nuevoArchivo);
+                Uri pdfUri = FileProvider.getUriForFile(this, "com.haku.molar.fileprovider", archivoBase);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(pdfUri, "application/pdf");
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                startActivity(intent);
             }
-            Paragraph estadisticasGenrales = new Paragraph("\nEstadisticas Generales\n\n", FontFactory.getFont("arial",20, Font.BOLD, BaseColor.BLACK));
-            estadisticasGenrales.setAlignment(Element.ALIGN_LEFT);
-            document.add(estadisticasGenrales);
-            if (totalCitas.equals("0")){
-                Paragraph estadisticas = new Paragraph("Porcentaje de asistencia: 0%"+
-                        "\nPorcentaje de reagendar: 0%"+
-                        "\nPorcentaje de cancelación: 0%"+
-                        "\nPorcentaje de agendadas: 0%"+"\n\n", FontFactory.getFont("arial",16, Font.BOLD, BaseColor.BLACK));
-                estadisticas.setAlignment(Element.ALIGN_LEFT);
-                document.add(estadisticas);
-            }else{
-                Paragraph estadisticas = new Paragraph("Porcentaje de asistencia: "+(Integer.parseInt(totalCitasTerminadas)*100)/Integer.parseInt(totalCitas)+"%"+
-                        "\nPorcentaje de reagendar: "+(Integer.parseInt(totalCitasReagendadas)*100)/Integer.parseInt(totalCitas)+"%"+
-                        "\nPorcentaje de cancelación: "+(Integer.parseInt(totalCitasCanceladas)*100)/Integer.parseInt(totalCitas)+"%"+
-                        "\nPorcentaje de agendadas: "+(Integer.parseInt(totalCitasAgendadas)*100)/Integer.parseInt(totalCitas)+"%"+"\n\n", FontFactory.getFont("arial",16, Font.BOLD, BaseColor.BLACK));
-                estadisticas.setAlignment(Element.ALIGN_LEFT);
-                document.add(estadisticas);
-            }
-            Paragraph finalString = new Paragraph("Con amor Molar <3 | molar.haku@gmail.com", FontFactory.getFont("arial",10, Font.BOLD, BaseColor.BLACK));
-            finalString.setAlignment(Element.ALIGN_CENTER);
-
-            document.add(finalString);
-
-            document.close();
-            progressDialog.dismiss();
-            Toast.makeText(this, "Reporte generado con exito", Toast.LENGTH_SHORT).show();
-            //Uri pdfUri = FileProvider.getUriForFile(this, "com.haku.molar.fileprovider", nuevoArchivo);
-            Uri pdfUri = FileProvider.getUriForFile(this, "com.haku.molar.fileprovider", archivoBase);
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(pdfUri, "application/pdf");
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            startActivity(intent);
-
         }catch (FileNotFoundException e){
             progressDialog.dismiss();
             Toast.makeText(this, "Ocurrio un error inesperado, intente de nuevo", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
             e.printStackTrace();
         }catch (DocumentException e){
             progressDialog.dismiss();
             Toast.makeText(this, "Ocurrio un error inesperado, intente de nuevo", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
             e.printStackTrace();
         } catch (MalformedURLException e) {
             progressDialog.dismiss();
             Toast.makeText(this, "Ocurrio un error inesperado, intente de nuevo", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
             throw new RuntimeException(e);
         } catch (IOException e) {
             progressDialog.dismiss();
             Toast.makeText(this, "Ocurrio un error inesperado, intente de nuevo", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
             throw new RuntimeException(e);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "No se encontró una aplicación para abrir el archivo PDF", Toast.LENGTH_SHORT).show();
         }
     }
     private File obtenerNuevoArchivo(File archivoBase) {
@@ -431,106 +576,210 @@ public class controller_admin_menuReportes extends AppCompatActivity implements 
     }
     private void crearPFDMes(){
         try {
-            String carpeta = "/reportesMolar";
-            String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath()+carpeta;
+            String nombreBase = "Reporte"+"_"+mes+"_"+año+".pdf";
+            FileOutputStream fos;
+            //Generacion de pdf para Android Igual o mayor a 10
+            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q){
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.DISPLAY_NAME, nombreBase);
+                values.put(MediaStore.Images.Media.MIME_TYPE, "application/pdf");
+                values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS+"/ReportesMesMolar");
 
-            File dir = new File(path);
-            if (!dir.exists()){
-                dir.mkdirs();
-            }
+                Uri externalContentUri = MediaStore.Downloads.EXTERNAL_CONTENT_URI;
+                pdfUri = getContentResolver().insert(externalContentUri, values);
+                if (pdfUri != null) {
+                    OutputStream outputStream = getContentResolver().openOutputStream(pdfUri);
+                    if (outputStream != null) {
+                        Rectangle pagSieze = PageSize.A4.rotate();
+                        Document document = new Document(pagSieze);
+                        PdfWriter.getInstance(document, outputStream);
 
-            String nombreBase = "Reporte"+mes+año+".pdf";
-            File archivoBase = new File(dir, nombreBase);
-            //File nuevoArchivo = obtenerNuevoArchivoMes(archivoBase);
-            FileOutputStream fos = new FileOutputStream(archivoBase);
-            //FileOutputStream fos = new FileOutputStream(nuevoArchivo);
-            Rectangle pagSieze = PageSize.A4.rotate();
-            Document document = new Document(pagSieze);
-            PdfWriter.getInstance(document, fos);
+                        document.open();
+                        Paragraph tituloPro = new Paragraph("Reporte del mes de " + mesString + " del año " + año + "\n", FontFactory.getFont("arial", 22, Font.BOLD, BaseColor.BLACK));
+                        tituloPro.setAlignment(Element.ALIGN_CENTER);
+                        document.add(tituloPro);
 
-            document.open();
-            Paragraph tituloPro = new Paragraph("Reporte del mes de "+mesString+" del "+año+"\n", FontFactory.getFont("arial",22, Font.BOLD, BaseColor.BLACK));
-            tituloPro.setAlignment(Element.ALIGN_CENTER);
-            document.add(tituloPro);
+                        Calendar currentDate = Calendar.getInstance();
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                        String formattedDate = formatter.format(currentDate.getTime());
 
-            Calendar currentDate = Calendar.getInstance();
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            String formattedDate = formatter.format(currentDate.getTime());
+                        Paragraph titulo = new Paragraph("Molar | Administrador | " + nombre + " | " + matricula + " | " + formattedDate + "\n", FontFactory.getFont("arial", 18, Font.NORMAL, BaseColor.BLACK));
+                        titulo.setAlignment(Element.ALIGN_CENTER);
+                        document.add(titulo);
 
-            Paragraph titulo = new Paragraph("Molar | Administrador | "+nombre+" | "+matricula+" | "+formattedDate+"\n", FontFactory.getFont("arial",18, Font.NORMAL, BaseColor.BLACK));
-            titulo.setAlignment(Element.ALIGN_CENTER);
-            document.add(titulo);
+                        Drawable d = getDrawable(R.drawable.logo);
+                        Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        byte[] bitmapdata = stream.toByteArray();
+                        Image image = Image.getInstance(bitmapdata);
+                        image.scaleToFit(70, 70);
+                        image.setAlignment(Element.ALIGN_CENTER);
+                        document.add(image);
 
-            Drawable d = getDrawable(R.drawable.logo);
-            Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
-            byte[] bitmapdata = stream.toByteArray();
-            Image image = Image.getInstance(bitmapdata);
-            image.scaleToFit(70, 70);
-            image.setAlignment(Element.ALIGN_CENTER);
-            document.add(image);
+                        Paragraph postTitulo = new Paragraph("El presente informe general tiene como objetivo " +
+                                "proporcionar una visión completa y detallada de la gestión de citas" +
+                                " a través de la aplicación Molar durante el mes de " + mesString, FontFactory.getFont("arial", 12, Font.NORMAL, BaseColor.BLACK));
+                        titulo.setAlignment(Element.ALIGN_CENTER);
+                        document.add(postTitulo);
 
-            Paragraph postTitulo = new Paragraph("El presente informe general tiene como objetivo " +
-                    "proporcionar una visión completa y detallada de la gestión de citas" +
-                    " a través de la aplicación Molar durante el mes de "+mesString, FontFactory.getFont("arial",12, Font.NORMAL, BaseColor.BLACK));
-            titulo.setAlignment(Element.ALIGN_CENTER);
-            document.add(postTitulo);
+                        Paragraph cuerpoProPro = new Paragraph("Citas:\n\n", FontFactory.getFont("arial", 20, Font.BOLD, BaseColor.BLACK));
+                        cuerpoProPro.setAlignment(Element.ALIGN_LEFT);
+                        document.add(cuerpoProPro);
 
-            Paragraph cuerpoProPro = new Paragraph("Citas:\n\n", FontFactory.getFont("arial",20, Font.BOLD, BaseColor.BLACK));
-            cuerpoProPro.setAlignment(Element.ALIGN_LEFT);
-            document.add(cuerpoProPro);
+                        PdfPTable table = new PdfPTable(8);
+                        table.addCell("Id");
+                        table.addCell("Día");
+                        table.addCell("Hora");
+                        table.addCell("Motivo");
+                        table.addCell("Descripción");
+                        table.addCell("Estado");
+                        table.addCell("idUsuario");
+                        table.addCell("idMedico");
 
-            PdfPTable table = new PdfPTable(8);
-            table.addCell("Id");
-            table.addCell("Día");
-            table.addCell("Hora");
-            table.addCell("Motivo");
-            table.addCell("Descripción");
-            table.addCell("Estado");
-            table.addCell("idUsuario");
-            table.addCell("idMedico");
+                        for (int i = 0; i < listaCitas.size(); i++) {
+                            table.addCell(listaCitas.get(i).getReporteId());
+                            table.addCell(listaCitas.get(i).getReporteDia());
+                            table.addCell(listaCitas.get(i).getReporteHora());
+                            table.addCell(listaCitas.get(i).getReporteMotivo());
+                            table.addCell(listaCitas.get(i).getReporteDescripcion());
+                            if (listaCitas.get(i).getReporteEstado().equals("0")) {
+                                table.addCell("Terminada");
+                            } else if (listaCitas.get(i).getReporteEstado().equals("1")) {
+                                table.addCell("Pendiente");
+                            } else if (listaCitas.get(i).getReporteEstado().equals("2")) {
+                                table.addCell("Cancelada");
+                            } else if (listaCitas.get(i).getReporteEstado().equals("3")) {
+                                table.addCell("Reagendada");
+                            } else if (listaCitas.get(i).getReporteEstado().equals("4")) {
+                                table.addCell("Pendiente");
+                            }
+                            table.addCell(listaCitas.get(i).getReporteIdUsuario());
+                            table.addCell(listaCitas.get(i).getReporteIdMedico());
+                        }
 
-            for (int i = 0; i < listaCitas.size(); i++) {
-                table.addCell(listaCitas.get(i).getReporteId());
-                table.addCell(listaCitas.get(i).getReporteDia());
-                table.addCell(listaCitas.get(i).getReporteHora());
-                table.addCell(listaCitas.get(i).getReporteMotivo());
-                table.addCell(listaCitas.get(i).getReporteDescripcion());
-                if (listaCitas.get(i).getReporteEstado().equals("0")){
-                    table.addCell("Terminada");
-                }else if (listaCitas.get(i).getReporteEstado().equals("1")){
-                    table.addCell("Pendiente");
-                }else if (listaCitas.get(i).getReporteEstado().equals("2")){
-                    table.addCell("Cancelada");
-                }else if (listaCitas.get(i).getReporteEstado().equals("3")){
-                    table.addCell("Reagendada");
-                }else if (listaCitas.get(i).getReporteEstado().equals("4")){
-                    table.addCell("Pendiente");
+                        document.add(table);
+
+                        Paragraph finalString = new Paragraph("Con amor Molar <3 | molar.haku@gmail.com", FontFactory.getFont("arial", 10, Font.BOLD, BaseColor.BLACK));
+                        finalString.setAlignment(Element.ALIGN_CENTER);
+
+                        document.add(finalString);
+
+                        document.close();
+
+                        progressDialogMes.dismiss();
+
+                        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                        mediaScanIntent.setData(pdfUri);
+                        sendBroadcast(mediaScanIntent);
+                        Toast.makeText(this, "Reporte generado con exito", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setDataAndType(pdfUri, "application/pdf");
+                        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        startActivity(intent);
+                    }
                 }
-                table.addCell(listaCitas.get(i).getReporteIdUsuario());
-                table.addCell(listaCitas.get(i).getReporteIdMedico());
+            }else {
+                //Generacion de pdf para Android Menor a 10
+                String carpeta = "/ReportesMesMolar";
+                String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + carpeta;
+
+                File dir = new File(path);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+
+                File archivoBase = new File(dir, nombreBase);
+                //File nuevoArchivo = obtenerNuevoArchivoMes(archivoBase);
+                fos = new FileOutputStream(archivoBase);
+                //FileOutputStream fos = new FileOutputStream(nuevoArchivo);
+                Rectangle pagSieze = PageSize.A4.rotate();
+                Document document = new Document(pagSieze);
+                PdfWriter.getInstance(document, fos);
+
+                document.open();
+                Paragraph tituloPro = new Paragraph("Reporte del mes de " + mesString + " del año " + año + "\n", FontFactory.getFont("arial", 22, Font.BOLD, BaseColor.BLACK));
+                tituloPro.setAlignment(Element.ALIGN_CENTER);
+                document.add(tituloPro);
+
+                Calendar currentDate = Calendar.getInstance();
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                String formattedDate = formatter.format(currentDate.getTime());
+
+                Paragraph titulo = new Paragraph("Molar | Administrador | " + nombre + " | " + matricula + " | " + formattedDate + "\n", FontFactory.getFont("arial", 18, Font.NORMAL, BaseColor.BLACK));
+                titulo.setAlignment(Element.ALIGN_CENTER);
+                document.add(titulo);
+
+                Drawable d = getDrawable(R.drawable.logo);
+                Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] bitmapdata = stream.toByteArray();
+                Image image = Image.getInstance(bitmapdata);
+                image.scaleToFit(70, 70);
+                image.setAlignment(Element.ALIGN_CENTER);
+                document.add(image);
+
+                Paragraph postTitulo = new Paragraph("El presente informe general tiene como objetivo " +
+                        "proporcionar una visión completa y detallada de la gestión de citas" +
+                        " a través de la aplicación Molar durante el mes de " + mesString, FontFactory.getFont("arial", 12, Font.NORMAL, BaseColor.BLACK));
+                titulo.setAlignment(Element.ALIGN_CENTER);
+                document.add(postTitulo);
+
+                Paragraph cuerpoProPro = new Paragraph("Citas:\n\n", FontFactory.getFont("arial", 20, Font.BOLD, BaseColor.BLACK));
+                cuerpoProPro.setAlignment(Element.ALIGN_LEFT);
+                document.add(cuerpoProPro);
+
+                PdfPTable table = new PdfPTable(8);
+                table.addCell("Id");
+                table.addCell("Día");
+                table.addCell("Hora");
+                table.addCell("Motivo");
+                table.addCell("Descripción");
+                table.addCell("Estado");
+                table.addCell("idUsuario");
+                table.addCell("idMedico");
+
+                for (int i = 0; i < listaCitas.size(); i++) {
+                    table.addCell(listaCitas.get(i).getReporteId());
+                    table.addCell(listaCitas.get(i).getReporteDia());
+                    table.addCell(listaCitas.get(i).getReporteHora());
+                    table.addCell(listaCitas.get(i).getReporteMotivo());
+                    table.addCell(listaCitas.get(i).getReporteDescripcion());
+                    if (listaCitas.get(i).getReporteEstado().equals("0")) {
+                        table.addCell("Terminada");
+                    } else if (listaCitas.get(i).getReporteEstado().equals("1")) {
+                        table.addCell("Pendiente");
+                    } else if (listaCitas.get(i).getReporteEstado().equals("2")) {
+                        table.addCell("Cancelada");
+                    } else if (listaCitas.get(i).getReporteEstado().equals("3")) {
+                        table.addCell("Reagendada");
+                    } else if (listaCitas.get(i).getReporteEstado().equals("4")) {
+                        table.addCell("Pendiente");
+                    }
+                    table.addCell(listaCitas.get(i).getReporteIdUsuario());
+                    table.addCell(listaCitas.get(i).getReporteIdMedico());
+                }
+
+                document.add(table);
+
+                Paragraph finalString = new Paragraph("Con amor Molar <3 | molar.haku@gmail.com", FontFactory.getFont("arial", 10, Font.BOLD, BaseColor.BLACK));
+                finalString.setAlignment(Element.ALIGN_CENTER);
+
+                document.add(finalString);
+
+                document.close();
+
+                progressDialogMes.dismiss();
+                Toast.makeText(this, "Reporte generado con exito", Toast.LENGTH_SHORT).show();
+                Uri pdfUri = FileProvider.getUriForFile(this, "com.haku.molar.fileprovider", archivoBase);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(pdfUri, "application/pdf");
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                startActivity(intent);
             }
-
-            document.add(table);
-
-            Paragraph finalString = new Paragraph("Con amor Molar <3 | molar.haku@gmail.com", FontFactory.getFont("arial",10, Font.BOLD, BaseColor.BLACK));
-            finalString.setAlignment(Element.ALIGN_CENTER);
-
-            document.add(finalString);
-
-            document.close();
-            progressDialogMes.dismiss();
-            Toast.makeText(this, "Reporte generado con exito", Toast.LENGTH_SHORT).show();
-            Uri pdfUri = FileProvider.getUriForFile(this, "com.haku.molar.fileprovider", archivoBase);
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(pdfUri, "application/pdf");
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            startActivity(intent);
-
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
-        }catch (DocumentException e){
+        }catch (FileNotFoundException | DocumentException e){
             e.printStackTrace();
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
