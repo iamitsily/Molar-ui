@@ -218,7 +218,7 @@ public class model_Doctor {
         requestQueue.add(request);
     }
     public void obtenerPassDoctor(){
-        String url = "https://molarservices.azurewebsites.net/general/login.php";
+        String url = molarConfig.getDomainAzure()+"/general/login.php";
 
         StringRequest request = new StringRequest(Request.Method.POST,url , new Response.Listener<String>() {
             @Override

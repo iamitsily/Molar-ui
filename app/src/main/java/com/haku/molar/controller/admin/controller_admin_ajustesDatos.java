@@ -144,9 +144,9 @@ public class controller_admin_ajustesDatos extends AppCompatActivity implements 
             }
         });
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Aviso");
-        builder.setMessage("Por favor antes de actualizar sus datos, asegurese " +
-                "de que el email y número de telefono sean correctos.").setPositiveButton("Ok",new DialogInterface.OnClickListener(){
+        builder.setTitle("Aviso").setIcon(R.mipmap.logoapp);
+        builder.setMessage("Por favor antes de actualizar sus datos, asegúrese " +
+                "de que el email y número de teléfono sean correctos.").setPositiveButton("Ok",new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -294,6 +294,9 @@ public class controller_admin_ajustesDatos extends AppCompatActivity implements 
     @Override
     public void onSuccessUpdatebyUser() {
         progressDialog.dismiss();
+        edt_passNueva.setText("");
+        edt_passActual.setText("");
+        edt_passconfirmed.setText("");
         Toast.makeText(this, "Datos actualizados", Toast.LENGTH_SHORT).show();
     }
 
@@ -308,7 +311,7 @@ public class controller_admin_ajustesDatos extends AppCompatActivity implements 
             if(!validarDatos(MolarCrypt.decrypt(datos[2]))){
                 actualizarUsuario();
             }else{
-                Toast.makeText(this, "No es posible realizar las modificaciones, se incumplen criterios", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Se incumplen criterios.", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
         } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {

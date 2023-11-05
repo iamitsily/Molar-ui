@@ -37,7 +37,7 @@ public class controller_patient_AgendarCitas extends AppCompatActivity {
         IVBtnBack = findViewById(R.id.AC1_iv1);
 
         ArrayList<motivo> Motivos = new ArrayList<>();
-            Motivos.add(new motivo("Revision"));
+            Motivos.add(new motivo("Revisión"));
         Motivos.add(new motivo("Caries"));
         Motivos.add(new motivo("Limpieza"));
         Motivos.add(new motivo("Muelas"));
